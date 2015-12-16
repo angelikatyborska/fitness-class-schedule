@@ -12,9 +12,9 @@
 //
 //= require jquery/dist/jquery.min.js
 //= require fastclick/lib/fastclick.js
-//= require jquery-placeholder/jquery.placehoder.js
+//= require jquery-placeholder/jquery.placeholder.js
 //= require jquery.cookie/jquery.cookie.js
 //= require modernizr/modernizr.js
-//= require foundation/foundation.min.js
+//= require foundation/js/foundation.min.js
 //= require turbolinks
 //= require_tree .
