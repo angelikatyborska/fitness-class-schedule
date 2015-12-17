@@ -1,0 +1,17 @@
+require 'rails_helper'
+
+RSpec.describe Trainer do
+  describe 'validations' do
+    it { is_expected.to validate_presence_of :first_name }
+    it { is_expected.to validate_presence_of :description }
+  end
+
+  describe 'database columns' do
+    it { is_expected.to have_db_column :first_name }
+    it { is_expected.to have_db_column :description }
+  end
+
+  describe 'associations' do
+    it { is_expected.to have_many :schedule_items }
+  end
+end
