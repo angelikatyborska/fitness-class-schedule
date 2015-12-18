@@ -9,24 +9,24 @@ RSpec.describe ScheduleItem do
     it { is_expected.to validate_presence_of :type }
     it { is_expected.to validate_inclusion_of(:type).in_array(ScheduleItem.types) }
 
-    it 'fail when starts in the past' do
-      schedule_item = ScheduleItem.new(
-        start: DateTime.now - 1.day,
-        duration: 45,
-        type: ScheduleItem.types[0]
-      )
-      expect(schedule_item.valid?).to be false
-      expect(schedule_item.errors[:start]).to include('can\'t be in the past')
+    context 'with start date in the past' do
+      subject { build(:schedule_item, start: DateTime.now - 1.day) }
+
+      it { is_expected.not_to be_valid }
+
+      it 'has proper error messages' do
+        expect(subject.errors[:start]).to include('can\'t be in the past')
+      end
     end
 
-    it 'fail when doesn\'t end on the same day' do
-      schedule_item = ScheduleItem.new(
-        start: DateTime.now.beginning_of_day + 1.day,
-        duration: 25 * 60,
-        type: ScheduleItem.types[0]
-      )
-      expect(schedule_item.valid?).to be false
-      expect(schedule_item.errors[:duration]).to include('must end on the same day')
+    context 'with duration overlapping to the next day' do
+      subject { build(:schedule_item, start: DateTime.now.beginning_of_day + 1.day, duration: 25 * 60) }
+
+      it { is_expected.not_to be_valid }
+
+      it 'has proper error messages' do
+        expect(subject.errors[:duration]).to include('must end on the same day')
+      end
     end
   end
 
