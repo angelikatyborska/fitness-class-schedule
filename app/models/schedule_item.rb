@@ -1,5 +1,6 @@
 class ScheduleItem < ActiveRecord::Base
   belongs_to :trainer
+  belongs_to :room
 
   validates :start, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
