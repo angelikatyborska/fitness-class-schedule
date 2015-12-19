@@ -13,4 +13,12 @@ class Reservation < ActiveRecord::Base
       end
     end
   end
+
+  def schedule_item_cant_be_full
+    unless schedule_item.nil?
+      if schedule_item.reservations.count >= schedule_item.capacity
+        errors.add(:schedule_item, I18n.t('errors.cant_make_reservations_for_full_items'))
+      end
+    end
+  end
 end

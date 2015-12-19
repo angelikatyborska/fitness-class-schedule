@@ -7,7 +7,7 @@ class ScheduleItem < ActiveRecord::Base
   validates :start, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :trainer, presence: true
-  validates :type, presence: true, inclusion: { in: proc { types } }
+  validates :activity, presence: true, inclusion: { in: proc { activities } }
   validates :capacity, presence: true, numericality: { greater_than: 0 }
   validate :duration_cannot_span_multiple_days
   validate :start_cannot_be_in_the_past
@@ -28,7 +28,7 @@ class ScheduleItem < ActiveRecord::Base
     end
   end
 
-  def self.types
+  def self.activities
     %w(ABT TBC Step)
   end
 end

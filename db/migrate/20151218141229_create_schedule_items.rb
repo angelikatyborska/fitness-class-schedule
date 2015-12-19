@@ -3,7 +3,7 @@ class CreateScheduleItems < ActiveRecord::Migration
     create_table :schedule_items do |t|
       t.datetime :start
       t.integer :duration
-      t.string :type
+      t.string :activity
       t.integer :capacity
       t.references :trainer, index: true, foreign_key: true
 

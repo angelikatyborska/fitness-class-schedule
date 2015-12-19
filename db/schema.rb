@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20151219114325) do
   create_table "schedule_items", force: :cascade do |t|
     t.datetime "start"
     t.integer  "duration"
-    t.string   "type"
+    t.string   "activity"
     t.integer  "capacity"
     t.integer  "trainer_id"
     t.datetime "created_at", null: false
