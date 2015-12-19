@@ -1,5 +1,10 @@
-%ul
-  - schedule_items.each do |schedule_item|
-    %li= "#{l(schedule_item.start.to_date)}: #{l(schedule_item.start, format: :simple_time)} - #{schedule_item.activity}"
+%schedule
+  %week
+    - schedule_items_by_day.each do |day, items|
+      %ul
+        - items.each do |item|
+          %li= "#{l(item.start.to_date)}: #{l(item.start, format: :simple_time)} - #{item.activity}"
+
+
 = link_to 'prev week', schedule_items_path(week: @week - 1.week)
 = link_to 'next week', schedule_items_path(week: @week + 1.week)
