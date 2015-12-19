@@ -28,5 +28,5 @@ group :test do
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'
   gem 'selenium-webdriver', '~> 2.48.1'
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers', '~> 3.0.1', require: false
 end
