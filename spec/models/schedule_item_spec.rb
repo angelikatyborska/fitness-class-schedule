@@ -24,7 +24,7 @@ RSpec.describe ScheduleItem do
 
       it 'is not valid' do
         is_expected.not_to be_valid
-        expect(subject.errors[:duration]).to include('must end on the same day')
+        expect(subject.errors[:duration]).to include('must start and end on the same day')
       end
     end
   end

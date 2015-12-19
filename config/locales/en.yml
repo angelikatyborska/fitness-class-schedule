@@ -22,6 +22,9 @@
 en:
   errors:
     cant_be_in_the_past: "can't be in the past"
-    must_end_on_the_same_day: 'must end on the same day'
-    cant_make_reservations_in_the_past: "can't make reservations for items from the past"
-    cant_make_reservations_for_full_items: 'schedule_item capacity exceeded'
+    schedule_item:
+      must_start_and_end_on_the_same_day: 'must start and end on the same day'
+    reservation:
+      cant_make_reservations_in_the_past: "can't make reservations for items from the past"
+      cant_make_reservations_for_full_items: 'schedule_item capacity exceeded'
+      cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"

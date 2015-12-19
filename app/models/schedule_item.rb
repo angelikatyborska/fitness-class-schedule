@@ -18,7 +18,7 @@ class ScheduleItem < ActiveRecord::Base
       stop = start + duration.minutes
       next_day = start.beginning_of_day + 1.day
 
-      errors.add(:duration, I18n.t('errors.must_end_on_the_same_day')) if stop > next_day
+      errors.add(:duration, I18n.t('errors.schedule_item.must_start_and_end_on_the_same_day')) if stop > next_day
     end
   end
 
