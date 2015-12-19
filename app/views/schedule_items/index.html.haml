@@ -1,9 +1,10 @@
-%schedule
-  %week
+.schedule
+  .week
     - schedule_items_by_day.each do |day, items|
-      %ul
+      .day
         - items.each do |item|
-          %li= "#{l(item.start.to_date)}: #{l(item.start, format: :simple_time)} - #{item.activity}"
+          .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
+            = "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}"
 
 
 = link_to 'prev week', schedule_items_path(week: @week - 1.week)

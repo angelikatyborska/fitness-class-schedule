@@ -1,5 +1,23 @@
 .schedule {
-  .week {
+  background-color: yellow;
+  height: 100%;
 
+  .week {
+    width: 100%;
+    height: 100%;
+
+    .day {
+      position: relative;
+      float: left;
+      width: 10%;
+      height: 100%;
+
+      background-color: orange;
+
+      .item {
+        position: absolute;
+        background-color: red;
+      }
+    }
   }
 }
