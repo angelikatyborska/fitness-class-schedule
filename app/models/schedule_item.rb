@@ -1,7 +1,7 @@
 class ScheduleItem < ActiveRecord::Base
   belongs_to :trainer
   belongs_to :room
-  has_many :reservations
+  has_many :reservations, dependent: :destroy
   has_many :users, through: :reservations
 
   validates :start, presence: true
@@ -11,6 +11,8 @@ class ScheduleItem < ActiveRecord::Base
   validates :capacity, presence: true, numericality: { greater_than: 0 }
   validate :duration_cannot_span_multiple_days
   validate :start_cannot_be_in_the_past
+
+  scope :week, -> (datetime = DateTime.now) { where('start >= ? AND start < ?', datetime.beginning_of_week, datetime.beginning_of_week + 1.week)}
 
 
   def duration_cannot_span_multiple_days

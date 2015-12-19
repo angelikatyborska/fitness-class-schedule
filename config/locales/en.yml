@@ -20,6 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  time:
+    formats:
+      simple_time: '%H:%M'
   errors:
     cant_be_in_the_past: "can't be in the past"
     schedule_item:

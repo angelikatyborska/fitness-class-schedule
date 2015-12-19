@@ -15,6 +15,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4.0'
   gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'faker', '~> 1.6.1'
 end
 
 group :development do
@@ -23,7 +24,6 @@ group :development do
 end
 
 group :test do
-  gem 'faker', '~> 1.6.1'
   gem 'capybara', '~> 2.5.0'
   gem 'database_cleaner', '~> 1.5.0'
   gem 'launchy', '~> 2.4.3'

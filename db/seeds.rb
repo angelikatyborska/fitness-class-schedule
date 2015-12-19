@@ -5,3 +5,34 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+puts "Seeds: start"
+
+Trainer.destroy_all
+Room.destroy_all
+ScheduleItem.destroy_all
+
+6.times do
+  Trainer.create!(
+    first_name: Faker::Name.first_name,
+    description: Faker::Lorem.paragraph(3)
+  )
+end
+
+3.times do
+  Room.create!(
+    name: Faker::Lorem.word
+  )
+end
+
+30.times do
+  ScheduleItem.create!(
+    start: Faker::Time.between(DateTime.now + 1.day, DateTime.now + 2.weeks),
+    duration: 45,
+    activity: ScheduleItem.activities.sample,
+    trainer: Trainer.all.sample,
+    room: Room.all.sample,
+    capacity: Faker::Number.between(5, 15)
+  )
+end
+
+puts "Seeds: done"
