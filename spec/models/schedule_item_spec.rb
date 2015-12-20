@@ -43,4 +43,38 @@ RSpec.describe ScheduleItem do
     it { is_expected.to belong_to :room}
     it { is_expected.to have_many :reservations }
   end
+
+  describe 'scope' do
+    describe 'week' do
+      before :all do
+        @today = Time.zone.now
+        @this_week_item_1 = build(:schedule_item, start: @today.beginning_of_week + 1.day)
+        @this_week_item_2 = build(:schedule_item, start: @today.beginning_of_week + 2.day)
+        @next_week_item_1 = build(:schedule_item, start: @today.beginning_of_week + 8.day)
+        @next_week_item_2 = build(:schedule_item, start: @today.beginning_of_week + 9.day)
+
+        [@this_week_item_1, @this_week_item_2, @next_week_item_1, @next_week_item_2].each do |item|
+          item.save(validate: false)
+        end
+      end
+
+      context 'without argument' do
+        subject { described_class.week }
+
+        it 'lists all schedule items starting this week' do
+          is_expected.to include @this_week_item_1, @this_week_item_2
+          is_expected.not_to include @next_week_item_1, @next_week_item_2
+        end
+      end
+
+      context 'with next week\'s date' do
+        subject { described_class.week(@today + 7.days) }
+
+        it 'lists all schedule items starting next week' do
+          is_expected.not_to include @this_week_item_1, @this_week_item_2
+          is_expected.to include @next_week_item_1, @next_week_item_2
+        end
+      end
+    end
+  end
 end

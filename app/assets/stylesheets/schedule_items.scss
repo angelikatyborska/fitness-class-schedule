@@ -1,22 +1,21 @@
 .schedule {
-  background-color: yellow;
-  height: 100%;
-
   .week {
     width: 100%;
-    height: 100%;
+
+    h2 {
+      margin: 0;
+    }
 
     .day {
       position: relative;
       float: left;
       width: 10%;
-      height: 100%;
+      height: 400px;
 
-      background-color: orange;
 
       .item {
         position: absolute;
-        background-color: red;
+        background-color: beige;
       }
     }
   }
