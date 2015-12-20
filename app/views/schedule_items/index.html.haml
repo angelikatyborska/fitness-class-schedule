@@ -1,10 +1,12 @@
 .schedule
   .week
+    %h2= "#{@week.beginning_of_week} - #{@week.end_of_week}"
     - schedule_items_by_day.each do |day, items|
       .day
-        - items.each do |item|
-          .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
-            = "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}"
+        - unless items.nil?
+          - items.each do |item|
+            .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
+              = "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}"
 
 
 = link_to 'prev week', schedule_items_path(week: @week - 1.week)

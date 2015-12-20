@@ -7,7 +7,7 @@ RSpec.describe Reservation do
     it { is_expected.to validate_presence_of :schedule_item }
 
     context 'with schedule item starting in the past' do
-      subject { build(:reservation, schedule_item: build(:schedule_item, start: DateTime.now - 1.day ))}
+      subject { build(:reservation, schedule_item: build(:schedule_item, start: Time.zone.now - 1.day ))}
 
       it 'is invalid' do
         is_expected.to be_invalid

@@ -11,7 +11,7 @@ RSpec.describe ScheduleItem do
     it { is_expected.to validate_inclusion_of(:activity).in_array(ScheduleItem.activities) }
 
     context 'with start date in the past' do
-      subject { build(:schedule_item, start: DateTime.now - 1.day) }
+      subject { build(:schedule_item, start: Time.zone.now - 1.day) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -20,7 +20,7 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with duration overlapping to the next day' do
-      subject { build(:schedule_item, start: DateTime.now.beginning_of_day + 1.day, duration: 25 * 60) }
+      subject { build(:schedule_item, start: Time.zone.now.beginning_of_day + 1.day, duration: 25 * 60) }
 
       it 'is not valid' do
         is_expected.not_to be_valid

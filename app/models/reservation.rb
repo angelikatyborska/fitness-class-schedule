@@ -9,7 +9,7 @@ class Reservation < ActiveRecord::Base
 
   def schedule_item_cant_be_in_the_past
     unless schedule_item.nil?
-      if schedule_item.start < DateTime.now
+      if schedule_item.start < Time.zone.now
         errors.add(:schedule_item, I18n.t('errors.reservation.cant_make_reservations_in_the_past'))
       end
     end

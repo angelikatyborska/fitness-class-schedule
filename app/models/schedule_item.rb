@@ -12,7 +12,7 @@ class ScheduleItem < ActiveRecord::Base
   validate :duration_cannot_span_multiple_days
   validate :start_cannot_be_in_the_past
 
-  scope :week, -> (datetime = DateTime.now) { where('start >= ? AND start < ?', datetime.beginning_of_week, datetime.beginning_of_week + 1.week)}
+  scope :week, -> (time = Time.zone.now) { where('start >= ? AND start < ?', time.beginning_of_week, time.beginning_of_week + 1.week)}
 
 
   def duration_cannot_span_multiple_days
@@ -26,7 +26,7 @@ class ScheduleItem < ActiveRecord::Base
 
   def start_cannot_be_in_the_past
     unless start.nil?
-      errors.add(:start, I18n.t('errors.cant_be_in_the_past')) if start < DateTime.now
+      errors.add(:start, I18n.t('errors.cant_be_in_the_past')) if start < Time.zone.now
     end
   end
 

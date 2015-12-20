@@ -4,17 +4,24 @@ class ScheduleItemsController < ApplicationController
   end
 
   expose(:schedule_items_by_day) do
-    schedule_items.map.with_object({}) do |item, weekdays|
-      weekdays[item.start.beginning_of_day] ||= []
+    weekdays = {}
+
+    7.times do |n|
+      weekdays[@week.beginning_of_week + n.days] = []
+    end
+
+    schedule_items.map do |item|
       weekdays[item.start.beginning_of_day] << item
     end
+
+    weekdays
   end
 
   def index
     if params[:week]
-      @week = DateTime.parse(params[:week])
+      @week = Time.parse(params[:week])
     else
-      @week = DateTime.now
+      @week = Time.zone.now
     end
   end
 end
