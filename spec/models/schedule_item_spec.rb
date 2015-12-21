@@ -24,7 +24,7 @@ RSpec.describe ScheduleItem do
 
       it 'is not valid' do
         is_expected.not_to be_valid
-        expect(subject.errors[:duration]).to include('must start and end on the same day')
+        expect(subject.errors[:duration]).to include('can\'t span more than one day')
       end
     end
   end
@@ -48,10 +48,14 @@ RSpec.describe ScheduleItem do
     describe 'week' do
       before :all do
         @today = Time.zone.now
-        @this_week_item_1 = build(:schedule_item, start: @today.beginning_of_week + 1.day)
-        @this_week_item_2 = build(:schedule_item, start: @today.beginning_of_week + 2.day)
-        @next_week_item_1 = build(:schedule_item, start: @today.beginning_of_week + 8.day)
-        @next_week_item_2 = build(:schedule_item, start: @today.beginning_of_week + 9.day)
+        @this_week_item_1 = build(:schedule_item_this_week)
+        @this_week_item_1.save(validate: false)
+        @this_week_item_2 = build(:schedule_item_this_week)
+        @this_week_item_2.save(validate: false)
+        @next_week_item_1 = build(:schedule_item_next_week)
+        @next_week_item_1.save(validate: false)
+        @next_week_item_2 = build(:schedule_item_next_week)
+        @next_week_item_2.save(validate: false)
 
         [@this_week_item_1, @this_week_item_2, @next_week_item_1, @next_week_item_2].each do |item|
           item.save(validate: false)

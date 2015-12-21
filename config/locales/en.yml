@@ -23,10 +23,12 @@ en:
   time:
     formats:
       simple_time: '%H:%M'
+      simple_date: '%Y-%m-%d'
+      weekday: '%A'
   errors:
     cant_be_in_the_past: "can't be in the past"
     schedule_item:
-      must_start_and_end_on_the_same_day: 'must start and end on the same day'
+      must_start_and_end_on_the_same_day: "can\'t span more than one day"
     reservation:
       cant_make_reservations_in_the_past: "can't make reservations for items from the past"
       cant_make_reservations_for_full_items: 'schedule_item capacity exceeded'

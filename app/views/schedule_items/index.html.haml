@@ -1,8 +1,9 @@
 .schedule
   .week
-    %h2= "#{@week.beginning_of_week} - #{@week.end_of_week}"
-    - schedule_items_by_day.each do |day, items|
+    %h2= "#{l(@week.beginning_of_week, format: :simple_date)} - #{l(@week.end_of_week, format: :simple_date)}"
+    - @schedule_items_by_day.each do |day, items|
       .day
+        %h3= l(day, format: :weekday)
         - unless items.nil?
           - items.each do |item|
             .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
