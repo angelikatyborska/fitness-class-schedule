@@ -26,7 +26,7 @@ end
 
 30.times do
   ScheduleItem.create!(
-    start: Faker::Time.between(Time.zone.now + 1.day, Time.zone.now + 15.day).beginning_of_day + Faker::Number.between(1, 84) * 15.minutes,
+    start: Faker::Time.between(Time.zone.now + 1.day, Time.zone.now + 15.day).beginning_of_day + (Faker::Number.between(1, 80) * 15).minutes,
     duration: 45,
     activity: ScheduleItem.activities.sample,
     trainer: Trainer.all.sample,
