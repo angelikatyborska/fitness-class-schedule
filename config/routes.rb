@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  resources :schedule_items, only: :index
+  resources :schedule_items, only: [:index, :show]
 
   root to: 'schedule_items#index'
   # The priority is based upon order of creation: first created -> highest priority.

@@ -35,4 +35,12 @@ RSpec.describe ScheduleItemsController do
       end
     end
   end
+
+  describe 'GET #show' do
+    it 'exposes the requested schedule item' do
+      schedule_item = create(:schedule_item)
+      get :show, id: schedule_item
+      expect(controller.schedule_item).to eq schedule_item
+    end
+  end
 end
