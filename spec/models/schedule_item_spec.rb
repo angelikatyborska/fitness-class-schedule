@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ScheduleItem do
+  include ApplicationHelper
+
   describe 'validations' do
     it { is_expected.to validate_presence_of :start }
     it { is_expected.to validate_presence_of :duration }
@@ -11,7 +13,7 @@ RSpec.describe ScheduleItem do
     it { is_expected.to validate_inclusion_of(:activity).in_array(ScheduleItem.activities) }
 
     context 'with start date in the past' do
-      subject { build(:schedule_item, start: Time.zone.now - 1.day) }
+      subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now - 1.day)) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -20,11 +22,20 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with duration overlapping to the next day' do
-      subject { build(:schedule_item, start: Time.zone.now.beginning_of_day + 1.day, duration: 25 * 60) }
+      subject { build(:schedule_item, duration: 25 * 60) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
         expect(subject.errors[:duration]).to include('can\'t span more than one day')
+      end
+    end
+
+    context 'with start date earlier than day start' do
+      subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now) - 1.hour + 1.day)}
+
+      it 'is not valid' do
+        is_expected.not_to be_valid
+        expect(subject.errors[:start]).to include('can\'t start that early')
       end
     end
   end
@@ -78,6 +89,27 @@ RSpec.describe ScheduleItem do
           is_expected.not_to include @this_week_item_1, @this_week_item_2
           is_expected.to include @next_week_item_1, @next_week_item_2
         end
+      end
+    end
+  end
+
+  describe 'class methods' do
+    describe '#beginning_of_day' do
+      let(:today) { Time.zone.now }
+      subject { described_class.beginning_of_day(today) }
+
+      it 'returns the earliest time a schedule item can start this day' do
+        expect(subject.hour).to eq Configurable.day_start
+        expect(subject.min).to eq 0
+      end
+    end
+    describe '#end_of_day' do
+      let(:today) { Time.zone.now }
+      subject { described_class.end_of_day(today) }
+
+      it 'returns the earliest time that is too late for a schedule item to start this day' do
+        expect(subject.hour).to eq Configurable.day_end
+        expect(subject.min).to eq 0
       end
     end
   end

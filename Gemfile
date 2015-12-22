@@ -10,6 +10,7 @@ gem 'haml-rails'
 gem 'decent_exposure'
 gem 'devise'
 gem 'draper'
+gem 'configurable_engine', '~> 0.4'
 
 group :development, :test do
   gem 'byebug'

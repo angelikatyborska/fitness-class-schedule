@@ -24,9 +24,13 @@ end
   )
 end
 
+start_from = Time.zone.now + 1.day
+start_to = Time.zone.now + 14.day
+max_quarters = ScheduleItem.day_duration_in_quarters - 1
+
 30.times do
   ScheduleItem.create!(
-    start: Faker::Time.between(Time.zone.now + 1.day, Time.zone.now + 15.day).beginning_of_day + (Faker::Number.between(1, 80) * 15).minutes,
+    start: ScheduleItem.beginning_of_day(Faker::Date.between(start_from, start_to)) + (Faker::Number.between(0, max_quarters).to_i * 15).minutes,
     duration: 45,
     activity: ScheduleItem.activities.sample,
     trainer: Trainer.all.sample,

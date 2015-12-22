@@ -6,10 +6,10 @@ class ScheduleItemDecorator < Draper::Decorator
   end
 
   def start_day_percentage
-     (start - start.beginning_of_day) / (start.end_of_day - start.beginning_of_day) * 100
+     (start - ScheduleItem.beginning_of_day(start)) / (ScheduleItem.end_of_day(start) - ScheduleItem.beginning_of_day(start)) * 100
   end
 
   def duration_day_percentage
-    (start + duration.minutes - start) / (start.end_of_day - start.beginning_of_day) * 100
+    (start + duration.minutes - start) / (ScheduleItem.end_of_day(start) - ScheduleItem.beginning_of_day(start)) * 100
   end
 end
