@@ -7,8 +7,11 @@ RSpec.describe ScheduleItemsController do
       @schedule_item_next_week.save(validate: false)
     end
 
-    context 'without parameters' do
+    subject { get :index }
 
+    it { is_expected.to render_template :index }
+
+    context 'without parameters' do
       it 'exposes schedule items from this week' do
         get :index
         expect(controller.schedule_items).to eq([@schedule_item_this_week])
@@ -36,7 +39,8 @@ RSpec.describe ScheduleItemsController do
     let(:schedule_item) { create(:schedule_item) }
 
     subject { get :show, id: schedule_item }
-    it { is_expected.to render_template 'show'}
+
+    it { is_expected.to render_template :show }
 
     it 'exposes the requested schedule item' do
       get :show, id: schedule_item
