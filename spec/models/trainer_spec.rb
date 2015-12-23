@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Trainer do
+  it_behaves_like 'occupiable', :trainer
+
   describe 'validations' do
     it { is_expected.to validate_presence_of :first_name }
     it { is_expected.to validate_presence_of :description }
