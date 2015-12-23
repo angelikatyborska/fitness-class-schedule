@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe ScheduleItemsController do
   describe 'GET #index' do
     before :all do
