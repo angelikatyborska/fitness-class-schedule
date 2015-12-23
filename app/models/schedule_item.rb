@@ -84,6 +84,10 @@ class ScheduleItem < ActiveRecord::Base
     (Configurable.day_end - Configurable.day_start) * 4
   end
 
+  def self.day_duration_in_hours
+    day_duration_in_quarters / 4
+  end
+
   def self.activities
     %w(ABT TBC Step)
   end

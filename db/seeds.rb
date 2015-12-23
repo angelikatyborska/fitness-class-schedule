@@ -18,7 +18,7 @@ end
 end
 
 tomorrow = Time.zone.now + 1.day
-available_hours = (0..(ScheduleItem.day_duration_in_quarters / 4)).to_a
+available_hours = (0...(ScheduleItem.day_duration_in_hours)).to_a
 
 Room.all.each_with_index do |room, room_index|
   10.times do |days|

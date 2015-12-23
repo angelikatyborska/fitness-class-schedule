@@ -1,1 +1,3 @@
 RoomsController#index
+- rooms.each do |room|
+  = link_to room.name, room_schedule_items_path(room)

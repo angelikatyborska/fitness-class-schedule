@@ -5,10 +5,16 @@
 %h2= "#{t('room.name')}: #{room.name}"
 .schedule
   .week
-    %h3= "#{l(week.beginning_of_week, format: :simple_date)} - #{l(week.end_of_week, format: :simple_date)}"
+    .hours
+      .day-schedule
+        - ScheduleItem.day_duration_in_hours.times do |n|
+          .hour{ style: "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%; height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"}
+            = l(ScheduleItem.beginning_of_day(Time.zone.now) + n.hours, format: :simple_time)
     - schedule_items_by_day.each do |day, items|
       .day
-        %h4.day-header= l(day, format: :weekday)
+        .day-header
+          %h4= l(day, format: :weekday)
+          %h5= l(day, format: :simple_date)
         .day-schedule
           - unless items.nil?
             - items.each do |item|
