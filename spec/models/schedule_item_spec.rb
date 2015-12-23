@@ -41,6 +41,15 @@ RSpec.describe ScheduleItem do
       end
     end
 
+    context 'with end date later than day end' do
+      subject { build(:schedule_item, start: ScheduleItem.end_of_day(Time.zone.now) + 1.hour + 1.day)}
+
+      it 'is not valid' do
+        is_expected.not_to be_valid
+        expect(subject.errors[:start]).to include('can\'t be that late')
+      end
+    end
+
     context 'with a room that is already occupied' do
       let!(:room) { create(:room) }
       let!(:schedule_item_occupying_the_room) { create(:schedule_item, room: room, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60) }
