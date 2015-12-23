@@ -9,9 +9,12 @@
     .day {
       position: relative;
       float: left;
-      width: 10%;
-      height: 400px;
+      width: 1/7 * 100%;
 
+      .day-schedule {
+        position: relative;
+        height: 400px;
+      }
 
       .item {
         position: absolute;

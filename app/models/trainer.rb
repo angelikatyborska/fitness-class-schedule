@@ -3,4 +3,6 @@ class Trainer < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :description, presence: true
+
+  include Occupiable
 end

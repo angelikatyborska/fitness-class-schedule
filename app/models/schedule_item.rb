@@ -4,6 +4,8 @@ class ScheduleItem < ActiveRecord::Base
   has_many :reservations, dependent: :destroy
   has_many :users, through: :reservations
 
+  validates :trainer, presence: true
+  validates :room, presence: true
   validates :start, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :trainer, presence: true
@@ -12,6 +14,8 @@ class ScheduleItem < ActiveRecord::Base
   validate :duration_cant_span_multiple_days
   validate :start_cant_be_in_the_past
   validate :start_cant_be_before_day_start
+  validate :room_cant_be_already_occupied
+  validate :trainer_cant_be_already_occupied
 
   scope :week, -> (time = Time.zone.now) { where('start >= ? AND start < ?', time.beginning_of_week, time.beginning_of_week + 1.week)}
 
@@ -33,10 +37,30 @@ class ScheduleItem < ActiveRecord::Base
 
   def start_cant_be_before_day_start
     unless start.nil?
-      if start.hour < Configurable.day_start
+      if start < self.class.beginning_of_day(start)
         errors.add(:start, I18n.t('errors.schedule_item.cant_start_before_day_start'))
       end
     end
+  end
+
+  def room_cant_be_already_occupied
+    unless start.nil? || room.nil?
+      errors.add(:room, I18n.t('errors.occupied')) if room.occupied?(start, stop)
+    end
+  end
+
+  def trainer_cant_be_already_occupied
+    unless start.nil? || trainer.nil?
+      errors.add(:trainer, I18n.t('errors.occupied')) if trainer.occupied?(start, stop)
+    end
+  end
+
+  def going_on_at?(time)
+    start <= time && start + duration.minutes > time
+  end
+
+  def stop
+    start + duration.minutes
   end
 
   def self.beginning_of_day(time)

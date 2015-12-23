@@ -1,10 +1,12 @@
 class ScheduleItemsController < ApplicationController
+  expose(:rooms)
+  expose(:room)
   expose(:week) { params[:week].nil? ? Time.zone.now : Time.parse(params[:week])}
-  expose(:schedule_item)
-  expose(:schedule_items) do |default|
+  expose(:schedule_items, ancestor: :room) do |default|
     default.order(:start)
   end
 
+  expose(:schedule_item)
   expose(:schedule_items_by_day) do
     weekdays = {}
 
@@ -20,7 +22,7 @@ class ScheduleItemsController < ApplicationController
   end
 
   def index
-    self.schedule_items = ScheduleItem.week(week).order(:start)
+    self.schedule_items = room.schedule_items.week(week).order(:start)
   end
 
   def show

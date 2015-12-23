@@ -4,6 +4,8 @@ RSpec.describe ScheduleItem do
   include ApplicationHelper
 
   describe 'validations' do
+    it { is_expected.to validate_presence_of :trainer }
+    it { is_expected.to validate_presence_of :room }
     it { is_expected.to validate_presence_of :start }
     it { is_expected.to validate_presence_of :duration }
     it { is_expected.to validate_numericality_of(:duration).is_greater_than(0) }
@@ -35,7 +37,31 @@ RSpec.describe ScheduleItem do
 
       it 'is not valid' do
         is_expected.not_to be_valid
-        expect(subject.errors[:start]).to include('can\'t start that early')
+        expect(subject.errors[:start]).to include('can\'t be that early')
+      end
+    end
+
+    context 'with a room that is already occupied' do
+      let!(:room) { create(:room) }
+      let!(:schedule_item_occupying_the_room) { create(:schedule_item, room: room, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60) }
+
+      subject { build(:schedule_item, room: room, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes)}
+
+      it 'is not valid' do
+        is_expected.not_to be_valid
+        expect(subject.errors[:room]).to include('is already occupied at this time')
+      end
+    end
+
+    context 'with a trainer that is already occupied' do
+      let!(:trainer) { create(:trainer) }
+      let!(:schedule_item_occupying_the_room) { create(:schedule_item, trainer: trainer, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60) }
+
+      subject { build(:schedule_item, trainer: trainer, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes)}
+
+      it 'is not valid' do
+        is_expected.not_to be_valid
+        expect(subject.errors[:trainer]).to include('is already occupied at this time')
       end
     end
   end
@@ -55,20 +81,19 @@ RSpec.describe ScheduleItem do
     it { is_expected.to have_many :reservations }
   end
 
-  describe 'scope' do
+  describe 'scopes' do
     describe 'week' do
       before :all do
         @today = Time.zone.now
-        @this_week_item_1 = build(:schedule_item_this_week)
-        @this_week_item_1.save(validate: false)
-        @this_week_item_2 = build(:schedule_item_this_week)
-        @this_week_item_2.save(validate: false)
-        @next_week_item_1 = build(:schedule_item_next_week)
-        @next_week_item_1.save(validate: false)
-        @next_week_item_2 = build(:schedule_item_next_week)
-        @next_week_item_2.save(validate: false)
+        @this_week_items = 2.times.with_object([]) do |n, items|
+          items << build(:schedule_item_this_week)
+        end
 
-        [@this_week_item_1, @this_week_item_2, @next_week_item_1, @next_week_item_2].each do |item|
+        @next_week_items = 2.times.with_object([]) do |n, items|
+          items << build(:schedule_item_next_week)
+        end
+
+        (@this_week_items + @next_week_items).each do |item|
           item.save(validate: false)
         end
       end
@@ -77,8 +102,8 @@ RSpec.describe ScheduleItem do
         subject { described_class.week }
 
         it 'lists all schedule items starting this week' do
-          is_expected.to include @this_week_item_1, @this_week_item_2
-          is_expected.not_to include @next_week_item_1, @next_week_item_2
+          is_expected.to include *(@this_week_items)
+          is_expected.not_to include *(@next_week_items)
         end
       end
 
@@ -86,9 +111,39 @@ RSpec.describe ScheduleItem do
         subject { described_class.week(@today + 7.days) }
 
         it 'lists all schedule items starting next week' do
-          is_expected.not_to include @this_week_item_1, @this_week_item_2
-          is_expected.to include @next_week_item_1, @next_week_item_2
+          is_expected.not_to include *(@this_week_items)
+          is_expected.to include *(@next_week_items)
         end
+      end
+    end
+  end
+
+  describe '#going_on_at?' do
+    let(:now) { Time.zone.now }
+
+    context 'with a schedule item that starts just now' do
+      subject { build(:schedule_item, start: now, duration: 60) }
+
+      it 'returns true' do
+        subject.save(validate: false)
+        expect(subject.going_on_at?(now)).to eq true
+      end
+    end
+
+    context 'with a schedule item that started 5 minutes before' do
+      subject { build(:schedule_item, start: now - 5.minutes, duration: 60) }
+
+      it 'returns true' do
+        subject.save(validate: false)
+        expect(subject.going_on_at?(now)).to eq true
+      end
+    end
+
+    context 'with a schedule item that is not currently going on' do
+      subject { create(:schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60) }
+
+      it 'returns true' do
+        expect(subject.going_on_at?(now)).to eq false
       end
     end
   end

@@ -1,14 +1,20 @@
+= t('room.name').pluralize
+- rooms.each do |room|
+  = link_to room.name, room_schedule_items_path(room)
+
+%h2= "#{t('room.name')}: #{room.name}"
 .schedule
   .week
-    %h2= "#{l(week.beginning_of_week, format: :simple_date)} - #{l(week.end_of_week, format: :simple_date)}"
+    %h3= "#{l(week.beginning_of_week, format: :simple_date)} - #{l(week.end_of_week, format: :simple_date)}"
     - schedule_items_by_day.each do |day, items|
       .day
-        %h3= l(day, format: :weekday)
-        - unless items.nil?
-          - items.each do |item|
-            .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
-              = link_to "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}", item
+        %h4.day-header= l(day, format: :weekday)
+        .day-schedule
+          - unless items.nil?
+            - items.each do |item|
+              .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
+                = link_to "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}", room_schedule_item_path(room, item)
 
 
-= link_to 'prev week', schedule_items_path(week: week - 1.week)
-= link_to 'next week', schedule_items_path(week: week + 1.week)
+= link_to 'prev week', room_schedule_items_path(week: week - 1.week)
+= link_to 'next week', room_schedule_items_path(week: week + 1.week)

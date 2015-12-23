@@ -1,3 +1,4 @@
 %h2= schedule_item.activity
 %p= l(schedule_item.start, format: :simple_date)
-%p= "#{l(schedule_item.start, format: :simple_time)} - #{l(schedule_item.decorate.stop, format: :simple_time)}"
+%p= "When: #{l(schedule_item.start, format: :simple_time)} - #{l(schedule_item.decorate.stop, format: :simple_time)}"
+%p= "Where: #{schedule_item.room.name}"
