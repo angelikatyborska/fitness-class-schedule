@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 puts "Seeds: start"
 
 Trainer.destroy_all
@@ -24,19 +17,22 @@ end
   )
 end
 
-start_from = Time.zone.now + 1.day
-start_to = Time.zone.now + 14.day
-max_quarters = ScheduleItem.day_duration_in_quarters - 1
+tomorrow = Time.zone.now + 1.day
+available_hours = (0..(ScheduleItem.day_duration_in_quarters / 4)).to_a
 
-30.times do
-  ScheduleItem.create!(
-    start: ScheduleItem.beginning_of_day(Faker::Date.between(start_from, start_to)) + (Faker::Number.between(0, max_quarters).to_i * 15).minutes,
-    duration: 45,
-    activity: ScheduleItem.activities.sample,
-    trainer: Trainer.all.sample,
-    room: Room.all.sample,
-    capacity: Faker::Number.between(5, 15)
-  )
+Room.all.each_with_index do |room, room_index|
+  10.times do |days|
+    available_hours.sample(available_hours.length * 2 / 3).each do |hours|
+      ScheduleItem.create!(
+        start: ScheduleItem.beginning_of_day(tomorrow) + days.days + hours.hours,
+        duration: 45,
+        activity: ScheduleItem.activities.sample,
+        trainer: Trainer.all[room_index * 2..(room_index * 2 + 1)].sample,
+        room: room,
+        capacity: Faker::Number.between(5, 15)
+      )
+    end
+  end
 end
 
 puts "Seeds: done"
