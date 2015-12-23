@@ -54,13 +54,13 @@ class ScheduleItem < ActiveRecord::Base
 
   def room_cant_be_already_occupied
     unless start.nil? || room.nil?
-      errors.add(:room, I18n.t('errors.occupied')) if room.occupied?(start, stop)
+      errors.add(:room, I18n.t('errors.occupied')) if room.occupied?(start, stop, except: self)
     end
   end
 
   def trainer_cant_be_already_occupied
     unless start.nil? || trainer.nil?
-      errors.add(:trainer, I18n.t('errors.occupied')) if trainer.occupied?(start, stop)
+      errors.add(:trainer, I18n.t('errors.occupied')) if trainer.occupied?(start, stop, except: self)
     end
   end
 
