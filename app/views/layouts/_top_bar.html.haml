@@ -20,8 +20,18 @@
     %ul.right
       - if user_signed_in?
         = render 'layouts/top_bar_admin'
-        %li
-          = link_to t('user.logout'), destroy_user_session_path, method: :delete
+        %li.has-dropdown
+          %a{href: '#'}
+            = current_user.email
+          %ul.dropdown
+            %li
+              = link_to t('reservation.name').pluralize, user_reservations_path(user_id: current_user.id)
+            %li
+              = link_to t('reservation.history'), user_reservations_path(user_id: current_user.id)
+            %li
+              = link_to t('user.settings'), edit_user_path(current_user)
+            %li
+              = link_to t('user.logout'), destroy_user_session_path, method: :delete
       - else
         %li
           = link_to t('user.login'), new_user_session_path

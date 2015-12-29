@@ -61,8 +61,12 @@ en:
   room:
     name: 'Room'
     all_rooms: 'All rooms'
+  reservation:
+    name: 'Reservation'
+    history: 'Past classes'
   user:
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'
+    settings: 'Settings'
     admin_panel: 'Admin panel'
