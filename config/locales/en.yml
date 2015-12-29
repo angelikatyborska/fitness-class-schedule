@@ -38,3 +38,7 @@ en:
     occupied: "is already occupied at this time"
   room:
     name: 'Room'
+  user:
+    login: 'Log in'
+    logout: 'Log out'
+    signup: 'Sign up'

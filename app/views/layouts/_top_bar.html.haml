@@ -17,9 +17,12 @@
           - rooms.each do |room|
             %li
               = link_to room.name, room_schedule_items_path(room)
--#.navbar
--#  - if user_signed_in?
--#    = link_to 'log out', destroy_user_session_path, method: :delete
--#  - else
--#    = link_to 'log in', new_user_session_path
--#    = link_to 'sign up', new_user_registration_path
+    %ul.right
+      - if user_signed_in?
+        %li
+          = link_to t('user.logout'), destroy_user_session_path, method: :delete
+      - else
+        %li
+          = link_to t('user.login'), new_user_session_path
+        %li
+          = link_to t('user.signup'), new_user_registration_path
