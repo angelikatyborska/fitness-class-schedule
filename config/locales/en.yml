@@ -44,8 +44,20 @@ en:
     edit: Edit
     show: Show
     delete: Delete
+    create: Add
+    confirm: Are you sure?
   schedule_item:
     name: 'Schedule item'
+    attributes:
+      hour: 'Start'
+      start: 'Start'
+      end: 'End'
+      date: 'Date'
+      duration: 'Duration'
+      trainer: 'Trainer'
+      room: 'Room'
+      capacity: 'Capacity'
+      activity: 'Activity'
   room:
     name: 'Room'
     all_rooms: 'All rooms'

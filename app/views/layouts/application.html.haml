@@ -9,12 +9,12 @@
   %body
     = render 'layouts/top_bar'
     - if flash[:alert]
-      .alert-box.warning.radius{{ 'data-alert': '' }}
+      .alert-box.warning{{ 'data-alert': '' }}
         = flash[:alert]
         %a.close{href: '#'}
           &times;
     - if flash[:notice]
-      .alert-box.info.radius{{ 'data-alert': '' }}
+      .alert-box.info{{ 'data-alert': '' }}
         = flash[:notice]
         %a.close{href: '#'}
           &times;

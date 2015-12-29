@@ -2,6 +2,7 @@
   = f.input :start
   = f.input :duration
   = f.input :activity
+  = f.input :capacity
   = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
   = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
   = f.button :submit

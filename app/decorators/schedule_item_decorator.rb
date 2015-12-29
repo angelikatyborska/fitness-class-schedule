@@ -8,4 +8,8 @@ class ScheduleItemDecorator < Draper::Decorator
   def duration_day_percentage
     (start + duration.minutes - start) / (ScheduleItem.end_of_day(start) - ScheduleItem.beginning_of_day(start)) * 100
   end
+
+  def css_id
+    "schedule-item-#{ id }"
+  end
 end

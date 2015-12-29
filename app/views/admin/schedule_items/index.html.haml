@@ -1,23 +1,27 @@
+= link_to t('shared.create'), new_admin_schedule_item_path, class: 'button'
+
 %table
   %thead
     %tr
       %th
-        day
+        = t('schedule_item.attributes.day')
       %th
-        starts
+        = t('schedule_item.attributes.hour')
       %th
-        ends
+        = t('schedule_item.attributes.end')
       %th
-        type
+        = t('schedule_item.attributes.activity')
       %th
-        trainer
+        = t('schedule_item.attributes.capacity')
       %th
-        room
+        = t('schedule_item.attributes.trainer')
+      %th
+        = t('schedule_item.attributes.room')
       %th
         = t('shared.actions')
   %tbody
     - schedule_items.each do |item|
-      %tr
+      %tr{id: item.decorate.css_id}
         %td
           = l(item.start, format: :simple_date)
         %td
@@ -27,6 +31,8 @@
         %td
           = item.activity
         %td
+          = item.capacity
+        %td
           = item.trainer.first_name
         %td
           = item.room.name
@@ -35,4 +41,4 @@
             %li
               = link_to t('shared.edit'), edit_admin_schedule_item_path(item)
             %li
-              = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }
+              = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: t('shared.confirm') }
