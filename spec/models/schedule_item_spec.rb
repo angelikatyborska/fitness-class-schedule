@@ -166,6 +166,35 @@ RSpec.describe ScheduleItem do
     end
   end
 
+  describe '#going_on_between?' do
+    let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now + 1.day) }
+    let(:schedule_item) { build(:schedule_item, start: tomorrow, duration: 60) }
+
+    context 'a time period ending before item start' do
+      subject { schedule_item.going_on_between?(tomorrow - 2.hours, tomorrow - 1.hour) }
+
+      it { is_expected.to eq false }
+    end
+
+    context 'a time period starting after item start and ending before item end' do
+      subject { schedule_item.going_on_between?(tomorrow + 5.minutes, tomorrow + 10.minutes) }
+
+      it { is_expected.to eq true }
+    end
+
+    context 'a time period starting after item start and ending after item end' do
+      subject { schedule_item.going_on_between?(tomorrow + 5.minutes, tomorrow + 1.hour) }
+
+      it { is_expected.to eq true }
+    end
+
+    context 'a time period starting after item end' do
+      subject { schedule_item.going_on_between?(tomorrow + 2.hours, tomorrow + 3.hours) }
+
+      it { is_expected.to eq false }
+    end
+  end
+
   describe 'class methods' do
     describe '#beginning_of_day' do
       let(:today) { Time.zone.now }

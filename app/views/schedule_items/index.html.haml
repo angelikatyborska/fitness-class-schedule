@@ -1,22 +1,5 @@
 %h2= room.name
-.schedule
-  .week
-    .hours
-      .day-schedule
-        - ScheduleItem.day_duration_in_hours.times do |n|
-          .hour{ style: "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%; height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"}
-            = l(ScheduleItem.beginning_of_day(Time.zone.now) + n.hours, format: :simple_time)
-    - schedule_items_by_day.each do |day, items|
-      .day
-        .day-header
-          %h4= l(day, format: :weekday)
-          %h5= l(day, format: :simple_date)
-        .day-schedule
-          - unless items.nil?
-            - items.each do |item|
-              .item{ style: "top: #{item.decorate.start_day_percentage}%; height: #{item.decorate.duration_day_percentage}%;"}
-                = link_to "#{l(item.start, format: :simple_time)} : #{l(item.decorate.stop, format: :simple_time)} #{item.activity}", room_schedule_item_path(room, item)
-
+= render 'schedule_table'
 
 = link_to 'prev week', room_schedule_items_path(week: week - 1.week)
 = link_to 'next week', room_schedule_items_path(week: week + 1.week)

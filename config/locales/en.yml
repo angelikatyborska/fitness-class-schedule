@@ -38,6 +38,7 @@ en:
     occupied: "is already occupied at this time"
   room:
     name: 'Room'
+    all_rooms: 'All rooms'
   user:
     login: 'Log in'
     logout: 'Log out'

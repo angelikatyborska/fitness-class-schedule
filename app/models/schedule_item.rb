@@ -77,6 +77,10 @@ class ScheduleItem < ActiveRecord::Base
     start <= time && start + duration.minutes > time
   end
 
+  def going_on_between?(from, to)
+    !((stop < from) || (start > to))
+  end
+
   def stop
     start + duration.minutes
   end
@@ -95,6 +99,20 @@ class ScheduleItem < ActiveRecord::Base
 
   def self.day_duration_in_hours
     day_duration_in_quarters / 4
+  end
+
+  def self.order_by_weekdays(schedule_items, week)
+    weekdays = {}
+
+    7.times do |n|
+      weekdays[week.beginning_of_week + n.days] = []
+    end
+
+    schedule_items.order(:start).map do |item|
+      weekdays[item.start.beginning_of_day] << item
+    end
+
+    weekdays
   end
 
   def self.activities

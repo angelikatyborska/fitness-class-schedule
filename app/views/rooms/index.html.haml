@@ -1,3 +1,6 @@
-RoomsController#index
-- rooms.each do |room|
-  = link_to room.name, room_schedule_items_path(room)
+%h2
+  = "#{t('room.all_rooms')}:"
+= render 'schedule_items/schedule_table', schedule_items: schedule_items
+
+= link_to 'prev week', rooms_path(week: week - 1.week)
+= link_to 'next week', rooms_path(week: week + 1.week)

@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   expose(:rooms)
+  expose(:week) { params[:week].nil? ? Time.zone.now : Time.parse(params[:week])}
 end

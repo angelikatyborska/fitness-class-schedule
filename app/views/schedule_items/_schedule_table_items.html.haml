@@ -1,0 +1,4 @@
+- unless items.nil?
+  - items.each do |item|
+    .item{ style: "top: #{item.decorate.start_day_percentage}%; left: #{schedule_item_left_position(item, items)}%; height: #{item.decorate.duration_day_percentage}%; width: #{schedule_item_width(item, items)}%;"}
+      = link_to "#{l(item.start, format: :simple_time)} #{item.activity}", room_schedule_item_path(item.room, item)
