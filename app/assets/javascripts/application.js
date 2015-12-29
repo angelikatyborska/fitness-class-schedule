@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery.min.js
+//= require jquery-ujs/src/rails.js
 //= require fastclick/lib/fastclick.js
 //= require jquery-placeholder/jquery.placeholder.js
 //= require jquery.cookie/jquery.cookie.js
@@ -18,3 +19,7 @@
 //= require foundation/js/foundation.min.js
 //= require turbolinks
 //= require_tree .
+
+$(document).ready(function() {
+  $(document).foundation();
+});
