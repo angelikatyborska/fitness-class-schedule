@@ -1,0 +1,7 @@
+- if current_user.admin?
+  %li.has-dropdown
+    %a{href: '#'}
+      = t('user.admin_panel')
+    %ul.dropdown
+      %li
+        = link_to t('schedule_item.name').pluralize, admin_schedule_items_path

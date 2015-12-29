@@ -1,6 +1,6 @@
 FactoryGirl.define do
   random_start = -> (from, to) do
-    ScheduleItem.beginning_of_day(Faker::Time.between(from, to).utc) + (Faker::Number.between(1, ScheduleItem.day_duration_in_quarters - 4) * 15).minutes
+    ScheduleItem.beginning_of_day(Faker::Time.between(from, to).utc) + (Faker::Number.between(1, ScheduleItem.day_duration_in_quarters - 8) * 15).minutes
   end
 
   factory :schedule_item do

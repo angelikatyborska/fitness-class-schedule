@@ -2,7 +2,7 @@ class ScheduleItemsController < ApplicationController
   expose(:rooms)
   expose(:room)
   expose(:schedule_items, ancestor: :room) do |default|
-    default.order(:start)
+    default.order(:start).includes([:room, :trainer])
   end
 
   expose(:schedule_item)

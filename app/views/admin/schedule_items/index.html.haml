@@ -1,0 +1,38 @@
+%table
+  %thead
+    %tr
+      %th
+        day
+      %th
+        starts
+      %th
+        ends
+      %th
+        type
+      %th
+        trainer
+      %th
+        room
+      %th
+        = t('shared.actions')
+  %tbody
+    - schedule_items.each do |item|
+      %tr
+        %td
+          = l(item.start, format: :simple_date)
+        %td
+          = l(item.start, format: :simple_time)
+        %td
+          = l(item.stop, format: :simple_time)
+        %td
+          = item.activity
+        %td
+          = item.trainer.first_name
+        %td
+          = item.room.name
+        %td
+          %ul
+            %li
+              = link_to t('shared.edit'), edit_admin_schedule_item_path(item)
+            %li
+              = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: 'Are you sure?' }

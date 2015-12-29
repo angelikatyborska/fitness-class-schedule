@@ -36,6 +36,16 @@ en:
       cant_make_reservations_for_full_items: 'schedule_item capacity exceeded'
       cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"
     occupied: "is already occupied at this time"
+  shared:
+    created: "%{resource} has been created!"
+    updated: "%{resource} has been updated!"
+    deleted: "%{resource} has been deleted!"
+    actions: Actions
+    edit: Edit
+    show: Show
+    delete: Delete
+  schedule_item:
+    name: 'Schedule item'
   room:
     name: 'Room'
     all_rooms: 'All rooms'
@@ -43,3 +53,4 @@ en:
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'
+    admin_panel: 'Admin panel'

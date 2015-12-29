@@ -19,6 +19,7 @@
               = link_to room.name, room_schedule_items_path(room)
     %ul.right
       - if user_signed_in?
+        = render 'layouts/top_bar_admin'
         %li
           = link_to t('user.logout'), destroy_user_session_path, method: :delete
       - else
