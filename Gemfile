@@ -13,6 +13,7 @@ gem 'devise'
 gem 'draper'
 gem 'rolify'
 gem 'configurable_engine', '~> 0.4'
+gem 'simple_form', '~> 3.2'
 
 group :development, :test do
   gem 'byebug'
