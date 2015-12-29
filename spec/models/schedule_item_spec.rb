@@ -32,6 +32,15 @@ RSpec.describe ScheduleItem do
       end
     end
 
+    context 'with duration exceeding day end by 15 minutes' do
+      subject { build(:schedule_item, start: (ScheduleItem.end_of_day(Time.zone.now + 1.day) - 30.minutes) , duration: 45) }
+
+      it 'is not valid' do
+        is_expected.not_to be_valid
+        expect(subject.errors[:start]).to include('can\'t be that late')
+      end
+    end
+
     context 'with start date earlier than day start' do
       subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now) - 1.hour + 1.day)}
 
@@ -41,7 +50,7 @@ RSpec.describe ScheduleItem do
       end
     end
 
-    context 'with end date later than day end' do
+    context 'with start date later than day end' do
       subject { build(:schedule_item, start: ScheduleItem.end_of_day(Time.zone.now) + 1.hour + 1.day)}
 
       it 'is not valid' do
@@ -167,6 +176,7 @@ RSpec.describe ScheduleItem do
         expect(subject.min).to eq 0
       end
     end
+
     describe '#end_of_day' do
       let(:today) { Time.zone.now }
       subject { described_class.end_of_day(today) }

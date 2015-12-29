@@ -14,6 +14,7 @@ class ScheduleItem < ActiveRecord::Base
   validate :duration_cant_span_multiple_days
   validate :start_cant_be_in_the_past
   validate :start_cant_be_before_day_start
+  validate :start_cant_be_after_day_end
   validate :end_cant_be_after_day_end
   validate :room_cant_be_already_occupied
   validate :trainer_cant_be_already_occupied
@@ -44,9 +45,17 @@ class ScheduleItem < ActiveRecord::Base
     end
   end
 
+  def start_cant_be_after_day_end
+    unless start.nil? || duration.nil?
+      if start > self.class.end_of_day(start)
+        errors.add(:start, I18n.t('errors.schedule_item.cant_end_after_day_end'))
+      end
+    end
+  end
+
   def end_cant_be_after_day_end
     unless start.nil? || duration.nil?
-      if start + duration.minutes > self.class.end_of_day(start)
+      if stop > self.class.end_of_day(stop)
         errors.add(:start, I18n.t('errors.schedule_item.cant_end_after_day_end'))
       end
     end
