@@ -13,7 +13,7 @@ end
 
 3.times do
   Room.create!(
-    name: Faker::Lorem.word
+    name: Faker::Lorem.word.capitalize
   )
 end
 

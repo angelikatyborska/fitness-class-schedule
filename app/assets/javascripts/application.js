@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require jquery/dist/jquery.min.js
+//= require jquery.turbolinks
 //= require jquery-ujs/src/rails.js
 //= require fastclick/lib/fastclick.js
 //= require jquery-placeholder/jquery.placeholder.js

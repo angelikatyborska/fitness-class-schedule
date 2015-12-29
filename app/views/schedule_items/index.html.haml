@@ -1,8 +1,4 @@
-= t('room.name').pluralize
-- rooms.each do |room|
-  = link_to room.name, room_schedule_items_path(room)
-
-%h2= "#{t('room.name')}: #{room.name}"
+%h2= room.name
 .schedule
   .week
     .hours

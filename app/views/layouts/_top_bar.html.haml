@@ -1,0 +1,25 @@
+%nav.top-bar{role: 'navigation', data: {'topbar' => ''}}
+  %ul.title-area
+    %li.name
+      %h1
+        %a{href: root_path}
+          Fitness
+    %li.toggle-topbar.menu-icon
+      %a{href: '#'}
+        %span
+          Menu
+  %section.top-bar-section
+    %ul.left
+      %li.has-dropdown
+        %a{href: '#'}
+          = t('room.name').pluralize
+        %ul.dropdown
+          - rooms.each do |room|
+            %li
+              = link_to room.name, room_schedule_items_path(room)
+-#.navbar
+-#  - if user_signed_in?
+-#    = link_to 'log out', destroy_user_session_path, method: :delete
+-#  - else
+-#    = link_to 'log in', new_user_session_path
+-#    = link_to 'sign up', new_user_registration_path

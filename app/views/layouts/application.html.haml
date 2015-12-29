@@ -7,12 +7,7 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    .navbar
-      - if user_signed_in?
-        = link_to 'log out', destroy_user_session_path, method: :delete
-      - else
-        = link_to 'log in', new_user_session_path
-        = link_to 'sign up', new_user_registration_path
+    = render 'layouts/top_bar'
     - if flash[:alert]
       .alert-box.warning.radius{{ 'data-alert': '' }}
         = flash[:alert]
