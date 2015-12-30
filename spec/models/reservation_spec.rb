@@ -4,6 +4,7 @@ RSpec.describe Reservation do
   describe 'validations' do
     it { is_expected.to validate_presence_of :user }
     it { is_expected.to validate_presence_of :schedule_item }
+    it { is_expected.to validate_presence_of :status }
 
     context 'with schedule item starting in the past' do
       subject { build(:reservation, schedule_item: build(:schedule_item, start: Time.zone.now - 1.day ))}
