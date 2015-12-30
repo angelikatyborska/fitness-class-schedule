@@ -86,15 +86,15 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def self.beginning_of_day(time)
-    time.beginning_of_day + Configurable.day_start.hours
+    time.beginning_of_day + day_start.hours
   end
 
   def self.end_of_day(time)
-    (time + 1.day).beginning_of_day - (24 - Configurable.day_end).hours
+    (time + 1.day).beginning_of_day - (24 - day_end).hours
   end
 
   def self.day_duration_in_quarters
-    (Configurable.day_end - Configurable.day_start) * 4
+    (day_end - day_start) * 4
   end
 
   def self.day_duration_in_hours
@@ -117,5 +117,15 @@ class ScheduleItem < ActiveRecord::Base
 
   def self.activities
     %w(ABT TBC Step)
+  end
+
+  private
+
+  def self.day_start
+    @day_start ||= Configurable.day_start
+  end
+
+  def self.day_end
+    @day_end ||= Configurable.day_end
   end
 end

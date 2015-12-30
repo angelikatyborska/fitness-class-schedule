@@ -4,6 +4,6 @@ class RoomsController < ApplicationController
   end
 
   def index
-    self.schedule_items = ScheduleItem.week(week).order(:start)
+    self.schedule_items = ScheduleItem.week(week).order(:start).includes([:room, :trainer])
   end
 end
