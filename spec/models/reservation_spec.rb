@@ -31,17 +31,62 @@ RSpec.describe Reservation do
 
     # this could be tested using shoulda-matcher validate_uniqueness_of().scoped_to(), but it doesn't work for some reason
     context 'with user having already made a reservation for this schedule item' do
-      before :all do
-        @schedule_item = create(:schedule_item)
-        @user = create(:user)
-        create(:reservation, schedule_item: @schedule_item, user: @user)
-      end
+      let!(:schedule_item) { create(:schedule_item) }
+      let!(:user) { create(:user) }
+      let!(:other_reservation) { create(:reservation, schedule_item: schedule_item, user: user) }
 
-      subject { build(:reservation, schedule_item: @schedule_item, user: @user) }
+      subject { build(:reservation, schedule_item: schedule_item, user: user) }
 
       it 'is invalid' do
         is_expected.to be_invalid
         expect(subject.errors[:user]).to include('has already been taken')
+      end
+    end
+  end
+
+  describe 'database columns' do
+    it { is_expected.to have_db_column :queue_position }
+    it { is_expected.to have_db_index :queue_position }
+
+  end
+
+  describe '#queue_position' do
+    context 'with all reservations for the same schedule item' do
+      let(:schedule_item) { create(:schedule_item) }
+
+      let!(:reservations) { create_list(:reservation, 4, schedule_item: schedule_item) }
+
+      it 'queues reservations in the same order they were created' do
+        expect(reservations[0].queue_position).to eq 1
+        expect(reservations[1].queue_position).to eq 2
+        expect(reservations[2].queue_position).to eq 3
+        expect(reservations[3].queue_position).to eq 4
+      end
+
+      it 'moves reservations in the queue by one position when a reservation is removed' do
+        reservations[1].destroy
+        expect(reservations[0].reload.queue_position).to eq 1
+        expect(reservations[2].reload.queue_position).to eq 2
+        expect(reservations[3].reload.queue_position).to eq 3
+      end
+    end
+
+    context 'with reservations for different schedule items' do
+      let!(:reservations) { create_list(:reservation, 4) }
+
+      it 'queues each reservation seperately' do
+        expect(reservations[0].queue_position).to eq 1
+        expect(reservations[1].queue_position).to eq 1
+        expect(reservations[2].queue_position).to eq 1
+        expect(reservations[3].queue_position).to eq 1
+      end
+
+
+      it 'does not move reservations in their respective queues' do
+        reservations[1].destroy
+        expect(reservations[0].reload.queue_position).to eq 1
+        expect(reservations[2].reload.queue_position).to eq 1
+        expect(reservations[3].reload.queue_position).to eq 1
       end
     end
   end
