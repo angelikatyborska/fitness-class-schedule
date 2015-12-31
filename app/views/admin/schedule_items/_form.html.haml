@@ -1,8 +1,20 @@
 = simple_form_for [:admin, schedule_item] do |f|
-  = f.input :start
-  = f.input :duration
-  = f.input :activity
-  = f.input :capacity
-  = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
-  = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
-  = f.button :submit
+  .row
+    .medium-12.columns
+      = f.input :start, start_year: Time.zone.now.year, end_year: Time.zone.now.year + 1
+  .row
+    .medium-6.columns
+      = f.input :duration
+    .medium-6.columns
+      = f.input :capacity
+  .row
+    .medium-12.columns
+      = f.input :activity
+  .row
+    .medium-6.columns
+      = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
+    .medium-6.columns
+      = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
+  .row
+    .medium-12.columns
+      = f.button :submit

@@ -1,0 +1,21 @@
+.row
+  .medium-12.columns
+    %h2 Log in
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  .form-inputs
+    .row
+      .medium-12.columns
+        = f.input :email, required: false, autofocus: true
+    .row
+      .medium-12.columns
+        = f.input :password, required: false
+    .row
+      .medium-12.columns
+        = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+  .form-actions
+    .row
+      .medium-12.columns
+        = f.button :submit, "Log in"
+.row
+  .medium-12.columns
+    = render "devise/shared/links"
