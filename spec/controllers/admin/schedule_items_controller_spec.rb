@@ -1,37 +1,45 @@
 require 'rails_helper'
 
 RSpec.describe Admin::ScheduleItemsController do
-  context 'without admin privileges' do
-    let(:user) { create :user }
-
-    before { sign_in user }
-
+  shared_examples 'access denied' do
     describe 'GET #index' do
       it 'raises an error' do
-        expect { get :index }.to raise_error ActionController::RoutingError
+        expect { get :index }.to require_admin_privileges
       end
     end
 
     describe 'GET #new' do
       it 'raises an error' do
-        expect { get :new }.to raise_error ActionController::RoutingError
+        expect { get :new }.to require_admin_privileges
       end
     end
 
     describe 'PUT #update' do
       it 'raises an error' do
-        expect { put :update, id: create(:schedule_item), schedule_item: attributes_for(:schedule_item) }.to raise_error ActionController::RoutingError
+        expect { put :update, id: create(:schedule_item), schedule_item: attributes_for(:schedule_item) }.to require_admin_privileges
       end
     end
 
     describe 'DELETE #destroy' do
       it 'raises an error' do
-        expect { delete :destroy, id: create(:schedule_item) }.to raise_error ActionController::RoutingError
+        expect { delete :destroy, id: create(:schedule_item) }.to require_admin_privileges
       end
     end
   end
 
-  context 'with admin privileges' do
+  describe 'guest access' do
+    it_behaves_like 'access denied'
+  end
+
+  describe 'user access' do
+    let(:user) { create :user }
+
+    before { sign_in user }
+
+    it_behaves_like 'access denied'
+  end
+
+  describe 'admin access' do
     let(:admin) { create :admin_user }
 
     before { sign_in admin }
