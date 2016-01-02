@@ -101,18 +101,18 @@ RSpec.describe ScheduleItem do
 
   describe 'scopes' do
     describe 'week' do
-      before :all do
-        @today = Time.zone.now
-        @this_week_items = 2.times.with_object([]) do |n, items|
+      let!(:today) { Time.zone.now }
+      let!(:this_week_items) do
+        2.times.with_object([]) do |n, items|
           items << build(:schedule_item_this_week)
+          items[n].save(validate: false)
         end
+      end
 
-        @next_week_items = 2.times.with_object([]) do |n, items|
+      let!(:next_week_items) do
+        2.times.with_object([]) do |n, items|
           items << build(:schedule_item_next_week)
-        end
-
-        (@this_week_items + @next_week_items).each do |item|
-          item.save(validate: false)
+          items[n].save(validate: false)
         end
       end
 
@@ -120,17 +120,17 @@ RSpec.describe ScheduleItem do
         subject { described_class.week }
 
         it 'lists all schedule items starting this week' do
-          is_expected.to include *(@this_week_items)
-          is_expected.not_to include *(@next_week_items)
+          is_expected.to include *(this_week_items)
+          is_expected.not_to include *(next_week_items)
         end
       end
 
       context 'with next week\'s date' do
-        subject { described_class.week(@today + 7.days) }
+        subject { described_class.week(today + 7.days) }
 
         it 'lists all schedule items starting next week' do
-          is_expected.not_to include *(@this_week_items)
-          is_expected.to include *(@next_week_items)
+          is_expected.not_to include *(this_week_items)
+          is_expected.to include *(next_week_items)
         end
       end
     end

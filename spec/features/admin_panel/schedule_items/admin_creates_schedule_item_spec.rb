@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'Admin creates a schedule item', js: true do
+feature 'Admin creates a schedule item' do
   let!(:room) { create(:room) }
   let!(:trainer) { create(:trainer) }
   let!(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now + 1.day) }
@@ -26,8 +26,6 @@ feature 'Admin creates a schedule item', js: true do
       click_button 'Save'
     }.to change(ScheduleItem, :count).by(1)
 
-    # TODO: add an expectation for the current path when hash location paths dilemma resolved
-
     expect(page).to have_content 'ABT'
     expect(page).to have_content I18n.l(tomorrow, format: :simple_date)
     expect(page).to have_content I18n.l(tomorrow, format: :simple_time)
@@ -42,7 +40,7 @@ feature 'Admin creates a schedule item', js: true do
       fill_in 'Activity', with: 'ABT'
 
       click_button 'Save'
-    }.to change(ScheduleItem, :count).by(0)
+    }.not_to change(ScheduleItem, :count)
 
     expect(page).to have_content 'can\'t be that early'
   end

@@ -20,6 +20,25 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  devise:
+    failure:
+      already_authenticated: "You are already logged in."
+      timeout: "Your session expired. Please log in again to continue."
+      unauthenticated: "You need to log in or register before continuing."
+    passwords:
+      updated: "Your password has been changed successfully. You are now logged in."
+    registrations:
+      signed_up_but_inactive: "You have registered successfully. However, we could not log you in because your account is not yet activated."
+      signed_up_but_locked: "You have registered up successfully. However, we could not log you in because your account is locked."
+    sessions:
+      signed_in: "Logged in successfully."
+      signed_out: "Logged out successfully."
+      already_signed_out: "Logged out successfully."
+    unlocks:
+      unlocked: "Your account has been unlocked successfully. Please log in to continue."
+  errors:
+    messages:
+      already_confirmed: "was already confirmed, please try logging in"
   time:
     formats:
       simple_time: '%H:%M'
@@ -40,13 +59,14 @@ en:
     created: "%{resource} has been created!"
     updated: "%{resource} has been updated!"
     deleted: "%{resource} has been deleted!"
-    actions: Actions
-    edit: Edit
-    show: Show
-    delete: Delete
-    create: Add
-    save: Save
-    confirm: Are you sure?
+    actions: 'Actions'
+    edit: 'Edit'
+    show: 'Show'
+    delete: 'Delete'
+    create: 'Add'
+    save: 'Save'
+    confirm: 'Are you sure?'
+
   schedule_item:
     name: 'Schedule item'
     attributes:
