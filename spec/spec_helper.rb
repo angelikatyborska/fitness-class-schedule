@@ -22,7 +22,7 @@ RSpec.configure do |config|
   # assertions if you prefer.
 
   Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each { |f| require f }
-
+  config.include FeatureMacros, type: :feature
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods
