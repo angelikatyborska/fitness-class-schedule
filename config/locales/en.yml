@@ -45,6 +45,7 @@ en:
     show: Show
     delete: Delete
     create: Add
+    save: Save
     confirm: Are you sure?
   schedule_item:
     name: 'Schedule item'
