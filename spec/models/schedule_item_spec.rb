@@ -157,10 +157,10 @@ RSpec.describe ScheduleItem do
       end
     end
 
-    context 'with a schedule item that is not currently going on' do
+    context 'with a schedule item that starts tomorrow' do
       subject { create(:schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60) }
 
-      it 'returns true' do
+      it 'returns false' do
         expect(subject.going_on_at?(now)).to eq false
       end
     end
