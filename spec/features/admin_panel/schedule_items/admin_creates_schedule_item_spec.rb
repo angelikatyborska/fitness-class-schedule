@@ -1,4 +1,4 @@
-require'rails_helper'
+require 'rails_helper'
 
 feature 'Admin creates a schedule item' do
   let!(:room) { create(:room) }
