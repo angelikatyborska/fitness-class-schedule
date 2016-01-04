@@ -12,15 +12,15 @@ class ReservationsController < ApplicationController
 
   def create
     if reservation.save
-      redirect_to user_reservations_path(user: user), notice: I18n.t('reservation.created')
+      redirect_to user_reservations_path(user), notice: I18n.t('reservation.created')
     else
-      redirect_to user_reservations_path(user: user), alert: I18n.t('reservation.not_created')
+      redirect_to user_reservations_path(user), alert: I18n.t('reservation.not_created')
     end
   end
 
-  def delete
+  def destroy
     reservation.destroy
-    redirect_to user_reservations_path(user: user)
+    redirect_to user_reservations_path(user), notice: I18n.t('reservation.deleted')
   end
 
   private

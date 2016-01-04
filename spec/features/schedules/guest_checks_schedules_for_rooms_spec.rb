@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 feature 'Guest check schedules for rooms' do
-  given!(:small_room) { create(:room, name: 'Small room') }
-  given!(:big_room) { create(:room, name: 'Big room') }
-  given!(:small_schedule_item_this_week) {
+  let!(:small_room) { create(:room, name: 'Small room') }
+  let!(:big_room) { create(:room, name: 'Big room') }
+  let!(:small_schedule_item_this_week) {
     create(:schedule_item, room: small_room, activity: 'ABT', start: Time.zone.parse('8:05'), capacity: 6 )
   }
-  given!(:small_schedule_item_next_week) {
+  let!(:small_schedule_item_next_week) {
     create(:schedule_item, room: small_room, activity: 'Step', start: Time.zone.parse('8:15') + 7.days, capacity: 6 )
   }
-  given!(:big_schedule_item_this_week) {
+  let!(:big_schedule_item_this_week) {
     create(:schedule_item, room: big_room, activity: 'TBC', start: Time.zone.parse('9:05'), capacity: 20)
   }
-  given!(:big_schedule_item_next_week) {
+  let!(:big_schedule_item_next_week) {
     create(:schedule_item, room: big_room, activity: 'Step', start: Time.zone.parse('9:15') + 7.days, capacity: 20)
   }
 

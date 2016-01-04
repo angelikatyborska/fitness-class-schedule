@@ -51,5 +51,7 @@ RSpec.describe Admin::ScheduleItemsController do
       it { is_expected.to render_template :index }
       it { expect(controller.schedule_items).to match_array schedule_items }
     end
+
+    # TODO: write tests for edit and delete
   end
 end

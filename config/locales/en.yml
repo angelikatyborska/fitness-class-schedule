@@ -88,6 +88,7 @@ en:
     created: 'Your reservation has been added.'
     create: 'Reserve'
     deleted: 'Your reservation has been deleted.'
+    delete: 'Cancel'
   user:
     login: 'Log in'
     logout: 'Log out'

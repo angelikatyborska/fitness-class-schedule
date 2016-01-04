@@ -16,9 +16,7 @@ RSpec.describe ReservationsController do
     describe 'POST #create' do
       subject { post :create, user_id: user.id, reservation: { schedule_item_id: schedule_item.id } }
 
-      it 'requires login' do
-        expect(subject).to require_login
-      end
+      it { is_expected.to require_login }
     end
   end
 
@@ -37,10 +35,18 @@ RSpec.describe ReservationsController do
 
     context 'for the same user' do
       describe 'GET #index' do
-        it 'exposes user reservations' do
-          get :index, user_id: user.id
-          expect(controller.reservations).to eq user.reservations
-        end
+        subject { get :index, user_id: other_user.id }
+
+        it { expect(controller.reservations).to eq other_user.reservations }
+        it { is_expected.to render_template :index }
+      end
+
+      describe 'DELETE #destroy' do
+        let!(:reservation) { create(:reservation, user: other_user) }
+        subject { delete :destroy, user_id: other_user.id, id: reservation.id }
+
+        it { is_expected.to redirect_to user_reservations_path(other_user) }
+        it { expect{ subject }.to change(other_user.reservations, :count).by(-1) }
       end
 
       describe 'POST #create' do

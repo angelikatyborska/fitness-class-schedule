@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'User makes a reservation' do
-  given!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
-  given!(:user) { create(:user) }
+  let!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
+  let!(:user) { create(:user) }
 
   before :all do
     Timecop.freeze(Time.zone.now.beginning_of_week)
@@ -25,7 +25,7 @@ feature 'User makes a reservation' do
     expect(page).to have_selector("input[type=submit][value='Reserve']")
     expect {
       click_button 'Reserve'
-    }.to change(Reservation, :count).by(1)
+    }.to change(user.reservations, :count).by(1)
     expect(page).to have_content 'Your reservation has been added.'
   end
 end
