@@ -2,3 +2,6 @@
 %p= l(schedule_item.start, format: :simple_date)
 %p= "When: #{l(schedule_item.start, format: :simple_time)} - #{l(schedule_item.decorate.stop, format: :simple_time)}"
 %p= "Where: #{schedule_item.room.name}"
+
+- if user_signed_in?
+  = render 'reservations/form', reservation: current_user.reservations.new, schedule_item: schedule_item

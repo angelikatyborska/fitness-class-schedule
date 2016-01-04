@@ -1,0 +1,4 @@
+ReservationsController#index
+- reservations.each do |reservation|
+  %li
+    = "#{l(reservation.schedule_item.start, format: :simple_time)} #{reservation.schedule_item.activity}"

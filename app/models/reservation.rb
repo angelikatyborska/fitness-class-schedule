@@ -10,6 +10,7 @@ class Reservation < ActiveRecord::Base
   validates :user, presence: true, uniqueness: { scope: :schedule_item_id }
   validates :schedule_item, presence: true
   validates :status, presence: true, inclusion: { in: statuses.keys }
+  # TODO: resolve
   #validates :queue_position, presence: true
   validate :schedule_item_cant_be_in_the_past
   validate :schedule_item_cant_be_full

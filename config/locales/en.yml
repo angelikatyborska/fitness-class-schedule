@@ -66,7 +66,6 @@ en:
     create: 'Add'
     save: 'Save'
     confirm: 'Are you sure?'
-
   schedule_item:
     name: 'Schedule item'
     attributes:
@@ -85,6 +84,10 @@ en:
   reservation:
     name: 'Reservation'
     history: 'Past classes'
+    not_created: 'Something went wrong, your reservation has not been added.'
+    created: 'Your reservation has been added.'
+    create: 'Reserve'
+    deleted: 'Your reservation has been deleted.'
   user:
     login: 'Log in'
     logout: 'Log out'
