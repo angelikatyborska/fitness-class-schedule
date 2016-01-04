@@ -5,6 +5,14 @@ RSpec.describe ReservationsController do
   let!(:user) { create(:user) }
 
   shared_examples 'access denied' do
+    describe 'GET #index' do
+      subject { get :index, user_id: user.id }
+
+      it 'requires login' do
+        expect(subject).to require_login
+      end
+    end
+
     describe 'POST #create' do
       subject { post :create, user_id: user.id, reservation: { schedule_item_id: schedule_item.id } }
 
@@ -28,6 +36,13 @@ RSpec.describe ReservationsController do
     end
 
     context 'for the same user' do
+      describe 'GET #index' do
+        it 'exposes user reservations' do
+          get :index, user_id: user.id
+          expect(controller.reservations).to eq user.reservations
+        end
+      end
+
       describe 'POST #create' do
         context 'with valid attributes' do
           it 'creates a reservation' do
