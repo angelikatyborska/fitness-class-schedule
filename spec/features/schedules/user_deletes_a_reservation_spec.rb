@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User makes a reservation' do
+feature 'User deletes a reservation', js: true do
   let!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
   let!(:user) { create(:user) }
   let!(:reservation) { create(:reservation, user: user, schedule_item: schedule_item) }
@@ -21,6 +21,7 @@ feature 'User makes a reservation' do
     expect(page).to have_link 'Cancel'
     expect {
       click_link 'Cancel'
+      wait_for_ajax
     }.to change(user.reservations, :count).by(-1)
     expect(page).to have_content 'Your reservation has been deleted.'
   end

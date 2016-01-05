@@ -1,0 +1,38 @@
+$overlay-close-size: 23px;
+
+.overlay-background {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: $overlay-background;
+}
+
+.overlay-box {
+  position: relative;
+  top: 50%;
+  width: 500px;
+  margin: 0 auto;
+  transform: translateY(-50%);
+  padding: 10px;
+  background-color: $white;
+}
+
+.overlay-header {
+  position: relative;
+  margin: 0;
+  text-align: center;
+
+  .overlay-close {
+    position: absolute;
+    display: block;
+    top: 0;
+    right: 0;
+    width: $overlay-close-size;
+    height: $overlay-close-size;
+    font-size: $overlay-close-size;
+    line-height: $overlay-close-size;
+  }
+}

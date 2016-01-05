@@ -60,10 +60,14 @@ $schedule-height: 860px;
           height: 100%;
           margin: 0 5px;
           font-size: $paragraph-aside-font-size;
-          background-color: palegreen;
+          background-color: yellow;
 
           &.stale {
-            background-color: darkseagreen;
+            background-color: rosybrown;
+          }
+
+          &.reserved {
+            background-color: limegreen;
           }
         }
       }

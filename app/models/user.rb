@@ -9,4 +9,12 @@ class User < ActiveRecord::Base
   def admin?
     has_role?(:admin)
   end
+
+  def reservation_for(schedule_item)
+    reservations.find_by(schedule_item: schedule_item)
+  end
+
+  def reservation_for?(schedule_item)
+    !reservation_for(schedule_item).nil?
+  end
 end

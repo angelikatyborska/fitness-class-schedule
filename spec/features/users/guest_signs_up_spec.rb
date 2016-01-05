@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'Guest signs up' do
+feature 'Guest signs up', js: true do
   scenario 'with a valid email' do
     expect {
       visit root_path

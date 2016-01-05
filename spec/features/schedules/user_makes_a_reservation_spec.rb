@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User makes a reservation' do
+feature 'User makes a reservation', js: true do
   let!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
   let!(:user) { create(:user) }
 
@@ -25,6 +25,7 @@ feature 'User makes a reservation' do
     expect(page).to have_selector("input[type=submit][value='Reserve']")
     expect {
       click_button 'Reserve'
+      wait_for_ajax
     }.to change(user.reservations, :count).by(1)
     expect(page).to have_content 'Your reservation has been added.'
   end

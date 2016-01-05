@@ -1,6 +1,10 @@
-@import 'foundation/scss/normalize',
+@import 'foundation_settings',
+'foundation/scss/normalize',
 'foundation/scss/foundation',
 
 'utilities/colors',
 
+'base',
+
+'overlay',
 'schedule_items';

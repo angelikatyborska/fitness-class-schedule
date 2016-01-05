@@ -1,0 +1,7 @@
+.button {
+  @include button;
+}
+
+.button-delete {
+  @include button-style($bg:$alert-button-bg-color, $bg-hover:$alert-button-bg-hover, $border-color:$alert-button-border-color);
+}

@@ -11,16 +11,27 @@ class ReservationsController < ApplicationController
   end
 
   def create
-    if reservation.save
-      redirect_to user_reservations_path(user), notice: I18n.t('reservation.created')
-    else
-      redirect_to user_reservations_path(user), alert: I18n.t('reservation.not_created')
+    respond_to do |format|
+      if reservation.save
+        flash[:notice] = I18n.t('reservation.created')
+
+        format.html { redirect_to user_reservations_path(user) }
+        format.js { render inline: 'location.reload();' }
+      else
+        flash[:alert] = I18n.t('reservation.not_created')
+        format.html { redirect_to user_reservations_path(user) }
+        format.js { render inline: 'location.reload();' }
+      end
     end
   end
 
   def destroy
     reservation.destroy
-    redirect_to user_reservations_path(user), notice: I18n.t('reservation.deleted')
+    respond_to do |format|
+      flash[:notice] = I18n.t('reservation.deleted')
+      format.html { redirect_to user_reservations_path(user) }
+      format.js { render inline: 'location.reload();' }
+    end
   end
 
   private

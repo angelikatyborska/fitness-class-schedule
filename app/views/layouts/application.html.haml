@@ -9,13 +9,9 @@
   %body
     = render 'layouts/top_bar'
     - if flash[:alert]
-      .alert-box.warning{{ 'data-alert': '' }}
-        = flash[:alert]
-        %a.close{href: '#'}
-          &times;
+      :javascript
+        Overlay.show('#{flash[:alert]}', '');
     - if flash[:notice]
-      .alert-box.info{{ 'data-alert': '' }}
-        = flash[:notice]
-        %a.close{href: '#'}
-          &times;
+      :javascript
+        Overlay.show('#{flash[:notice]}', '');
     = yield

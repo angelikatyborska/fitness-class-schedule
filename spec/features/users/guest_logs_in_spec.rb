@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'Guest logs in' do
+feature 'Guest logs in', js: true do
   let!(:user) { create(:user, password: 'password1234') }
 
   scenario 'with a valid password' do

@@ -87,3 +87,16 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+# slow down selenium tests
+# require 'selenium-webdriver'
+#
+# module ::Selenium::WebDriver::Remote
+#   class Bridge
+#     def execute(*args)
+#       result = raw_execute(*args)['value']
+#       sleep 0.5
+#       result
+#     end
+#   end
+# end

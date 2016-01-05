@@ -5,5 +5,9 @@
         .item-box.stale
           = "#{l(item.start, format: :simple_time)} #{item.activity}"
       - else
-        .item-box
-          = link_to "#{l(item.start, format: :simple_time)} #{item.activity}", room_schedule_item_path(item.room, item)
+        - klass = 'item-box'
+        - if user_signed_in? && current_user.reservation_for?(item)
+          - klass << ' reserved'
+        %div{ class: klass }
+          - # TODO: make the whole box clickable
+          = link_to "#{l(item.start, format: :simple_time)} #{item.activity}", room_schedule_item_path(item.room, item), remote: true
