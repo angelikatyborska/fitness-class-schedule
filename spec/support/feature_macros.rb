@@ -26,5 +26,7 @@ module FeatureMacros
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_button 'Log in'
+    wait_for_ajax
+    click_button 'Close'
   end
 end

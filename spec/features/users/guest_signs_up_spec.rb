@@ -11,6 +11,7 @@ feature 'Guest signs up', js: true do
       end
       fill_in 'Password confirmation', with: 'password1234'
       click_button 'Sign up'
+      wait_for_ajax
     }.to change(User, :count).by(1)
 
     expect(page).to have_content 'You have signed up successfully'

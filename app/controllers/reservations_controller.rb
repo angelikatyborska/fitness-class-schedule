@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   expose(:user)
   expose(:reservations, ancestor: :user) do |default|
-    default.includes(:schedule_item)
+    default.includes(schedule_item: [:reservations])
   end
   expose(:reservation, attributes: :reservation_params)
 
@@ -14,23 +14,20 @@ class ReservationsController < ApplicationController
     respond_to do |format|
       if reservation.save
         flash[:notice] = I18n.t('reservation.created')
-
-        format.html { redirect_to user_reservations_path(user) }
-        format.js { render inline: 'location.reload();' }
+        format.js
       else
         flash[:alert] = I18n.t('reservation.not_created')
-        format.html { redirect_to user_reservations_path(user) }
-        format.js { render inline: 'location.reload();' }
+        format.js
       end
     end
   end
 
   def destroy
     reservation.destroy
+    flash[:notice] = I18n.t('reservation.deleted')
+
     respond_to do |format|
-      flash[:notice] = I18n.t('reservation.deleted')
-      format.html { redirect_to user_reservations_path(user) }
-      format.js { render inline: 'location.reload();' }
+      format.js
     end
   end
 

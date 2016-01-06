@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin creates a schedule item' do
+feature 'Admin creates a schedule item', js: true do
   let!(:room) { create(:room) }
   let!(:trainer) { create(:trainer) }
   let!(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now + 1.day) }

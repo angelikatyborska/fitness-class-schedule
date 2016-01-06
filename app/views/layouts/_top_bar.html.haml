@@ -31,9 +31,9 @@
             %li
               = link_to t('user.settings'), edit_user_path(current_user)
             %li
-              = link_to t('user.logout'), destroy_user_session_path, method: :delete
+              = link_to t('user.logout'), destroy_user_session_path, method: :delete, remote: true
       - else
         %li
-          = link_to t('user.login'), new_user_session_path
+          = link_to t('user.login'), new_user_session_path, remote: true
         %li
-          = link_to t('user.signup'), new_user_registration_path
+          = link_to t('user.signup'), new_user_registration_path, remote: true

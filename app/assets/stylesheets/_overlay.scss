@@ -26,13 +26,27 @@ $overlay-close-size: 23px;
   text-align: center;
 
   .overlay-close {
+    @include hide-text;
+
     position: absolute;
     display: block;
     top: 0;
     right: 0;
     width: $overlay-close-size;
     height: $overlay-close-size;
+    padding: 0;
     font-size: $overlay-close-size;
     line-height: $overlay-close-size;
+    border: 0;
+    background-color: transparent;
+    border-radius: 0;
+
+    &:before {
+      content: '\00d7';
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-indent: 0;
+    }
   }
 }

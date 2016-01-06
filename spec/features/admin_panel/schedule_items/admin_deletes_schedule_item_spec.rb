@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'Admin deletes a schedule item' do
+feature 'Admin deletes a schedule item', js: true do
   let!(:schedule_item) { create(:schedule_item) }
   let!(:admin) { create(:admin_user) }
 
@@ -20,6 +20,8 @@ feature 'Admin deletes a schedule item' do
 
     expect {
       click_link 'Delete'
+      page.driver.browser.switch_to.alert.accept
+      wait_for_ajax
     }.to change(ScheduleItem, :count).by(-1)
 
     expect(current_path).to eq admin_schedule_items_path

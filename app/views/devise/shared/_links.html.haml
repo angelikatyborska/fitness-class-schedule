@@ -1,0 +1,20 @@
+.row
+  - if controller_name != 'sessions'
+    .medium-12.columns
+      = link_to t('user.login'), new_session_path(resource_name), remote: true
+  - if devise_mapping.registerable? && controller_name != 'registrations'
+    .medium-12.columns
+      = link_to t('user.signup'), new_registration_path(resource_name), remote: true
+  - if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations'
+    .medium-12.columns
+      = link_to t('devise.passwords.forgot'), new_password_path(resource_name), remote: true
+  - if devise_mapping.confirmable? && controller_name != 'confirmations'
+    .medium-12.columns
+      = link_to t('devise.confirmations.didnt_receive_instructions'), new_confirmation_path(resource_name)
+  - if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks'
+    .medium-12.columns
+      = link_to t('devise.unlocks.didnt_receive_instructions'), new_unlock_path(resource_name)
+  - if devise_mapping.omniauthable?
+    - resource_class.omniauth_providers.each do |provider|
+      .medium-12.columns
+        = link_to "Sign in with #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider)

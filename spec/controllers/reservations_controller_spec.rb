@@ -14,7 +14,7 @@ RSpec.describe ReservationsController do
     end
 
     describe 'POST #create' do
-      subject { post :create, user_id: user.id, reservation: { schedule_item_id: schedule_item.id } }
+      subject { xhr :post, :create, user_id: user.id, reservation: { schedule_item_id: schedule_item.id } }
 
       it { is_expected.to require_login }
     end
@@ -43,9 +43,8 @@ RSpec.describe ReservationsController do
 
       describe 'DELETE #destroy' do
         let!(:reservation) { create(:reservation, user: other_user) }
-        subject { delete :destroy, user_id: other_user.id, id: reservation.id }
+        subject { xhr :delete, :destroy, user_id: other_user.id, id: reservation.id }
 
-        it { is_expected.to redirect_to user_reservations_path(other_user) }
         it { expect{ subject }.to change(other_user.reservations, :count).by(-1) }
       end
 
@@ -53,7 +52,7 @@ RSpec.describe ReservationsController do
         context 'with valid attributes' do
           it 'creates a reservation' do
             expect {
-              post :create, user_id: other_user.id, reservation: { schedule_item_id: schedule_item.id }
+              xhr :post, :create, user_id: other_user.id, reservation: { schedule_item_id: schedule_item.id }
             }.to change(Reservation, :count).by(1)
           end
         end
@@ -63,7 +62,7 @@ RSpec.describe ReservationsController do
 
           it 'doesn\'t create a reservation' do
             expect {
-              post :create, user_id: other_user.id, reservation: { schedule_item_id: other_reservation.schedule_item.id }
+              xhr :post, :create, user_id: other_user.id, reservation: { schedule_item_id: other_reservation.schedule_item.id }
             }.not_to change(Reservation, :count)
           end
         end

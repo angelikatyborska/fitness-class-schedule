@@ -6,12 +6,15 @@ class User < ActiveRecord::Base
   has_many :reservations, dependent: :destroy
   has_many :schedule_items, through: :reservations
 
+  default_scope { includes(:reservations)}
+
   def admin?
     has_role?(:admin)
   end
 
   def reservation_for(schedule_item)
-    reservations.find_by(schedule_item: schedule_item)
+    # TODO: add index?
+    reservations.find { |reservation| reservation.schedule_item == schedule_item }
   end
 
   def reservation_for?(schedule_item)

@@ -18,9 +18,6 @@ var Overlay = (function () {
 
     $('body').prepend(this.overlay_background);
 
-    this.overlay_box.height(this.overlay_content.outerHeight() + this.overlay_header.outerHeight());
-    this.overlay_box.width(this.overlay_content.outerWidth());
-
     $(document).click(function(event) {
       var $target = $(event.target);
       if (!$target.closest('.overlay-box').length || $target.closest('.overlay-close').length) {

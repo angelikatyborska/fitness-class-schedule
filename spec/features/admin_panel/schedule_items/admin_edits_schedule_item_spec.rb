@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'Admin edits a schedule item' do
+feature 'Admin edits a schedule item', js: true do
   let!(:schedule_item) { create(:schedule_item, activity: 'ABT') }
   let!(:admin) { create(:admin_user) }
 
@@ -18,11 +18,10 @@ feature 'Admin edits a schedule item' do
 
     click_link 'Edit'
 
-    expect(current_path).to eq edit_admin_schedule_item_path(schedule_item)
-
     expect {
       fill_in 'Activity', with: 'TBC'
       click_button 'Save'
+      wait_for_ajax
     }.to change(ScheduleItem, :count).by(0)
 
     expect(current_path).to eq admin_schedule_items_path

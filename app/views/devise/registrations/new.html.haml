@@ -1,0 +1,19 @@
+= simple_form_for resource, as: resource_name, url: registration_path(resource_name), remote: true do |f|
+  .row
+    .medium-12.columns
+      = f.error_notification
+  .row
+    .medium-12.columns
+      = f.input :email, required: true, autofocus: true
+  .row
+    .medium-12.columns
+      - # TODO: localize
+      = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+  .row
+    .medium-12.columns
+      = f.input :password_confirmation, required: true
+  .row
+    .medium-12.columns
+      = f.button :submit, t('user.signup')
+= render "devise/shared/links"
+
