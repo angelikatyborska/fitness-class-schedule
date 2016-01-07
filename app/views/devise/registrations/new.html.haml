@@ -4,14 +4,13 @@
       = f.error_notification
   .row
     .medium-12.columns
-      = f.input :email, required: true, autofocus: true
+      = f.input :email, required: true, autofocus: true, label: false, placeholder: t('devise.email')
   .row
     .medium-12.columns
-      - # TODO: localize
-      = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length)
+      = f.input :password, required: true, hint: (t('devise.passwords.characters_minimum', minimum: @minimum_password_length)), label: false, placeholder: t('devise.password')
   .row
     .medium-12.columns
-      = f.input :password_confirmation, required: true
+      = f.input :password_confirmation, required: true, label: false, placeholder: t('devise.password_confirmation')
   .row
     .medium-12.columns
       = f.button :submit, t('user.signup')

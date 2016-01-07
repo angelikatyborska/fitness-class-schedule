@@ -21,6 +21,9 @@
 
 en:
   devise:
+    email: 'Email'
+    password: 'Password'
+    password_confirmation: 'Password confirmation'
     failure:
       already_authenticated: "You are already logged in."
       timeout: "Your session expired. Please log in again to continue."
@@ -29,6 +32,7 @@ en:
       updated: "Your password has been changed successfully. You are now logged in."
       forgot: "Forgot your password?"
       reset: "Reset password"
+      characters_minimum: "%{minimum} characters minimum"
     confirmations:
       didnt_receive_instructions: "Didn't receive unlock instructions?"
     registrations:
