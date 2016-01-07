@@ -14,6 +14,12 @@ RSpec.describe Admin::ScheduleItemsController do
       end
     end
 
+    describe 'POST #create' do
+      it 'raises an error' do
+        expect { post :create, schedule_item: build(:schedule_item) }.to require_admin_privileges
+      end
+    end
+
     describe 'PUT #update' do
       it 'raises an error' do
         expect { put :update, id: create(:schedule_item), schedule_item: attributes_for(:schedule_item) }.to require_admin_privileges
@@ -49,9 +55,36 @@ RSpec.describe Admin::ScheduleItemsController do
       subject { get :index }
 
       it { is_expected.to render_template :index }
-      it { expect(controller.schedule_items).to match_array schedule_items }
+      it 'exposes schedule items' do
+        expect(controller.schedule_items).to match_array schedule_items
+      end
     end
 
-    # TODO: write tests for edit and delete
+    describe 'GET #edit' do
+      let!(:schedule_item) { create(:schedule_item) }
+      subject { get :edit, id: schedule_item.id }
+
+      it { is_expected.to render_template :edit }
+    end
+
+    describe 'PUT #update' do
+      let!(:schedule_item) { create(:schedule_item, duration: 45) }
+
+      before :each do
+        put :update, id: schedule_item.id, schedule_item: { duration: 60 }
+      end
+
+      it 'updates schedule item attributes' do
+        expect(schedule_item.reload.duration).to eq 60
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      let!(:schedule_item) { create(:schedule_item) }
+      subject { delete :destroy, id: schedule_item.id }
+
+      it { expect { subject }.to change(ScheduleItem, :count).by(-1) }
+
+    end
   end
 end
