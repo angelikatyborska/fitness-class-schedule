@@ -3,18 +3,16 @@ require 'rails_helper'
 RSpec.describe ScheduleItemsController do
   describe 'GET #index' do
     let(:room) { create(:room) }
-    #TODO: refactor to use Timecop
-    let!(:schedule_item_this_week) {
-      item = build(:schedule_item_this_week, room: room)
-      item.save(validate: false)
-      item
-    }
+    let!(:schedule_item_this_week) { create(:schedule_item_this_week, room: room) }
+    let!(:schedule_item_next_week) { create(:schedule_item_next_week, room: room) }
 
-    let!(:schedule_item_next_week) {
-      item = build(:schedule_item_next_week, room: room)
-      item.save(validate: false)
-      item
-    }
+    before :all do
+      Timecop.freeze(Time.zone.now.beginning_of_week)
+    end
+
+    after :all do
+      Timecop.return
+    end
 
     subject { get :index, room_id: room }
 

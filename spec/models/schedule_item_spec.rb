@@ -102,18 +102,15 @@ RSpec.describe ScheduleItem do
   describe 'scopes' do
     describe 'week' do
       let!(:today) { Time.zone.now }
-      let!(:this_week_items) do
-        2.times.with_object([]) do |n, items|
-          items << build(:schedule_item_this_week)
-          items[n].save(validate: false)
-        end
+      let!(:this_week_items) { create_list(:schedule_item_this_week, 2) }
+      let!(:next_week_items) { create_list(:schedule_item_next_week, 2) }
+
+      before :all do
+        Timecop.freeze(Time.zone.now.beginning_of_week)
       end
 
-      let!(:next_week_items) do
-        2.times.with_object([]) do |n, items|
-          items << build(:schedule_item_next_week)
-          items[n].save(validate: false)
-        end
+      after :all do
+        Timecop.return
       end
 
       context 'without argument' do
