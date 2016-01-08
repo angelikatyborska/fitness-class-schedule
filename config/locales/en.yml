@@ -87,6 +87,8 @@ en:
       room: 'Room'
       capacity: 'Capacity'
       activity: 'Activity'
+    prev_week: 'Prev week'
+    next_week: 'Next week'
   room:
     name: 'Room'
     all_rooms: 'All rooms'

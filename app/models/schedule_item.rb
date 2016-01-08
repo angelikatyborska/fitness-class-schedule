@@ -37,7 +37,6 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def stale?
-    # TODO: change all views to show time in user's timezone
     start < Time.zone.now
   end
 
