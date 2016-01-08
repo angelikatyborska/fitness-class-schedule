@@ -103,4 +103,9 @@ en:
     logout: 'Log out'
     signup: 'Sign up'
     settings: 'Settings'
-    admin_panel: 'Admin panel'
+    admin_panel:
+      name: 'Admin panel'
+      settings: 'System settings'
+      day_end: 'Day ends at'
+      day_start: 'Day starts at'
+      time_zone: 'Schedule time zone'

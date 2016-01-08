@@ -3,8 +3,7 @@ require 'rails_helper'
 RSpec.describe ScheduleItemsController do
   describe 'GET #index' do
     let(:room) { create(:room) }
-    let!(:schedule_item_this_week) { create(:schedule_item_this_week, room: room) }
-    let!(:schedule_item_next_week) { create(:schedule_item_next_week, room: room) }
+    let!(:schedule_items) { create_list(:schedule_item, 3, room: room) }
 
     before :all do
       Timecop.freeze(Time.zone.now.beginning_of_week)
@@ -18,25 +17,9 @@ RSpec.describe ScheduleItemsController do
 
     it { is_expected.to render_template :index }
 
-    context 'without parameters' do
-      it 'exposes schedule items from this week' do
-        get :index, room_id: room
-        expect(controller.schedule_items).to eq([schedule_item_this_week])
-      end
-    end
-
-    context 'with next week as parameter' do
-      let!(:next_week) { Time.zone.now + 7.days }
-
-      it 'exposes next week' do
-        get :index, room_id: room, week: next_week
-        expect(controller.week).to be_within(1.minute).of(next_week)
-      end
-
-      it 'exposes schedule items from next week' do
-        get :index, room_id: room, week: next_week
-        expect(controller.schedule_items).to eq([schedule_item_next_week])
-      end
+    it 'exposes schedule items' do
+      get :index, room_id: room
+      expect(controller.schedule_items).to contain_exactly(*schedule_items)
     end
   end
 

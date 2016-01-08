@@ -8,16 +8,16 @@ module FeatureMacros
 
   def select_date(date, options = {})
     field = options[:from]
-    select date.year.to_s, from: "#{field}_1i"
-    select_by_id date.month, from: "#{field}_2i"
-    select_by_id date.day, from: "#{field}_3i"
+    select date.in_website_time_zone.year.to_s, from: "#{field}_1i"
+    select_by_id date.in_website_time_zone.month, from: "#{field}_2i"
+    select_by_id date.in_website_time_zone.day, from: "#{field}_3i"
   end
 
   def select_time(date, options = {})
     field = options[:from]
     select_date(date, options)
-    select date.hour.to_s.rjust(2, '0'), from: "#{field}_4i"
-    select date.min.to_s.rjust(2, '0'), from: "#{field}_5i"
+    select date.in_website_time_zone.hour.to_s.rjust(2, '0'), from: "#{field}_4i"
+    select date.in_website_time_zone.min.to_s.rjust(2, '0'), from: "#{field}_5i"
   end
 
   def log_in(user)

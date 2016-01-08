@@ -1,6 +1,7 @@
 %h2
   = "#{t('room.all_rooms')}:"
-= render 'schedule_items/schedule_table', schedule_items: schedule_items
+#schedule
+  = render 'schedule_items/schedule_table', schedule_items: schedule_items
 
-= link_to 'Prev week', rooms_path(week: week - 1.week)
-= link_to 'Next week', rooms_path(week: week + 1.week)
+= link_to 'Prev week', prev_week_rooms_path(week_offset: week_offset - 1), remote: true
+= link_to 'Next week', next_week_rooms_path(week_offset: week_offset + 1), remote: true

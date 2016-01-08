@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   end
 
   def reservation_for(schedule_item)
-    # TODO: add index?
     reservations.find { |reservation| reservation.schedule_item == schedule_item }
   end
 

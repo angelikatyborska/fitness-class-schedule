@@ -23,47 +23,19 @@ RSpec.describe ScheduleItem do
       end
     end
 
-    context 'with duration overlapping to the next day' do
-      subject { build(:schedule_item, duration: 25 * 60) }
-
-      it 'is not valid' do
-        is_expected.not_to be_valid
-        expect(subject.errors[:duration]).to include('can\'t span more than one day')
-      end
-    end
-
-    context 'with duration exceeding day end by 15 minutes' do
-      subject { build(:schedule_item, start: (ScheduleItem.end_of_day(Time.zone.now + 1.day) - 30.minutes) , duration: 45) }
-
-      it 'is not valid' do
-        is_expected.not_to be_valid
-        expect(subject.errors[:start]).to include('can\'t be that late')
-      end
-    end
-
-    context 'with start date earlier than day start' do
-      subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now) - 1.hour + 1.day)}
-
-      it 'is not valid' do
-        is_expected.not_to be_valid
-        expect(subject.errors[:start]).to include('can\'t be that early')
-      end
-    end
-
-    context 'with start date later than day end' do
-      subject { build(:schedule_item, start: ScheduleItem.end_of_day(Time.zone.now) + 1.hour + 1.day)}
-
-      it 'is not valid' do
-        is_expected.not_to be_valid
-        expect(subject.errors[:start]).to include('can\'t be that late')
-      end
-    end
-
     context 'with a room that is already occupied' do
       let!(:room) { create(:room) }
-      let!(:schedule_item_occupying_the_room) { create(:schedule_item, room: room, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60) }
+      let!(:schedule_item_occupying_the_room) { create(
+          :schedule_item,
+          room: room,
+          start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60
+        ) }
 
-      subject { build(:schedule_item, room: room, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes)}
+      subject { build(
+          :schedule_item,
+          room: room,
+          start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
+        ) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -73,9 +45,18 @@ RSpec.describe ScheduleItem do
 
     context 'with a trainer that is already occupied' do
       let!(:trainer) { create(:trainer) }
-      let!(:schedule_item_occupying_the_room) { create(:schedule_item, trainer: trainer, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60) }
+      let!(:schedule_item_occupying_the_room) { create(
+        :schedule_item,
+        trainer: trainer,
+        start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day),
+        duration: 60
+      ) }
 
-      subject { build(:schedule_item, trainer: trainer, start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes)}
+      subject { build(
+        :schedule_item,
+        trainer: trainer,
+        start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
+      ) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -192,12 +173,18 @@ RSpec.describe ScheduleItem do
     end
   end
 
+  describe '#stop' do
+    let!(:schedule_item) { create(:schedule_item, duration: 45) }
+    subject { schedule_item.stop }
+    it { is_expected.to eq schedule_item.start + 45.minutes }
+  end
+
   describe 'class methods' do
     describe '#beginning_of_day' do
       let(:today) { Time.zone.now }
       subject { described_class.beginning_of_day(today) }
 
-      it 'returns the earliest time a schedule item can start this day' do
+      it 'returns the earliest time a schedule item starting at will be displayed' do
         expect(subject.hour).to eq Configurable.day_start
         expect(subject.min).to eq 0
       end
@@ -207,9 +194,10 @@ RSpec.describe ScheduleItem do
       let(:today) { Time.zone.now }
       subject { described_class.end_of_day(today) }
 
-      it 'returns the earliest time that is too late for a schedule item to start this day' do
-        expect(subject.hour).to eq Configurable.day_end
-        expect(subject.min).to eq 0
+      it 'returns the latest time a schedule item starting at will be displayed' do
+        expect(subject.hour).to eq Configurable.day_end - 1
+        expect(subject.min).to eq 59
+        expect(subject.sec).to eq 59
       end
     end
   end

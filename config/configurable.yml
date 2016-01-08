@@ -34,10 +34,15 @@
 
 day_start:
   name: Day Start
-  default: 6
+  default: 8
   type: integer
 
 day_end:
   name: Day End
-  default: 22
+  default: 23
   type: integer
+
+time_zone:
+  name: Time Zone
+  default: 'Hawaii'
+  type: string

@@ -1,4 +1,4 @@
 %h2= schedule_item.activity
-%p= l(schedule_item.start, format: :simple_date)
-%p= "When: #{l(schedule_item.start, format: :simple_time)} - #{l(schedule_item.decorate.stop, format: :simple_time)}"
+%p= l(schedule_item.start.in_website_time_zone, format: :simple_date)
+%p= "When: #{l(schedule_item.start.in_website_time_zone, format: :simple_time)} - #{l(schedule_item.decorate.stop.in_website_time_zone, format: :simple_time)}"
 %p= "Where: #{schedule_item.room.name}"

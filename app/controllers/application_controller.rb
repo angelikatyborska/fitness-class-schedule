@@ -9,5 +9,4 @@ class ApplicationController < ActionController::Base
 
   expose(:rooms)
   expose(:trainers)
-  expose(:week) { params[:week].nil? ? Time.zone.now : Time.parse(params[:week])}
 end

@@ -1,5 +1,6 @@
 %h2= room.name
-= render 'schedule_table'
+#schedule
+  = render 'schedule_table'
 
-= link_to 'Prev week', room_schedule_items_path(week: week - 1.week)
-= link_to 'Next week', room_schedule_items_path(week: week + 1.week)
+= link_to 'Prev week', prev_week_room_schedule_items_path(week_offset: week_offset - 1), remote: true
+= link_to 'Next week', next_week_room_schedule_items_path(week_offset: week_offset + 1), remote: true

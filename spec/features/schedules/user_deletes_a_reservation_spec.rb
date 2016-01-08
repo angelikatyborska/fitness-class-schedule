@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 feature 'User deletes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT') }
   let!(:user) { create(:user) }
   let!(:reservation) { create(:reservation, user: user, schedule_item: schedule_item) }
 
   before :all do
-    Timecop.freeze(Time.zone.now.beginning_of_week)
+    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
 
   after :all do

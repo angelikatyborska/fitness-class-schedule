@@ -5,8 +5,18 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
 
-  resources :rooms, only: :index do
-    resources :schedule_items, only: [:index, :show]
+  resources :rooms, only: [:index, :show] do
+    collection do
+      get :prev_week
+      get :next_week
+    end
+
+    resources :schedule_items, only: [:index, :show] do
+      collection do
+        get :prev_week
+        get :next_week
+      end
+    end
   end
 
   resources :user do

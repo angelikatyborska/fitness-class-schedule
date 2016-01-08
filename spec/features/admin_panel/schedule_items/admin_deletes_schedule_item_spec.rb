@@ -15,8 +15,8 @@ feature 'Admin deletes a schedule item', js: true do
     click_link 'Schedule items'
 
     expect(page).to have_content schedule_item.activity
-    expect(page).to have_content I18n.l(schedule_item.start, format: :simple_date)
-    expect(page).to have_content I18n.l(schedule_item.start, format: :simple_time)
+    expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_date)
+    expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_time)
 
     expect {
       click_link 'Delete'
@@ -27,7 +27,7 @@ feature 'Admin deletes a schedule item', js: true do
     expect(current_path).to eq admin_schedule_items_path
 
     expect(page).not_to have_content schedule_item.activity
-    expect(page).not_to have_content I18n.l(schedule_item.start, format: :simple_date)
-    expect(page).not_to have_content I18n.l(schedule_item.start, format: :simple_time)
+    expect(page).not_to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_date)
+    expect(page).not_to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_time)
   end
 end

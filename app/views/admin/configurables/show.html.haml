@@ -1,0 +1,15 @@
+= form_tag(admin_configurable_path, method: :put) do
+  .row
+    .medium-6.columns
+      = label_tag 'day_start', t('user.admin_panel.day_start')
+      = number_field_tag 'day_start', Configurable.day_start, within: 0..23, autocomplete: :off
+    .medium-6.columns
+      = label_tag 'day_end', t('user.admin_panel.day_end')
+      = number_field_tag 'day_end', Configurable.day_end, within: 1..24, autocomplete: :off
+  .row
+    .medium-6.columns
+      = label_tag 'time_zone', t('user.admin_panel.time_zone')
+      = select_tag 'time_zone', options_from_collection_for_select(ActiveSupport::TimeZone.all, 'name', 'to_s', Configurable.time_zone), autocomplete: :off
+  .row
+    .medium-12.columns
+      = submit_tag t('shared.save'), class: 'button'

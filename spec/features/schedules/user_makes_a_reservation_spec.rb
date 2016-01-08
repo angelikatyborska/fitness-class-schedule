@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'User makes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week, activity: 'ABT') }
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT') }
   let!(:user) { create(:user) }
 
   before :all do
-    Timecop.freeze(Time.zone.now.beginning_of_week)
+    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
 
   after :all do

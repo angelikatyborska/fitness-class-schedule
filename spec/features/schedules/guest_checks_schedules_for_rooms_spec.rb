@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Guest check schedules for rooms' do
+feature 'Guest check schedules for rooms', js: true do
   let!(:small_room) { create(:room, name: 'Small room') }
   let!(:big_room) { create(:room, name: 'Big room') }
   let!(:small_schedule_item_this_monday) do
@@ -8,7 +8,7 @@ feature 'Guest check schedules for rooms' do
       :schedule_item,
       room: small_room,
       activity: 'ABT',
-      start: Time.zone.now.beginning_of_week + 8.hours + 5.minutes,
+      start: Time.zone.now.in_website_time_zone.beginning_of_week + 8.hours + 5.minutes,
       capacity: 6
     )
   end
@@ -18,7 +18,7 @@ feature 'Guest check schedules for rooms' do
       :schedule_item,
       room: small_room,
       activity: 'Step',
-      start: Time.zone.now.beginning_of_week + 1.week + 8.hours + 15.minutes,
+      start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 8.hours + 15.minutes,
       capacity: 6 )
   end
 
@@ -27,7 +27,7 @@ feature 'Guest check schedules for rooms' do
       :schedule_item,
       room: big_room,
       activity: 'TBC',
-      start: Time.zone.now.beginning_of_week + 6.days + 9.hours + 5.minutes,
+      start: Time.zone.now.in_website_time_zone.beginning_of_week + 6.days + 9.hours + 5.minutes,
       capacity: 20
     )
   }
@@ -37,13 +37,13 @@ feature 'Guest check schedules for rooms' do
       :schedule_item,
       room: big_room,
       activity: 'Step',
-      start: Time.zone.now.beginning_of_week + 1.week + 6.days + 9.hours + 15.minutes,
+      start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 6.days + 9.hours + 15.minutes,
       capacity: 20
     )
   end
 
   before :all do
-    Timecop.freeze(Time.zone.now.beginning_of_week)
+    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
 
   after :all do
@@ -59,6 +59,7 @@ feature 'Guest check schedules for rooms' do
       expect(page).to have_content '9:05'
 
       click_link 'Next week'
+      wait_for_ajax
 
       expect(page).to have_link 'Step'
       expect(page).to have_content '8:15'
@@ -77,6 +78,7 @@ feature 'Guest check schedules for rooms' do
       expect(page).not_to have_content '9:05'
 
       click_link 'Next week'
+      wait_for_ajax
 
       expect(page).to have_link 'Step'
       expect(page).to have_content '8:15'
@@ -95,6 +97,7 @@ feature 'Guest check schedules for rooms' do
       expect(page).to have_content '9:05'
 
       click_link 'Next week'
+      wait_for_ajax
 
       expect(page).to have_link 'Step'
       expect(page).not_to have_content '8:15'
@@ -104,7 +107,7 @@ feature 'Guest check schedules for rooms' do
 
   context 'on a wednesday' do
     scenario 'all rooms' do
-      Timecop.freeze(Time.zone.now.beginning_of_week + 3.days)
+      Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week + 3.days)
       visit root_path
       expect(page).to have_content 'ABT'
       expect(page).to have_no_link 'ABT'

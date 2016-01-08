@@ -6,11 +6,19 @@ class ScheduleItemsController < ApplicationController
   end
 
   expose(:schedule_item)
+  expose(:week_offset) { params[:week_offset].to_i || 0 }
 
-  def index
-    self.schedule_items = room.schedule_items.week(week).order(:start)
+  def next_week
+    respond_to do |format|
+      format.js { render 'reload_index'
+      }
+    end
   end
 
-  def show
+  def prev_week
+    respond_to do |format|
+      format.js { render 'reload_index'
+      }
+    end
   end
 end

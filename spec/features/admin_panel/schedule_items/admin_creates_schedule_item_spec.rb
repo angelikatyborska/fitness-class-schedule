@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Admin creates a schedule item', js: true do
   let!(:room) { create(:room) }
   let!(:trainer) { create(:trainer) }
-  let!(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now + 1.day) }
+  let!(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day) }
   let!(:admin) { create(:admin_user) }
 
   background do
@@ -33,7 +33,7 @@ feature 'Admin creates a schedule item', js: true do
 
   scenario 'with invalid input' do
     expect {
-      select_time (tomorrow - 1.hour), from: 'schedule_item_start'
+      select_time (tomorrow - 2.days), from: 'schedule_item_start'
 
       fill_in 'Duration', with: 45
       fill_in 'Capacity', with: 10
@@ -42,6 +42,6 @@ feature 'Admin creates a schedule item', js: true do
       click_button 'Save'
     }.not_to change(ScheduleItem, :count)
 
-    expect(page).to have_content 'can\'t be that early'
+    expect(page).to have_content 'can\'t be in the past'
   end
 end

@@ -5,7 +5,7 @@
         - ScheduleItem.day_duration_in_hours.times do |n|
           .hour{ style: "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%; height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"}
             = l(ScheduleItem.beginning_of_day(Time.zone.now) + n.hours, format: :simple_time)
-    - ScheduleItem.order_by_weekdays(schedule_items, week).each do |day, items|
+    - order_by_weekdays(schedule_items, week_offset).each do |day, items|
       .day
         .day-header
           %h4= l(day, format: :weekday)
