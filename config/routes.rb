@@ -11,7 +11,7 @@ Rails.application.routes.draw do
       get :next_week
     end
 
-    resources :schedule_items, only: [:index, :show] do
+    resources :schedule_items, only: [:show] do
       collection do
         get :prev_week
         get :next_week
