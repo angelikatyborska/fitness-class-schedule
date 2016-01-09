@@ -1,7 +1,9 @@
-%h2
-  = room.name
+.schedule-header
+  .location
+    = room.name
+  .navigation
+    = link_to t('schedule_item.prev_week'), prev_week_room_schedule_items_path(room_id: room.id, week_offset: week_offset - 1), remote: true, class: 'prev-week'
+    = link_to t('schedule_item.this_week'), next_week_room_schedule_items_path(room_id: room.id, week_offset: 0), remote: true, class: 'this-week'
+    = link_to t('schedule_item.next_week'), next_week_room_schedule_items_path(room_id: room.id, week_offset: week_offset + 1), remote: true, class: 'next-week'
 #schedule
   = render 'schedule_items/schedule_table', schedule_items: room.schedule_items
-
-= link_to 'Prev week', prev_week_room_schedule_items_path(room_id: room.id, week_offset: week_offset - 1), remote: true
-= link_to 'Next week', next_week_room_schedule_items_path(room_id: room.id, week_offset: week_offset + 1), remote: true

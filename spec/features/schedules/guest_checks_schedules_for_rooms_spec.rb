@@ -68,7 +68,7 @@ feature 'Guest check schedules for rooms', js: true do
 
     scenario 'the small room' do
       visit root_path
-      click_link 'Rooms'
+      click_link 'Locations'
       click_link 'Small room'
 
       expect(page).to have_link 'ABT'
@@ -87,7 +87,7 @@ feature 'Guest check schedules for rooms', js: true do
 
     scenario 'the big room' do
       visit root_path
-      click_link 'Rooms'
+      click_link 'Locations'
       click_link 'Big room'
 
       expect(page).not_to have_content 'ABT'

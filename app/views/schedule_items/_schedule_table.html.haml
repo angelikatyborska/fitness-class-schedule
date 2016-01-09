@@ -1,14 +1,19 @@
+- day_schedule_height = "#{75 * ScheduleItem.day_duration_in_hours}px"
+
 .schedule
   .week
     .hours
-      .day-schedule
+      .day-schedule{ style: "height: #{day_schedule_height}"}
         - ScheduleItem.day_duration_in_hours.times do |n|
           .hour{ style: "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%; height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"}
-            = l(ScheduleItem.beginning_of_day(Time.zone.now) + n.hours, format: :simple_time)
+            = l(ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone) + n.hours, format: :simple_time)
     - order_by_weekdays(schedule_items, week_offset).each do |day, items|
       .day
-        .day-header
-          %h4= l(day, format: :weekday)
-          %h5= l(day, format: :simple_date)
-        .day-schedule
+        - day_class = day.to_date == Time.zone.now.in_website_time_zone.to_date ? 'today' : ''
+        .day-header{ class: day_class }
+          %span.week-day
+            = l(day, format: :weekday)
+          %span.date
+            = l(day, format: :simple_date)
+        .day-schedule{ style: "height: #{day_schedule_height}"}
           = render 'schedule_items/schedule_table_items', items: items

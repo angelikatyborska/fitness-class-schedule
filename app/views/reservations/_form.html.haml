@@ -1,3 +1,4 @@
 = simple_form_for reservation, url: user_reservations_path(reservation.user), remote: true do |f|
   = f.hidden_field :schedule_item_id, value: schedule_item.id
-  = f.button :submit, t('reservation.create')
+  - label = schedule_item.full? ? t('reservation.queue') : t('reservation.create')
+  = f.button :submit, label

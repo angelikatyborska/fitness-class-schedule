@@ -52,6 +52,16 @@ class ScheduleItem < ActiveRecord::Base
     start + duration.minutes
   end
 
+  def spots_left
+    # TODO: write spec
+    capacity - reservations.count
+  end
+
+  def full?
+    # TODO: write spec
+    spots_left < 1
+  end
+
   def self.beginning_of_day(time)
     time.beginning_of_day + day_start.hours
   end

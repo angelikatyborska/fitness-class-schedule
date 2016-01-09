@@ -1,0 +1,204 @@
+$hours-width: 50px;
+$day-header-height: 80px;
+$item-margin: 3px;
+$day-padding: 8px;
+$reserved-check-size: 18px;
+
+.schedule-header {
+  @include clearfix;
+
+  padding: 10px;
+  background-color: $schedule-hour-light;
+
+  .location {
+    float: left;
+    font-size: $h3-font-size;
+  }
+
+  .navigation {
+    float: right;
+
+    * {
+      display: inline-block;
+    }
+
+    .prev-week, .next-week {
+      @include hide-text;
+
+      position: relative;
+      width: 24px;
+      height: 24px;
+
+      &:before {
+        @include fa-icon;
+
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        text-align: center;
+        text-indent: 0;
+      }
+    }
+
+    .prev-week {
+      &:before {
+        content: $fa-var-angle-double-left;
+      }
+    }
+
+    .next-week {
+      &:before {
+        content: $fa-var-angle-double-right;
+      }
+    }
+  }
+}
+
+.schedule {
+  background-color: $schedule-hour-light;
+
+  .week {
+    @include clearfix;
+
+    width: 100%;
+    padding-left: $hours-width;
+
+    h2 {
+      margin: 0;
+    }
+
+    .hours {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      padding-top: $day-header-height;
+
+      > * {
+        float: left;
+        width: 100%;
+      }
+
+      .hour {
+        position: absolute;
+        width: 100%;
+        padding-left: 10px;
+        background-color: $schedule-hour-dark;
+
+        &:nth-child(2n) {
+          background-color: $schedule-hour-light;
+        }
+      }
+    }
+
+    .day {
+      position: relative;
+      float: left;
+      width: calc(1/7 * 100%);
+      padding: 0 $day-padding;
+      text-align: center;
+
+      > * {
+        float: left;
+        width: 100%;
+      }
+
+      .item {
+        position: absolute;
+        right: 0;
+        left: 0;
+        margin-left: -1 * $item-margin;
+
+        .item-box {
+          display: block;
+          overflow: hidden;
+          width: calc(100% - #{2 * $item-margin});
+          height: 100%;
+          margin: 0 (2 * $item-margin);
+          padding: 5px;
+          font-size: $paragraph-aside-font-size;
+          color: $white;
+          background-color: lightsalmon;
+
+          &.stale {
+            position: relative;
+
+            &:before {
+              content: '';
+              display: block;
+              position: absolute;
+              z-index: 0;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              opacity: 0.7;
+              background-color: $dark-grey;
+            }
+          }
+
+          &.reserved {
+            &:before {
+              @include fa-icon;
+
+              content: $fa-var-check;
+              display: block;
+              position: absolute;
+              z-index: 0;
+              bottom: (-1/3) * $reserved-check-size;
+              right: (-1/3) * $reserved-check-size;
+              width: $reserved-check-size;
+              height: $reserved-check-size;
+              padding-top: 1px;
+              line-height: $reserved-check-size;
+              font-size: 13px;
+              color: $white;
+              background-color: $success-color;
+              border-radius: 50%;
+            }
+          }
+        }
+
+        .item-hours, .item-activity {
+          display: block;
+          position: relative;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .item-hours {
+          font-size: 80%;
+        }
+
+        .item-activity {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .day-header {
+      height: $day-header-height;
+
+      &.today {
+        font-weight: bold;
+      }
+
+      .week-day {
+        display: block;
+        font-size: $h4-font-size;
+      }
+
+      .date {
+        display: block;
+        font-size: $h5-font-size;
+      }
+    }
+
+    .day-schedule {
+      @include clearfix;
+
+      position: relative;
+    }
+  }
+}

@@ -3,9 +3,10 @@
     .item{ style: "top: #{schedule_item_start_day_percentage(item)}%; left: #{schedule_item_left_position(item, items)}%; height: #{schedule_item_duration_day_percentage(item)}%; width: #{schedule_item_width(item, items)}%;"}
       - if item.stale?
         .item-box.stale
-          = "#{l(item.start.in_website_time_zone, format: :simple_time)} #{item.activity}"
+          = render 'schedule_items/schedule_table_item', item: item
       - else
-        - klass = 'item-box'
+        - item_box_class = 'item-box'
         - if user_signed_in? && current_user.reservation_for?(item)
-          - klass << ' reserved'
-        = link_to "#{l(item.start.in_website_time_zone, format: :simple_time)} #{item.activity}", room_schedule_item_path(item.room, item), remote: true, class: klass
+          - item_box_class << ' reserved'
+        %a{ href: room_schedule_item_path(item.room, item), class: item_box_class, data: { remote: true } }
+          = render 'schedule_items/schedule_table_item', item: item

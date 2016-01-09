@@ -1,6 +1,9 @@
+$fa-font-path: '/assets';
+
 @import 'foundation_settings',
 'foundation/scss/normalize',
 'foundation/scss/foundation',
+'font-awesome/scss/font-awesome',
 
 'utilities/colors',
 'utilities/mixins',
@@ -8,4 +11,4 @@
 'base',
 
 'overlay',
-'schedule_items';
+'schedule';
