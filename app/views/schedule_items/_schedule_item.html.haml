@@ -1,14 +1,12 @@
-%h5= schedule_item.activity
-%p= l(schedule_item.start.in_website_time_zone, format: :simple_date)
-%p= "When: #{l(schedule_item.start.in_website_time_zone, format: :simple_time)} - #{l(schedule_item.decorate.stop.in_website_time_zone, format: :simple_time)}"
-%p= "Where: #{schedule_item.room.name}"
-%p= "Capacity: #{schedule_item.capacity}"
-%p= "Spots left: #{schedule_item.spots_left}"
+.schedule-item
+  %span.title
+    = "#{ schedule_item.activity } (#{ schedule_item.trainer.first_name })"
+  %span.details
+    = "#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)}, #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') } (#{ schedule_item.room.name })"
+  - if user_signed_in?
+    - if current_user.reservation_for?(schedule_item)
+      = link_to t('reservation.delete'), user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)), method: :delete, remote: true, class: 'button button-delete'
+    - else
+      = render 'reservations/form', reservation: current_user.reservations.new, schedule_item: schedule_item
 
-- if user_signed_in?
-  - if current_user.reservation_for?(schedule_item)
-    = link_to t('reservation.delete'), user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)), method: :delete, remote: true, class: 'button button-delete'
-  - else
-    = render 'reservations/form', reservation: current_user.reservations.new, schedule_item: schedule_item
-
-    - # TODO: refactor, localize
+      - # TODO: refactor, localize

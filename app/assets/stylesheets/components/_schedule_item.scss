@@ -1,0 +1,16 @@
+.schedule-item {
+  text-align: center;
+
+  span {
+    display: block;
+  }
+
+  .title {
+    font-size: $h5-font-size;
+    font-weight: bold;
+  }
+
+  .button {
+    margin-top: $button-margin-bottom;
+  }
+}

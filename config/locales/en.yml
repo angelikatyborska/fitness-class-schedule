@@ -31,6 +31,7 @@ en:
     formats:
       simple_time: '%H:%M'
       simple_date: '%Y-%m-%d'
+      human_friendly_date_with_time: '%e %B %H:%M'
       weekday: '%A'
   errors:
     cant_be_in_the_past: "can't be in the past"
@@ -62,9 +63,11 @@ en:
       end: 'End'
       date: 'Date'
       duration: 'Duration'
+      duration_unit: 'minutes'
       trainer: 'Trainer'
       room: 'Room'
       capacity: 'Capacity'
+      spots_left: 'Spots left'
       activity: 'Activity'
     prev_week: 'Prev week'
     next_week: 'Next week'

@@ -1,14 +1,14 @@
 $fa-font-path: '/assets';
 
-@import 'foundation_settings',
+@import 'utilities/foundation_settings',
 'foundation/scss/normalize',
 'foundation/scss/foundation',
 'font-awesome/scss/font-awesome',
 
 'utilities/colors',
 'utilities/mixins',
+'utilities/base',
 
-'base',
-
-'overlay',
-'schedule';
+'components/overlay',
+'components/schedule_table',
+'components/schedule_item';

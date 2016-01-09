@@ -1,7 +1,7 @@
 var Overlay = (function () {
   function build(body, header) {
     this.overlay_header = $('<div class="overlay-header">');
-    this.overlay_header_content = $('<h4 class="overlay-header-content">');
+    this.overlay_header_content = $('<h6 class="overlay-header-content">');
     this.overlay_header.append(this.overlay_header_content);
 
     this.overlay_content = $('<div class="overlay-content">');
