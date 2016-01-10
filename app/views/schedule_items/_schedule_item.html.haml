@@ -8,5 +8,3 @@
       = link_to t('reservation.delete'), user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)), method: :delete, remote: true, class: 'button button-delete'
     - else
       = render 'reservations/form', reservation: current_user.reservations.new, schedule_item: schedule_item
-
-      - # TODO: refactor, localize

@@ -1,0 +1,19 @@
+form {
+  .form-inputs {
+    margin-bottom: 10px;
+    min-width: 300px;
+  }
+
+  .error {
+    small.error {
+      margin-bottom: 0;
+      text-align: right;
+      color: $alert-color;
+      background: transparent;
+    }
+  }
+
+  .form-errors {
+    color: $alert-color;
+  }
+}

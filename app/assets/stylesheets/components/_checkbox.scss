@@ -1,0 +1,20 @@
+input[type="checkbox"] {
+  display: none;
+
+  + label {
+    &:before {
+      @include fa-icon;
+
+      content: $fa-var-square;
+      margin-right: 0.25em;
+    }
+  }
+
+  &:checked {
+    + label {
+      &:before {
+        content: $fa-var-check-square;
+      }
+    }
+  }
+}

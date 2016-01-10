@@ -2,10 +2,16 @@
   .row
     .medium-12.columns
   = f.error_notification
-  .row
-    .medium-12.columns
-      = f.input :email, required: true, autofocus: true
-  .row
-    .medium-12.columns
-      = f.button :submit, t('devise.passwords.reset')
+  .form-inputs
+    .row.collapse
+      .medium-12.columns
+        .row.collapse
+          .small-2.columns
+            %span.prefix
+              %i.fa.fa-envelope-o.fa-fw
+          = f.input :email, required: true, autofocus: true, label: false, placeholder: t('devise.email'), wrapper_html: { class: 'small-10 columns' }
+  .form-actions
+    .row.collapse
+      .medium-12.columns
+        = f.button :submit, t('devise.passwords.reset')
 = render "devise/shared/links"
