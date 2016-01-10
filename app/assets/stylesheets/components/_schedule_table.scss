@@ -19,23 +19,35 @@ $reserved-check-size: 18px;
     float: right;
 
     * {
-      display: inline-block;
+      display: block;
+      float: left;
+      background-color: $topbar-bg;
+      height: 34px;
+      margin: 0 5px;
+      padding: 5px 10px;
+      color: $white;
+
+      &:hover {
+        background-color: $topbar-link-bg-hover;
+      }
     }
 
     .prev-week, .next-week {
       @include hide-text;
 
       position: relative;
-      width: 24px;
-      height: 24px;
+      width: 34px;
+      padding: 0;
 
       &:before {
         @include fa-icon;
 
         position: absolute;
+        top: 50%;
         right: 0;
-        bottom: 0;
         left: 0;
+        padding: 5px;
+        transform: translateY(-50%);
         text-align: center;
         text-indent: 0;
       }
