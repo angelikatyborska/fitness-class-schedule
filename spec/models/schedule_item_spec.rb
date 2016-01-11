@@ -7,12 +7,11 @@ RSpec.describe ScheduleItem do
     it { is_expected.to validate_presence_of :trainer }
     it { is_expected.to validate_presence_of :room }
     it { is_expected.to validate_presence_of :start }
+    it { is_expected.to validate_presence_of :fitness_class }
     it { is_expected.to validate_presence_of :duration }
     it { is_expected.to validate_numericality_of(:duration).is_greater_than(0) }
     it { is_expected.to validate_presence_of :capacity }
     it { is_expected.to validate_numericality_of(:capacity).is_greater_than(0) }
-    it { is_expected.to validate_presence_of :activity }
-    it { is_expected.to validate_inclusion_of(:activity).in_array(ScheduleItem.activities) }
 
     context 'with start date in the past' do
       subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now - 1.day)) }
@@ -68,7 +67,6 @@ RSpec.describe ScheduleItem do
   describe 'database columns' do
     it { is_expected.to have_db_column :start }
     it { is_expected.to have_db_column :duration }
-    it { is_expected.to have_db_column :activity }
     it { is_expected.to have_db_column :capacity }
     it { is_expected.to have_db_index :start }
     it { is_expected.to have_db_index :duration }
@@ -76,7 +74,8 @@ RSpec.describe ScheduleItem do
 
   describe 'associations' do
     it { is_expected.to belong_to :trainer }
-    it { is_expected.to belong_to :room}
+    it { is_expected.to belong_to :room }
+    it { is_expected.to belong_to :fitness_class }
     it { is_expected.to have_many :reservations }
   end
 

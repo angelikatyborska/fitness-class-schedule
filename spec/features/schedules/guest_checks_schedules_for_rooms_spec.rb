@@ -7,7 +7,6 @@ feature 'Guest check schedules for rooms', js: true do
     create(
       :schedule_item,
       room: small_room,
-      activity: 'ABT',
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 8.hours + 5.minutes,
       capacity: 6
     )
@@ -17,7 +16,6 @@ feature 'Guest check schedules for rooms', js: true do
     create(
       :schedule_item,
       room: small_room,
-      activity: 'Step',
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 8.hours + 15.minutes,
       capacity: 6 )
   end
@@ -26,7 +24,6 @@ feature 'Guest check schedules for rooms', js: true do
     create(
       :schedule_item,
       room: big_room,
-      activity: 'TBC',
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 6.days + 9.hours + 5.minutes,
       capacity: 20
     )
@@ -36,7 +33,6 @@ feature 'Guest check schedules for rooms', js: true do
     create(
       :schedule_item,
       room: big_room,
-      activity: 'Step',
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 6.days + 9.hours + 15.minutes,
       capacity: 20
     )
@@ -53,16 +49,17 @@ feature 'Guest check schedules for rooms', js: true do
   context 'at the beginning of the week' do
     scenario 'all rooms' do
       visit root_path
-      expect(page).to have_link 'ABT'
+      expect(page).to have_link small_schedule_item_this_monday
       expect(page).to have_content '8:05'
-      expect(page).to have_link 'TBC'
+      expect(page).to have_link big_schedule_item_this_sunday
       expect(page).to have_content '9:05'
 
       click_link 'Next week'
       wait_for_ajax
 
-      expect(page).to have_link 'Step'
+      expect(page).to have_link small_schedule_item_next_monday
       expect(page).to have_content '8:15'
+      expect(page).to have_link big_schedule_item_next_sunday
       expect(page).to have_content '9:15'
     end
 
@@ -71,17 +68,18 @@ feature 'Guest check schedules for rooms', js: true do
       click_link 'Locations'
       click_link 'Small room'
 
-      expect(page).to have_link 'ABT'
+      expect(page).to have_link small_schedule_item_this_monday
       expect(page).to have_content '8:05'
 
-      expect(page).not_to have_content 'TBC'
+      expect(page).not_to have_content big_schedule_item_this_sunday
       expect(page).not_to have_content '9:05'
 
       click_link 'Next week'
       wait_for_ajax
 
-      expect(page).to have_link 'Step'
+      expect(page).to have_link small_schedule_item_next_monday
       expect(page).to have_content '8:15'
+      expect(page).not_to have_content big_schedule_item_next_sunday
       expect(page).not_to have_content '9:15'
     end
 
@@ -90,17 +88,18 @@ feature 'Guest check schedules for rooms', js: true do
       click_link 'Locations'
       click_link 'Big room'
 
-      expect(page).not_to have_content 'ABT'
+      expect(page).not_to have_content small_schedule_item_this_monday
       expect(page).not_to have_content '8:05'
 
-      expect(page).to have_link 'TBC'
+      expect(page).to have_link big_schedule_item_this_sunday
       expect(page).to have_content '9:05'
 
       click_link 'Next week'
       wait_for_ajax
 
-      expect(page).to have_link 'Step'
+      expect(page).not_to have_content small_schedule_item_next_monday
       expect(page).not_to have_content '8:15'
+      expect(page).to have_link big_schedule_item_next_sunday
       expect(page).to have_content '9:15'
     end
   end
@@ -109,9 +108,9 @@ feature 'Guest check schedules for rooms', js: true do
     scenario 'all rooms' do
       Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week + 3.days)
       visit root_path
-      expect(page).to have_content 'ABT'
-      expect(page).to have_no_link 'ABT'
-      expect(page).to have_link 'TBC'
+      expect(page).to have_content small_schedule_item_this_monday
+      expect(page).to have_no_link small_schedule_item_this_monday
+      expect(page).to have_link big_schedule_item_this_sunday
     end
   end
 end

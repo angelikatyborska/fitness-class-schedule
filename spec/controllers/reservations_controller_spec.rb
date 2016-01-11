@@ -37,8 +37,11 @@ RSpec.describe ReservationsController do
       describe 'GET #index' do
         subject { get :index, user_id: other_user.id }
 
-        it { expect(controller.reservations).to eq other_user.reservations }
         it { is_expected.to render_template :index }
+
+        it 'exposes current user\'s reservations' do
+          expect(controller.reservations).to eq other_user.reservations
+        end
       end
 
       describe 'DELETE #destroy' do

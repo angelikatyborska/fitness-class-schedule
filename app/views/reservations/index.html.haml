@@ -1,5 +1,5 @@
 ReservationsController#index
 - reservations.each do |reservation|
   %li
-    = "#{l(reservation.schedule_item.start.in_website_time_zone, format: :simple_time)} #{reservation.schedule_item.activity}"
+    = "#{l(reservation.schedule_item.start.in_website_time_zone, format: :simple_time)} #{reservation.schedule_item.fitness_class.name}"
     = link_to t('reservation.delete'), user_reservation_path(current_user, reservation), method: :delete, remote: true, class: 'button'

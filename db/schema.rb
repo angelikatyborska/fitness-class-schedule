@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151230150941) do
+ActiveRecord::Schema.define(version: 20160111145247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,12 @@ ActiveRecord::Schema.define(version: 20151230150941) do
   end
 
   add_index "configurables", ["name"], name: "index_configurables_on_name", using: :btree
+
+  create_table "fitness_classes", force: :cascade do |t|
+    t.string "name"
+    t.text   "description"
+    t.string "color"
+  end
 
   create_table "reservations", force: :cascade do |t|
     t.integer  "user_id"
@@ -58,15 +64,16 @@ ActiveRecord::Schema.define(version: 20151230150941) do
   create_table "schedule_items", force: :cascade do |t|
     t.datetime "start"
     t.integer  "duration"
-    t.string   "activity"
     t.integer  "capacity"
     t.integer  "trainer_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "room_id"
+    t.integer  "fitness_class_id"
   end
 
   add_index "schedule_items", ["duration"], name: "index_schedule_items_on_duration", using: :btree
+  add_index "schedule_items", ["fitness_class_id"], name: "index_schedule_items_on_fitness_class_id", using: :btree
   add_index "schedule_items", ["room_id"], name: "index_schedule_items_on_room_id", using: :btree
   add_index "schedule_items", ["start"], name: "index_schedule_items_on_start", using: :btree
   add_index "schedule_items", ["trainer_id"], name: "index_schedule_items_on_trainer_id", using: :btree
@@ -105,6 +112,7 @@ ActiveRecord::Schema.define(version: 20151230150941) do
 
   add_foreign_key "reservations", "schedule_items"
   add_foreign_key "reservations", "users"
+  add_foreign_key "schedule_items", "fitness_classes"
   add_foreign_key "schedule_items", "rooms"
   add_foreign_key "schedule_items", "trainers"
 end

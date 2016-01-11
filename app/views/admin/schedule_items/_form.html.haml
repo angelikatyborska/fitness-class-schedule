@@ -11,12 +11,12 @@
         = f.input :capacity
     .row
       .medium-12.columns
-        = f.input :activity
+        = f.association :fitness_class, collection: FitnessClass.all, value_method: :id, include_blank: false
     .row
       .medium-6.columns
-        = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
+        = f.association :trainer, collection: trainers, value_method: :id, include_blank: false
       .medium-6.columns
-        = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
+        = f.association :room, collection: rooms, value_method: :id, include_blank: false
   .form-actions
     .row
       .medium-12.columns

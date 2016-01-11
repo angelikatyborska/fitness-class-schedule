@@ -68,7 +68,7 @@ en:
       room: 'Room'
       capacity: 'Capacity'
       spots_left: 'Spots left'
-      activity: 'Activity'
+      fitness_class: 'Class'
     prev_week: 'Prev week'
     next_week: 'Next week'
     this_week: 'This week'

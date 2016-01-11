@@ -13,7 +13,7 @@ feature 'Guest check schedule item details', js: true do
 
   scenario '' do
     visit root_path
-    click_link schedule_item.activity
+    click_link schedule_item
     wait_for_ajax
     expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)
     expect(page).to have_content schedule_item.room.name

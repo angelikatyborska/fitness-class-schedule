@@ -10,7 +10,7 @@
       %th
         = t('schedule_item.attributes.end')
       %th
-        = t('schedule_item.attributes.activity')
+        = t('schedule_item.attributes.fitness_class')
       %th
         = t('schedule_item.attributes.capacity')
       %th
@@ -29,7 +29,7 @@
         %td
           = l(item.stop.in_website_time_zone, format: :simple_time)
         %td
-          = item.activity
+          = item.fitness_class.name
         %td
           = item.capacity
         %td

@@ -131,7 +131,7 @@ $reserved-check-size: 18px;
           padding: 5px;
           font-size: $paragraph-aside-font-size;
           color: $white;
-          background-color: lightsalmon;
+          background-color: $topbar-bg;
 
           &.stale {
             position: relative;
@@ -172,7 +172,7 @@ $reserved-check-size: 18px;
           }
         }
 
-        .item-hours, .item-activity {
+        .item-hours, .item-class {
           display: block;
           position: relative;
           overflow: hidden;
@@ -184,7 +184,7 @@ $reserved-check-size: 18px;
           font-size: 80%;
         }
 
-        .item-activity {
+        .item-class {
           font-weight: bold;
         }
       }

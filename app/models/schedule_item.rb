@@ -1,21 +1,22 @@
 class ScheduleItem < ActiveRecord::Base
   belongs_to :trainer
   belongs_to :room
+  belongs_to :fitness_class
   has_many :reservations, dependent: :destroy
   has_many :users, through: :reservations
 
   validates :trainer, presence: true
   validates :room, presence: true
   validates :start, presence: true
+  validates :fitness_class, presence: true
   validates :duration, presence: true, numericality: { greater_than: 0 }
   validates :trainer, presence: true
-  validates :activity, presence: true, inclusion: { in: proc { activities } }
   validates :capacity, presence: true, numericality: { greater_than: 0 }
   validate :start_cant_be_in_the_past
   validate :room_cant_be_already_occupied
   validate :trainer_cant_be_already_occupied
 
-  default_scope { includes(:reservations) }
+  default_scope { includes(:reservations, :fitness_class) }
   scope :week, -> (time = Time.zone.now) { where('start >= ? AND start < ?', time.beginning_of_week, time.beginning_of_week + 1.week)}
 
   def start_cant_be_in_the_past
@@ -34,6 +35,10 @@ class ScheduleItem < ActiveRecord::Base
     unless start.nil? || duration.nil? || trainer.nil?
       errors.add(:trainer, I18n.t('errors.occupied')) if trainer.occupied?(start, stop, except: self)
     end
+  end
+
+  def to_s
+    fitness_class.name
   end
 
   def stale?
@@ -76,10 +81,6 @@ class ScheduleItem < ActiveRecord::Base
 
   def self.day_duration_in_hours
     day_duration_in_quarters / 4
-  end
-
-  def self.activities
-    %w(ABT TBC Step)
   end
 
   private

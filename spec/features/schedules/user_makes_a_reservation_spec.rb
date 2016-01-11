@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User makes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT', capacity: 1) }
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, capacity: 1) }
   let!(:user) { create(:user) }
 
   before :all do
@@ -14,7 +14,7 @@ feature 'User makes a reservation', js: true do
 
   scenario 'without logging in' do
     visit root_path
-    click_link 'ABT'
+    click_link schedule_item
     expect(page).not_to have_content 'Reserve'
   end
 
@@ -23,7 +23,7 @@ feature 'User makes a reservation', js: true do
       scenario 'adds reservation' do
         log_in user
         visit root_path
-        click_link 'ABT'
+        click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Reserve']")
         expect {
           click_button 'Reserve'
@@ -39,7 +39,7 @@ feature 'User makes a reservation', js: true do
       scenario 'adds to waiting list' do
         log_in user
         visit root_path
-        click_link 'ABT'
+        click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Add to waiting list']")
         expect {
           click_button 'Add to waiting list'

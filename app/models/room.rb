@@ -4,4 +4,8 @@ class Room < ActiveRecord::Base
   validates :name, presence: true
 
   include Occupiable
+
+  def to_s
+    name
+  end
 end

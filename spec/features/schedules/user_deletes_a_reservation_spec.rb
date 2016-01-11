@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User deletes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT') }
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
   let!(:user) { create(:user) }
   let!(:reservation) { create(:reservation, user: user, schedule_item: schedule_item) }
 
@@ -29,7 +29,7 @@ feature 'User deletes a reservation', js: true do
   scenario 'via schedule item dialog box' do
     log_in user
     visit root_path
-    click_link schedule_item.activity
+    click_link schedule_item
     expect(page).to have_link 'Cancel'
     expect {
       click_link 'Cancel'

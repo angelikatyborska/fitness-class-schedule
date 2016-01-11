@@ -1,6 +1,6 @@
 .schedule-item
   %span.title
-    = "#{ schedule_item.activity } (#{ schedule_item.trainer.first_name })"
+    = "#{ schedule_item.fitness_class.name } (#{ schedule_item.trainer.first_name })"
   %span.details
     = "#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)}, #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') } (#{ schedule_item.room.name })"
   %span.details

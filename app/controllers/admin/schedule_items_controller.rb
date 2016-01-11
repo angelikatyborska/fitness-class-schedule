@@ -31,7 +31,7 @@ class Admin::ScheduleItemsController < Admin::AdminApplicationController
   private
 
   def schedule_item_params
-    params.require(:schedule_item).permit(:start, :duration, :trainer_id, :room_id, :activity, :capacity)
+    params.require(:schedule_item).permit(:start, :duration, :trainer_id, :room_id, :fitness_class_id, :capacity)
   end
 
   def convert_start_to_website_time_zone

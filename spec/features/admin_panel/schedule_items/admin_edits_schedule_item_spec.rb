@@ -1,7 +1,9 @@
 require'rails_helper'
 
 feature 'Admin edits a schedule item', js: true do
-  let!(:schedule_item) { create(:schedule_item, activity: 'ABT') }
+  let!(:abt) { create(:fitness_class, name: 'ABT') }
+  let!(:tbc) { create(:fitness_class, name: 'TBC') }
+  let!(:schedule_item) { create(:schedule_item, fitness_class: abt) }
   let!(:admin) { create(:admin_user) }
 
   background do
@@ -19,7 +21,7 @@ feature 'Admin edits a schedule item', js: true do
     click_link 'Edit'
 
     expect {
-      fill_in 'Activity', with: 'TBC'
+      select 'TBC', from: 'Fitness class'
       click_button 'Save'
       wait_for_ajax
     }.to change(ScheduleItem, :count).by(0)

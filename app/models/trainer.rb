@@ -5,4 +5,8 @@ class Trainer < ActiveRecord::Base
   validates :description, presence: true
 
   include Occupiable
+
+  def to_s
+    first_name
+  end
 end
