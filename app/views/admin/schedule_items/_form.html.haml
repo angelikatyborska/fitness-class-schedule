@@ -1,21 +1,23 @@
 = simple_form_for [:admin, schedule_item] do |f|
-  .row
-    .medium-12.columns
-      - selected = schedule_item.start ? schedule_item.start.in_website_time_zone : Time.zone.now.in_website_time_zone
-      = f.input :start, start_year: Time.zone.now.in_website_time_zone.year, end_year: Time.zone.now.in_website_time_zone.year + 1, selected: selected
-  .row
-    .medium-6.columns
-      = f.input :duration
-    .medium-6.columns
-      = f.input :capacity
-  .row
-    .medium-12.columns
-      = f.input :activity
-  .row
-    .medium-6.columns
-      = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
-    .medium-6.columns
-      = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
-  .row
-    .medium-12.columns
-      = f.button :submit, t('shared.save')
+  .form-inputs
+    .row
+      .medium-12.columns
+        - selected = schedule_item.start ? schedule_item.start.in_website_time_zone : Time.zone.now.in_website_time_zone
+        = f.input :start, start_year: Time.zone.now.in_website_time_zone.year, end_year: Time.zone.now.in_website_time_zone.year + 1, selected: selected
+    .row
+      .medium-6.columns
+        = f.input :duration
+      .medium-6.columns
+        = f.input :capacity
+    .row
+      .medium-12.columns
+        = f.input :activity
+    .row
+      .medium-6.columns
+        = f.association :trainer, collection: trainers, label_method: :first_name, value_method: :id, include_blank: false
+      .medium-6.columns
+        = f.association :room, collection: rooms, label_method: :name, value_method: :id, include_blank: false
+  .form-actions
+    .row
+      .medium-12.columns
+        = f.button :submit, t('shared.save')

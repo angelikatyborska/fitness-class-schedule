@@ -4,13 +4,15 @@ $fa-font-path: '/assets';
 'foundation/scss/normalize',
 'foundation/scss/foundation',
 'font-awesome/scss/font-awesome',
+'datetimepicker/jquery.datetimepicker.css',
 
 'utilities/colors',
 'utilities/mixins',
 'utilities/base',
-'components/checkbox',
 
+'components/checkbox',
 'components/overlay',
+'components/datetimepicker',
 'components/forms',
 'components/schedule_table',
 'components/schedule_item';

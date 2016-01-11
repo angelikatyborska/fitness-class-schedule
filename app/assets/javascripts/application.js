@@ -18,9 +18,16 @@
 //= require jquery.cookie/jquery.cookie.js
 //= require modernizr/modernizr.js
 //= require foundation/js/foundation.min.js
+//= require datetimepicker/jquery.datetimepicker.js
 //= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
   $(document).foundation();
+  $('.datetimepicker').datetimepicker({
+    format: 'Y-m-d H:i',
+    defaultTime: '00:00',
+    mask: true
+  });
 });
+

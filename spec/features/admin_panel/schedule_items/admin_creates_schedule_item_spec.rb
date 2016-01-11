@@ -17,7 +17,7 @@ feature 'Admin creates a schedule item', js: true do
 
   scenario 'with valid input' do
     expect {
-      select_time tomorrow, from: 'schedule_item_start'
+      select_datetime tomorrow, from: 'schedule_item_start'
 
       fill_in 'Duration', with: 45
       fill_in 'Capacity', with: 10
@@ -33,7 +33,7 @@ feature 'Admin creates a schedule item', js: true do
 
   scenario 'with invalid input' do
     expect {
-      select_time (tomorrow - 2.days), from: 'schedule_item_start'
+      select_datetime (tomorrow - 2.days), from: 'schedule_item_start'
 
       fill_in 'Duration', with: 45
       fill_in 'Capacity', with: 10

@@ -1,7 +1,14 @@
 form {
+  max-width: 640px;
+  margin: 10px auto;
+
   .form-inputs {
     margin-bottom: 10px;
     min-width: 300px;
+  }
+
+  .form-actions {
+    text-align: center;
   }
 
   .error {
@@ -11,9 +18,15 @@ form {
       color: $alert-color;
       background: transparent;
     }
+
+    label,
+    label.error {
+      color: inherit;
+    }
   }
 
   .form-errors {
+    margin-bottom: 10px;
     color: $alert-color;
   }
 }

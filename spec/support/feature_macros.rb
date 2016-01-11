@@ -6,18 +6,10 @@ module FeatureMacros
     select option_text, from: field
   end
 
-  def select_date(date, options = {})
-    field = options[:from]
-    select date.in_website_time_zone.year.to_s, from: "#{field}_1i"
-    select_by_id date.in_website_time_zone.month, from: "#{field}_2i"
-    select_by_id date.in_website_time_zone.day, from: "#{field}_3i"
-  end
-
-  def select_time(date, options = {})
-    field = options[:from]
-    select_date(date, options)
-    select date.in_website_time_zone.hour.to_s.rjust(2, '0'), from: "#{field}_4i"
-    select date.in_website_time_zone.min.to_s.rjust(2, '0'), from: "#{field}_5i"
+  def select_datetime(date, options = {})
+    find("##{ options[:from] }")
+    script = "$('##{ options[:from] }').val('#{ I18n.l(date.in_website_time_zone, format: :datetimepicker) }')"
+    page.execute_script(script)
   end
 
   def log_in(user)
