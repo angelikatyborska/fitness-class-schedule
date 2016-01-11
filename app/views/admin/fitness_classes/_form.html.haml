@@ -4,10 +4,10 @@
       .medium-5.columns
         = f.input :name
       .medium-6.columns
-        = f.input :color
+        = f.input :color, as: :color
     .row
       .medium-12.columns
-        = f.input :description
+        = f.input :description, :input_html => { rows: 5 }
   .form-actions
     .row
       .medium-12.columns

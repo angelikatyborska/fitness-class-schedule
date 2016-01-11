@@ -1,18 +1,22 @@
 $fa-font-path: '/assets';
 
-@import 'utilities/foundation_settings',
+@import 'overrides/foundation_settings',
 'foundation/scss/normalize',
 'foundation/scss/foundation',
 'font-awesome/scss/font-awesome',
 'datetimepicker/jquery.datetimepicker.css',
+'jquery-ui/themes/ui-lightness/jquery-ui.css',
+'colorpicker/jquery.colorpicker.css',
 
 'utilities/colors',
 'utilities/mixins',
 'utilities/base',
 
+'overrides/datetimepicker',
+'overrides/colorpicker',
+
 'components/checkbox',
 'components/overlay',
-'components/datetimepicker',
 'components/forms',
 'components/fitness_classes',
 'components/schedule_table',

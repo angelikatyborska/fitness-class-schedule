@@ -1,0 +1,60 @@
+// This file overrides styles in vendor/assets/components/colorpicker/jquery.colorpicker.css
+
+// those styles get overridden by the foundation reset, so they need to be re-applied with higher specificity
+.ui-colorpicker {
+  table tr:nth-of-type(2n) {
+    background-color: transparent;
+  }
+
+  input {
+    margin: 0;
+    height: auto;
+    padding: 0.2em;
+
+    + label {
+      margin-right: 0;
+    }
+  }
+
+  &.ui-widget {
+    input,
+    select,
+    textarea,
+    button,
+    label {
+      display: inline-block;
+      font-size: 12px;
+      line-height: 12px;
+    }
+  }
+
+  &.ui-widget {
+    button {
+      @include button(0.25rem, $topbar-bg);
+
+      margin: 0 0 10px 10px;
+      background-image: none;
+    }
+  }
+
+  .ui-colorpicker-number {
+    margin: 0.1em;
+    width: 4em;
+  }
+
+  .ui-colorpicker-hex {
+    input {
+      width: auto;
+    }
+  }
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+  padding: 10px;
+}
+
+.ui-widget-content {
+  border: 0;
+  border-radius: 0;
+  background: $ghost;
+}

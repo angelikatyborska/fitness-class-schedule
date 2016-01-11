@@ -12,6 +12,7 @@
 //
 //= require jquery/dist/jquery.min.js
 //= require jquery.turbolinks
+//= require jquery-ui/jquery-ui.min.js
 //= require jquery-ujs/src/rails.js
 //= require fastclick/lib/fastclick.js
 //= require jquery-placeholder/jquery.placeholder.js
@@ -19,15 +20,21 @@
 //= require modernizr/modernizr.js
 //= require foundation/js/foundation.min.js
 //= require datetimepicker/jquery.datetimepicker.js
+//= require colorpicker/jquery.colorpicker.js
 //= require turbolinks
 //= require_tree .
 
 $(document).ready(function() {
   $(document).foundation();
+
   $('.datetimepicker').datetimepicker({
     format: 'Y-m-d H:i',
     defaultTime: '00:00',
     mask: true
+  });
+
+  $('.colorpicker').colorpicker({
+    colorFormat: '#HEX'
   });
 });
 
