@@ -19,5 +19,7 @@ feature 'Guest check schedule item details', js: true do
     expect(page).to have_content schedule_item.room.name
     expect(page).to have_content schedule_item.duration
     expect(page).to have_content schedule_item.trainer.first_name
+    expect(page).to have_content schedule_item.capacity
+    expect(page).to have_content schedule_item.spots_left
   end
 end

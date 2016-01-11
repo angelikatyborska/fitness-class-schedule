@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'User makes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT') }
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, activity: 'ABT', capacity: 1) }
   let!(:user) { create(:user) }
 
   before :all do
@@ -18,15 +18,35 @@ feature 'User makes a reservation', js: true do
     expect(page).not_to have_content 'Reserve'
   end
 
-  scenario 'with logging in' do
-    log_in user
-    visit root_path
-    click_link 'ABT'
-    expect(page).to have_selector("input[type=submit][value='Reserve']")
-    expect {
-      click_button 'Reserve'
-      wait_for_ajax
-    }.to change(user.reservations, :count).by(1)
-    expect(page).to have_content 'Your reservation has been added.'
+  context 'with logging in' do
+    context 'when there are empty spots' do
+      scenario 'adds reservation' do
+        log_in user
+        visit root_path
+        click_link 'ABT'
+        expect(page).to have_selector("input[type=submit][value='Reserve']")
+        expect {
+          click_button 'Reserve'
+          wait_for_ajax
+        }.to change(user.reservations, :count).by(1)
+        expect(page).to have_content 'Your reservation has been added.'
+      end
+    end
+
+    context 'when there are no empty spots' do
+      let!(:other_reservation) { create(:reservation, schedule_item: schedule_item) }
+
+      scenario 'adds to waiting list' do
+        log_in user
+        visit root_path
+        click_link 'ABT'
+        expect(page).to have_selector("input[type=submit][value='Add to waiting list']")
+        expect {
+          click_button 'Add to waiting list'
+          wait_for_ajax
+        }.to change(user.reservations, :count).by(1)
+        expect(page).to have_content 'Your reservation has been added.'
+      end
+    end
   end
 end

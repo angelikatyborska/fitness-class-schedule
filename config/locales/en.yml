@@ -24,9 +24,9 @@ en:
     unlocks:
       unlocked: "Your account has been unlocked successfully. Please log in to continue."
       didnt_receive_instructions: "Didn't receive confirmation instructions?"
-  errors:
-    messages:
-      already_confirmed: "was already confirmed, please try logging in"
+    errors:
+      messages:
+        already_confirmed: "was already confirmed, please try logging in"
   time:
     formats:
       simple_time: '%H:%M'
@@ -41,7 +41,6 @@ en:
       cant_end_after_day_end: "can't be that late"
     reservation:
       cant_make_reservations_in_the_past: "can't make reservations for items from the past"
-      cant_make_reservations_for_full_items: 'schedule_item capacity exceeded'
       cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"
     occupied: "is already occupied at this time"
   shared:
@@ -84,6 +83,7 @@ en:
     deleted: 'Your reservation has been deleted.'
     delete: 'Cancel'
     queue: 'Add to waiting list'
+    emtpy_spots: 'Empty spots'
   user:
     login: 'Log in'
     logout: 'Log out'

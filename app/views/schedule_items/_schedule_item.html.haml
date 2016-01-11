@@ -3,6 +3,8 @@
     = "#{ schedule_item.activity } (#{ schedule_item.trainer.first_name })"
   %span.details
     = "#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)}, #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') } (#{ schedule_item.room.name })"
+  %span.details
+    = "#{ t('reservation.emtpy_spots')}: #{ schedule_item.spots_left } / #{ schedule_item.capacity }"
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)
       = link_to t('reservation.delete'), user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)), method: :delete, remote: true, class: 'button button-delete'

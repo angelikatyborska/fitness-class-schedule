@@ -15,20 +15,6 @@ RSpec.describe Reservation do
       end
     end
 
-    context 'with schedule_items that can\'t accept any more users' do
-      before :all do
-        @full_schedule_item = create(:schedule_item, capacity: 1)
-        create(:reservation, schedule_item: @full_schedule_item)
-      end
-
-      subject { build(:reservation, schedule_item: @full_schedule_item) }
-
-      it 'is invalid' do
-        is_expected.to be_invalid
-        expect(subject.errors[:schedule_item]).to include('schedule_item capacity exceeded')
-      end
-    end
-
     # this could be tested using shoulda-matcher validate_uniqueness_of().scoped_to(), but it doesn't work for some reason
     context 'with user having already made a reservation for this schedule item' do
       let!(:schedule_item) { create(:schedule_item) }
@@ -87,6 +73,34 @@ RSpec.describe Reservation do
         expect(reservations[0].reload.queue_position).to eq 1
         expect(reservations[2].reload.queue_position).to eq 1
         expect(reservations[3].reload.queue_position).to eq 1
+      end
+    end
+  end
+
+  describe '#status' do
+    let!(:schedule_item_with_one_spot) { create(:schedule_item, capacity: 1) }
+
+    context 'created for a schedule item with empty spots' do
+      let!(:reservation) { create(:reservation, schedule_item: schedule_item_with_one_spot) }
+
+      subject { reservation.status }
+      it { is_expected.to eq 'active' }
+    end
+
+    context 'created for a schedule item with no empty spots' do
+      let!(:other_reservation) { create(:reservation, schedule_item: schedule_item_with_one_spot) }
+      let!(:reservation) { create(:reservation, schedule_item: schedule_item_with_one_spot) }
+
+      subject { reservation.reload.status }
+
+      it { is_expected.to eq 'queued' }
+
+      context 'a spot becomes available' do
+        before :each do
+          other_reservation.destroy
+        end
+
+        it { is_expected.to eq 'active' }
       end
     end
   end
