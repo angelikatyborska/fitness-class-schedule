@@ -68,6 +68,7 @@ $reserved-check-size: 18px;
 }
 
 .schedule {
+  overflow: hidden;
   background-color: $schedule-hour-light;
 
   .week {

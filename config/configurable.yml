@@ -32,6 +32,11 @@
 #   default: secret
 #   type: password
 
+site_title:
+  name: Site title
+  default: My Fitness Club
+  type: string
+
 day_start:
   name: Day Start
   default: 8
