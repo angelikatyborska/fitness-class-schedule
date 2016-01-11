@@ -1,0 +1,59 @@
+ul.actions {
+  margin: 0;
+  list-style: none;
+
+  li {
+    float: left;
+    padding: 0 5px;
+  }
+}
+
+.create,
+.edit,
+.delete,
+.save {
+  @include hide-text;
+
+  &:before {
+    @include fa-icon;
+
+    font-size: $paragraph-font-size;
+    color: $body-font-color
+  }
+}
+
+.create {
+  &:before {
+    content: $fa-var-plus;
+  }
+}
+
+.edit {
+  &:before {
+    content: $fa-var-pencil;
+  }
+}
+
+.delete {
+  &:before {
+    content: $fa-var-trash;
+  }
+}
+
+.save {
+  &:before {
+    content: $fa-var-save;
+  }
+}
+
+
+.button {
+  &.create,
+  &.edit,
+  &.delete,
+  &.save {
+    &:before {
+      color: $white;
+    }
+  }
+}

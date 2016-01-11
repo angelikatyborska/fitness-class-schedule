@@ -50,13 +50,15 @@ $overlay-close-size: 23px;
     border-radius: 0;
 
     &:before {
+      @include fa-icon;
+
       content: '\00d7';
       position: absolute;
       top: 2px;
       right: 0;
       left: 0;
       text-align: center;
-      text-indent: 0;
+      color: $white;
     }
   }
 }

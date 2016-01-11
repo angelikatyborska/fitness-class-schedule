@@ -17,4 +17,5 @@
   .form-actions
     .row
       .medium-12.columns
-        = submit_tag t('shared.save'), class: 'button'
+        = content_tag :button, type: :submit, class: 'button save' do
+          = t('shared.save')

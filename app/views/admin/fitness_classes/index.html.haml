@@ -1,4 +1,4 @@
-= link_to t('shared.create'), new_admin_fitness_class_path, class: 'button'
+= link_to t('shared.create'), new_admin_fitness_class_path, class: 'button create'
 
 %table
   %thead
@@ -18,8 +18,8 @@
         %td
           = fitness_class.description
         %td
-          %ul
+          %ul.actions
             %li
-              = link_to t('shared.edit'), edit_admin_fitness_class_path(fitness_class)
+              = link_to t('shared.edit'), edit_admin_fitness_class_path(fitness_class), class: 'edit'
             %li
-              = link_to t('shared.delete'), admin_fitness_class_path(fitness_class), method: :delete, data: { confirm: t('shared.confirm') }
+              = link_to t('shared.delete'), admin_fitness_class_path(fitness_class), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
