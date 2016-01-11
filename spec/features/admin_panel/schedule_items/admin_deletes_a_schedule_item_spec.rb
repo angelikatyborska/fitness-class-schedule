@@ -1,4 +1,4 @@
-require'rails_helper'
+require 'rails_helper'
 
 feature 'Admin deletes a schedule item', js: true do
   let!(:schedule_item) { create(:schedule_item) }

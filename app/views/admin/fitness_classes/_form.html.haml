@@ -1,0 +1,14 @@
+= simple_form_for [:admin, fitness_class] do |f|
+  .form-inputs
+    .row
+      .medium-5.columns
+        = f.input :name
+      .medium-6.columns
+        = f.input :color
+    .row
+      .medium-12.columns
+        = f.input :description
+  .form-actions
+    .row
+      .medium-12.columns
+        = f.button :submit, t('shared.save')

@@ -55,6 +55,12 @@ en:
     create: 'Add'
     save: 'Save'
     confirm: 'Are you sure?'
+  fitness_class:
+    name: 'Class'
+    attributes:
+      name: 'Name'
+      description: 'Description'
+      color: 'Color'
   schedule_item:
     name: 'Schedule item'
     attributes:

@@ -1,4 +1,4 @@
-require'rails_helper'
+require 'rails_helper'
 
 feature 'Admin edits a schedule item', js: true do
   let!(:abt) { create(:fitness_class, name: 'ABT') }

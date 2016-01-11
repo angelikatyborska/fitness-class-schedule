@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
-    resources :schedule_items
+    resources :schedule_items, except: :show
+    resources :fitness_classes, except: :show
   end
 
   root to: 'rooms#index'
