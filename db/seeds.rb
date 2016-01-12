@@ -48,8 +48,10 @@ spinning_classes =
   )
 end
 
-tomorrow = Time.zone.now + 1.day
+beginning_of_week = Time.zone.now.beginning_of_week
 available_hours = (0...(ScheduleItem.day_duration_in_hours)).to_a
+
+Timecop.freeze(beginning_of_week)
 
 room_classes_pairings = [
   { room: fitness_hall, classes: fitness_classes},
@@ -60,7 +62,7 @@ room_classes_pairings.each_with_index do |pairing, index|
   10.times do |days|
     available_hours.sample(available_hours.length * 1 / 2).each do |hours|
       ScheduleItem.create!(
-        start: ScheduleItem.beginning_of_day(tomorrow) + days.days + hours.hours,
+        start: ScheduleItem.beginning_of_day(beginning_of_week) + days.days + hours.hours,
         duration: 45,
         fitness_class: pairing[:classes].sample,
         trainer: Trainer.all[index * 3..(index * 3 + 1)].sample,
@@ -70,5 +72,7 @@ room_classes_pairings.each_with_index do |pairing, index|
     end
   end
 end
+
+Timecop.return
 
 puts "Seeds: done"

@@ -136,6 +136,7 @@ $reserved-check-size: 18px;
 
           &.stale {
             position: relative;
+            color: $gainsboro;
 
             &:before {
               content: '';
@@ -146,8 +147,8 @@ $reserved-check-size: 18px;
               right: 0;
               bottom: 0;
               left: 0;
-              opacity: 0.7;
-              background-color: $dark-grey;
+              opacity: 0.8;
+              background-color: $base;
             }
           }
 

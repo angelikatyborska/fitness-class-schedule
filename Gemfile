@@ -20,6 +20,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.4.0'
   gem 'factory_girl_rails', '~> 4.5.0'
   gem 'faker', '~> 1.6.1'
+  gem 'timecop', '~> 0.8.0'
 end
 
 group :development do
@@ -33,5 +34,4 @@ group :test do
   gem 'launchy', '~> 2.4.3'
   gem 'selenium-webdriver', '~> 2.48.1'
   gem 'shoulda-matchers', '~> 3.0.1'
-  gem 'timecop', '~> 0.8.0'
 end
