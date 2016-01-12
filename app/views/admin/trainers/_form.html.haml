@@ -1,10 +1,9 @@
-= simple_form_for [:admin, fitness_class] do |f|
+= simple_form_for [:admin, trainer] do |f|
   .form-inputs
     .row
       .medium-6.columns
-        = f.input :name
+        = f.input :first_name
       .medium-6.columns
-        = f.input :color, as: :color
     .row
       .medium-12.columns
         = f.input :description, :input_html => { rows: 5 }

@@ -1,5 +1,5 @@
 - if current_user.admin?
-  %li.has-dropdown
+  %li.has-dropdown.admin-panel
     %a{href: '#'}
       = t('user.admin_panel.name')
     %ul.dropdown
@@ -7,5 +7,7 @@
         = link_to t('fitness_class.name').pluralize, admin_fitness_classes_path
       %li
         = link_to t('schedule_item.name').pluralize, admin_schedule_items_path
+      %li
+        = link_to t('trainer.name').pluralize, admin_trainers_path
       %li
         = link_to t('user.admin_panel.settings'), admin_configurable_path

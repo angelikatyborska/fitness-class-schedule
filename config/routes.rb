@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   namespace 'admin' do
     resources :schedule_items, except: :show
     resources :fitness_classes, except: :show
+    resources :trainers, except: :show
   end
 
   root to: 'rooms#index'

@@ -23,7 +23,7 @@ class Admin::FitnessClassesController < Admin::AdminApplicationController
 
   def destroy
     fitness_class.destroy
-    redirect_to admin_fitness_class_path, notice: I18n.t('shared.deleted', resource: I18n.t('fitness_class.name'))
+    redirect_to admin_fitness_classes_path, notice: I18n.t('shared.deleted', resource: I18n.t('fitness_class.name'))
   end
 
   private

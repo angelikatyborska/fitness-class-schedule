@@ -93,6 +93,9 @@ en:
     emtpy_spots: 'Empty spots'
   trainer:
     name: 'Trainer'
+    attributes:
+      first_name: 'First name'
+      description: 'Description'
   user:
     login: 'Log in'
     logout: 'Log out'
