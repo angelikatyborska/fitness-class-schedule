@@ -6,6 +6,8 @@
       %th
         = t('trainer.attributes.first_name')
       %th
+        = t('trainer.attributes.last_name')
+      %th
         = t('trainer.attributes.description')
       %th
         = t('shared.actions')
@@ -14,6 +16,8 @@
       %tr{id: trainer.decorate.css_id}
         %td
           = trainer.first_name
+        %td
+          = trainer.last_name
         %td
           = trainer.description
         %td

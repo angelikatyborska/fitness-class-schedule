@@ -79,12 +79,22 @@ RSpec.describe Admin::ScheduleItemsController do
       end
     end
 
+    describe 'POST #create' do
+      let!(:fitness_class) { create(:fitness_class) }
+      let!(:trainer) { create(:trainer) }
+      let!(:room) { create(:room) }
+      subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
+
+      it {
+        expect { subject }.to change(ScheduleItem, :count).by(1)
+      }
+    end
+
     describe 'DELETE #destroy' do
       let!(:schedule_item) { create(:schedule_item) }
       subject { delete :destroy, id: schedule_item.id }
 
       it { expect { subject }.to change(ScheduleItem, :count).by(-1) }
-
     end
   end
 end

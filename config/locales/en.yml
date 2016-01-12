@@ -95,6 +95,7 @@ en:
     name: 'Trainer'
     attributes:
       first_name: 'First name'
+      last_name: 'Last name'
       description: 'Description'
   user:
     login: 'Log in'

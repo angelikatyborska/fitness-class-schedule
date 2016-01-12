@@ -79,6 +79,12 @@ RSpec.describe Admin::FitnessClassesController do
       end
     end
 
+    describe 'POST #create' do
+      subject { post :create, fitness_class: attributes_for(:fitness_class) }
+
+      it { expect { subject }.to change(FitnessClass, :count).by(1) }
+    end
+
     describe 'DELETE #destroy' do
       let!(:fitness_class) { create(:fitness_class) }
       subject { delete :destroy, id: fitness_class.id }

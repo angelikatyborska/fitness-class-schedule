@@ -79,6 +79,12 @@ RSpec.describe Admin::TrainersController do
       end
     end
 
+    describe 'POST #create' do
+      subject { post :create, trainer: attributes_for(:trainer) }
+
+      it { expect { subject }.to change(Trainer, :count).by(1) }
+    end
+
     describe 'DELETE #destroy' do
       let!(:trainer) { create(:trainer) }
       subject { delete :destroy, id: trainer.id }

@@ -16,7 +16,7 @@ feature 'Admin deletes a trainer', js: true do
       click_link 'Trainers'
     end
 
-    expect(page).to have_content trainer
+    expect(page).to have_content trainer.first_name
     expect(page).to have_content trainer.description
 
     expect {
@@ -27,7 +27,7 @@ feature 'Admin deletes a trainer', js: true do
 
     expect(current_path).to eq admin_trainers_path
 
-    expect(page).not_to have_content trainer
+    expect(page).not_to have_content trainer.first_name
     expect(page).not_to have_content trainer.description
   end
 end
