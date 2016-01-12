@@ -29,6 +29,6 @@ class Admin::TrainersController < Admin::AdminApplicationController
   private
 
   def trainer_params
-    params.require(:trainer).permit(:first_name, :last_name, :description)
+    params.require(:trainer).permit(:first_name, :last_name, :description, :photo)
   end
 end

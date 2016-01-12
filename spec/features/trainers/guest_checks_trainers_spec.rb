@@ -10,8 +10,10 @@ feature 'guest checks trainers' do
 
     expect(page).to have_content 'Ann'
     expect(page).to have_content ann.description
+    page.should have_xpath("//img[@src='#{ ann.photo.url }']")
 
     expect(page).to have_content 'Paul'
     expect(page).to have_content paul.description
+    page.should have_xpath("//img[@src='#{ paul.photo.url }']")
   end
 end

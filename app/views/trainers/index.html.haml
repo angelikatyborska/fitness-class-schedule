@@ -1,8 +1,10 @@
-- trainers.each do |trainer|
-  .row
-    .medium-6.columns
-    .medium-6.columns
-      %h3
-        = trainer
-      %p
-        = trainer.description
+.trainers
+  - trainers.each do |trainer|
+    .row
+      .medium-6.columns
+        = image_tag trainer.photo.url, class: 'trainer-photo'
+      .medium-6.columns
+        %h3
+          = trainer
+        %p
+          = trainer.description

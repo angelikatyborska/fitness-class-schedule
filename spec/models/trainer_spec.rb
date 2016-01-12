@@ -13,6 +13,7 @@ RSpec.describe Trainer do
     it { is_expected.to have_db_column :first_name }
     it { is_expected.to have_db_column :last_name }
     it { is_expected.to have_db_column :description }
+    it { is_expected.to have_db_column :photo }
   end
 
   describe 'associations' do

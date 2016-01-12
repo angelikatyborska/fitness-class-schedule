@@ -4,6 +4,8 @@
   %thead
     %tr
       %th
+        = t('trainer.attributes.photo')
+      %th
         = t('trainer.attributes.first_name')
       %th
         = t('trainer.attributes.last_name')
@@ -14,6 +16,8 @@
   %tbody
     - trainers.each do |trainer|
       %tr{id: trainer.decorate.css_id}
+        %td
+          = image_tag trainer.photo.url, class: 'trainer-photo trainer-photo-thumbnail'
         %td
           = trainer.first_name
         %td

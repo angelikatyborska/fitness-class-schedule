@@ -1,0 +1,14 @@
+.trainer-photo-thumbnail {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.trainers {
+  .row {
+    margin: 10px auto;
+
+    @media #{$large-up} {
+      margin: 20px auto;
+    }
+  }
+}

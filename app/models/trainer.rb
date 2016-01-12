@@ -7,6 +7,8 @@ class Trainer < ActiveRecord::Base
 
   include Occupiable
 
+  mount_uploader :photo, TrainerPhotoUploader
+
   def to_s
     "#{ first_name } #{ last_name[0] }."
   end

@@ -19,6 +19,7 @@ feature 'Admin creates a trainer', js: true do
       fill_in 'First name', with: 'Ann'
       fill_in 'Last name', with: 'Kowalski'
       fill_in 'Description', with: 'A Zumba instructor licensed by Zumba Fitness, LLC.'
+      attach_file 'Photo', Rails.root.join('spec', 'fixtures', 'trainer.png')
       click_button 'Save'
       wait_for_ajax
     }.to change(Trainer, :count).by(1)
