@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     passwords: 'users/passwords'
   }
 
+  resources :trainers, only: [:index]
+
   resources :rooms, only: [:index, :show] do
     collection do
       get :prev_week

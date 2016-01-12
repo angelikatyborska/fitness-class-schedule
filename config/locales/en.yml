@@ -91,6 +91,8 @@ en:
     delete: 'Cancel'
     queue: 'Add to waiting list'
     emtpy_spots: 'Empty spots'
+  trainer:
+    name: 'Trainer'
   user:
     login: 'Log in'
     logout: 'Log out'

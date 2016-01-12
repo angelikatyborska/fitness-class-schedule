@@ -17,6 +17,8 @@
           - rooms.each do |room|
             %li
               = link_to room.name, room_path(room)
+      %li
+        = link_to t('trainer.name').pluralize, trainers_path
     %ul.right
       - if user_signed_in?
         = render 'layouts/top_bar_admin'
