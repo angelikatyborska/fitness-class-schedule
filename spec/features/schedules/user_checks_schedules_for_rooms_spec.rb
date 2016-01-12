@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Guest check schedules for rooms', js: true do
+feature 'User check schedules for rooms', js: true do
   let!(:small_room) { create(:room, name: 'Small room') }
   let!(:big_room) { create(:room, name: 'Big room') }
   let!(:small_schedule_item_this_monday) do

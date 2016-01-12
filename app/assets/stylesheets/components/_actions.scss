@@ -4,7 +4,6 @@ ul.actions {
 
   li {
     float: left;
-    padding: 0 5px;
   }
 }
 
@@ -54,6 +53,17 @@ ul.actions {
   &.save {
     &:before {
       color: $white;
+    }
+  }
+}
+
+:not(.button) {
+  &.create,
+  &.edit,
+  &.delete,
+  &.save {
+    &:before {
+      padding: 0 5px;
     }
   }
 }

@@ -10,15 +10,13 @@ class ScheduleItemsController < ApplicationController
 
   def next_week
     respond_to do |format|
-      format.js { render 'reload_index'
-      }
+      format.js { render 'reload_index' }
     end
   end
 
   def prev_week
     respond_to do |format|
-      format.js { render 'reload_index'
-      }
+      format.js { render 'reload_index' }
     end
   end
 end

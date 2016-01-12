@@ -1,6 +1,9 @@
 .schedule-item
   %span.title
     = "#{ schedule_item.fitness_class.name } (#{ schedule_item.trainer.first_name })"
+    - if current_user && current_user.admin?
+      = link_to t('shared.edit'), edit_admin_schedule_item_path(schedule_item), class: 'edit'
+      = link_to t('shared.delete'), admin_schedule_item_path(schedule_item), method: :delete, data: { confirm: t('shared.confirm') }, remote: true, class: 'delete'
   %span.details
     = "#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)}, #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') } (#{ schedule_item.room.name })"
   %span.details
