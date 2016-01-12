@@ -11,14 +11,19 @@
   %section.top-bar-section
     %ul.left
       %li.has-dropdown
-        %a{href: '#'}
+        %a{ href: rooms_path }
           = t('room.name').pluralize
         %ul.dropdown
           - rooms.each do |room|
             %li
-              = link_to room.name, room_path(room)
-      %li
-        = link_to t('trainer.name').pluralize, trainers_path
+              = link_to room.name, schedule_items_path(room: room.id)
+      %li.has-dropdown
+        %a{ href: trainers_path }
+          = t('trainer.name').pluralize
+        %ul.dropdown
+          - trainers.each do |trainer|
+            %li
+              = link_to trainer, schedule_items_path(trainer: trainer.id)
     %ul.right
       - if user_signed_in?
         = render 'layouts/top_bar_admin'

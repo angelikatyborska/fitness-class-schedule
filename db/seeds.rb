@@ -65,7 +65,7 @@ room_classes_pairings.each_with_index do |pairing, index|
         start: ScheduleItem.beginning_of_day(beginning_of_week) + days.days + hours.hours,
         duration: 45,
         fitness_class: pairing[:classes].sample,
-        trainer: Trainer.all[index * 3..(index * 3 + 1)].sample,
+        trainer: Trainer.all[(index * 3)..(index * 3 + 1)].sample,
         room: pairing[:room],
         capacity: Faker::Number.between(5, 15)
       )

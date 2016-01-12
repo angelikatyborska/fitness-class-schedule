@@ -6,18 +6,12 @@ Rails.application.routes.draw do
   }
 
   resources :trainers, only: [:index]
+  resources :rooms, only: [:index]
 
-  resources :rooms, only: [:index, :show] do
+  resources :schedule_items, only: [:index, :show] do
     collection do
       get :prev_week
       get :next_week
-    end
-
-    resources :schedule_items, only: [:show] do
-      collection do
-        get :prev_week
-        get :next_week
-      end
     end
   end
 
@@ -31,5 +25,5 @@ Rails.application.routes.draw do
     resources :trainers, except: :show
   end
 
-  root to: 'rooms#index'
+  root to: 'schedule_items#index'
 end

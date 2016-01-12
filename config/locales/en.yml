@@ -87,6 +87,7 @@ en:
   room:
     name: 'Location'
     all_rooms: 'All locations'
+    check_out_schedule: 'Check out the schedule for this location'
   reservation:
     name: 'Reservation'
     history: 'Past classes'
@@ -104,6 +105,7 @@ en:
       last_name: 'Last name'
       description: 'Description'
       photo: 'Photo'
+    check_out_schedule: 'Check out my schedule'
   user:
     login: 'Log in'
     logout: 'Log out'

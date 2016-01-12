@@ -1,6 +1,6 @@
 .trainers
   - trainers.each do |trainer|
-    .row
+    .row{ id: trainer.decorate.css_id }
       .medium-6.columns
         = image_tag trainer.photo.url, class: 'trainer-photo'
       .medium-6.columns
@@ -8,3 +8,5 @@
           = trainer
         %p
           = trainer.description
+        %p
+          = link_to t('trainer.check_out_schedule'), schedule_items_path(trainer: trainer.id)

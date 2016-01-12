@@ -65,7 +65,7 @@ feature 'User check schedules for rooms', js: true do
 
     scenario 'the small room' do
       visit root_path
-      click_link 'Locations'
+      find('a', text: 'Locations').hover
       click_link 'Small room'
 
       expect(page).to have_link small_schedule_item_this_monday
@@ -85,7 +85,7 @@ feature 'User check schedules for rooms', js: true do
 
     scenario 'the big room' do
       visit root_path
-      click_link 'Locations'
+      find('a', text: 'Locations').hover
       click_link 'Big room'
 
       expect(page).not_to have_content small_schedule_item_this_monday

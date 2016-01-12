@@ -15,7 +15,7 @@
         = t('shared.actions')
   %tbody
     - trainers.each do |trainer|
-      %tr{id: trainer.decorate.css_id}
+      %tr{ id: trainer.decorate.css_id }
         %td
           = image_tag trainer.photo.url, class: 'trainer-photo trainer-photo-thumbnail'
         %td
