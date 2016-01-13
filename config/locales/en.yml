@@ -61,6 +61,7 @@ en:
     create: 'Add'
     save: 'Save'
     confirm: 'Are you sure?'
+    all: 'All'
   fitness_class:
     name: 'Class'
     attributes:
@@ -83,7 +84,7 @@ en:
       fitness_class: 'Class'
     prev_week: 'Prev week'
     next_week: 'Next week'
-    this_week: 'This week'
+    this_week: 'Today'
   room:
     name: 'Location'
     all_rooms: 'All locations'

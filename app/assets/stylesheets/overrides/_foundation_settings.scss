@@ -73,6 +73,8 @@ $include-html-classes: true;
 // $include-print-styles: true;
 $include-html-global-classes: $include-html-classes;
 
+$font-color-ligtness-boundry: 65%;
+
 // b. Grid
 // - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -96,31 +98,33 @@ $include-html-global-classes: $include-html-classes;
 // $font-weight-bold: bold;
 
 $white       : #FFFFFF;
-// $ghost       : #FAFAFA;
-// $snow        : #F9F9F9;
-// $vapor       : #F6F6F6;
-// $white-smoke : #F5F5F5;
-// $silver      : #EFEFEF;
-// $smoke       : #EEEEEE;
-// $gainsboro   : #DDDDDD;
-// $iron        : #CCCCCC;
-// $base        : #AAAAAA;
-// $aluminum    : #999999;
-// $jumbo       : #888888;
-// $monsoon     : #777777;
-// $steel       : #666666;
-// $charcoal    : #555555;
-// $tuatara     : #444444;
-// $oil         : #333333;
+$ghost       : #FAFAFA;
+$snow        : #F9F9F9;
+$vapor       : #F6F6F6;
+$white-smoke : #F5F5F5;
+$silver      : #EFEFEF;
+$smoke       : #EEEEEE;
+$gainsboro   : #DDDDDD;
+$iron        : #CCCCCC;
+$base        : #AAAAAA;
+$aluminum    : #999999;
+$jumbo       : #888888;
+$monsoon     : #777777;
+$steel       : #666666;
+$charcoal    : #555555;
+$tuatara     : #444444;
+$oil         : #333333;
 $jet         : #222222;
-// $black       : #000000;
+$black       : #000000;
 
 $dark-font-color: $jet;
 $light-font-color: $white;
+$bar-color: color_from_configurables('topbar_bg_color');
 
 // We use these as default colors throughout
 $primary-color: color_from_configurables('primary_color');
-// $secondary-color: #e7e7e7;
+$secondary-color: $white-smoke;
+
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
@@ -456,7 +460,7 @@ $button-med: rem-calc(14);
 // $button-font-family: $body-font-family;
 $button-font-color: $light-font-color;
 
-@if (lightness($primary-color) > 65%) {
+@if (lightness($primary-color) > $font-color-ligtness-boundry) {
   $button-font-color: $dark-font-color;
 }
 
@@ -558,7 +562,7 @@ $button-font-color: $light-font-color;
 // $f-dropdown-margin-bottom: $f-dropdown-margin-top;
 
 // We use this to control the background color
-// $f-dropdown-bg: $white;
+$f-dropdown-bg: $white;
 
 // We use this to set the border styles for dropdowns.
 // $f-dropdown-border-style: solid;
@@ -576,7 +580,7 @@ $button-font-color: $light-font-color;
 // $f-dropdown-font-size: rem-calc(14);
 // $f-dropdown-list-padding: rem-calc(5, 10);
 // $f-dropdown-line-height: rem-calc(18);
-// $f-dropdown-list-hover-bg: $smoke;
+$f-dropdown-list-hover-bg: $snow;
 // $dropdown-mobile-default-float: 0;
 
 // We use this to control the styles for when the dropdown has custom content.
@@ -592,8 +596,14 @@ $button-font-color: $light-font-color;
 // $include-html-button-classes: $include-html-classes;
 
 // We use these to set the color of the pip in dropdown buttons
-// $dropdown-button-pip-color: $white;
-// $dropdown-button-pip-color-alt: $oil;
+$dropdown-button-pip-color: $light-font-color;
+
+@if (lightness($bar-color) > $font-color-ligtness-boundry) {
+  $dropdown-button-pip-color: $dark-font-color;
+}
+
+
+$dropdown-button-pip-color-alt: $dark-font-color;
 
 // We use these to set the size of the pip in dropdown buttons
 // $button-pip-tny: rem-calc(6);
@@ -1411,7 +1421,7 @@ $button-font-color: $light-font-color;
 // $include-html-top-bar-classes: $include-html-classes;
 
 // Background color for the top bar
-$topbar-bg-color: color_from_configurables('topbar_bg_color');
+$topbar-bg-color: $bar-color;
 $topbar-bg: $topbar-bg-color;
 
 // Height and margin
@@ -1426,7 +1436,7 @@ $topbar-bg: $topbar-bg-color;
 
 $topbar-link-color: $light-font-color;
 
-@if (lightness($topbar-bg-color) > 65%) {
+@if (lightness($bar-color) > $font-color-ligtness-boundry) {
   $topbar-link-color: $dark-font-color;
 }
 

@@ -14,7 +14,7 @@ feature 'User check schedules for rooms', js: true do
 
   scenario do
     visit root_path
-    find('a', text: 'Trainers').hover
+    click_button 'Trainer'
     click_link schedule_item.trainer
 
     expect(page).to have_content schedule_item

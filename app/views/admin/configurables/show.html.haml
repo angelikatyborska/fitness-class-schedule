@@ -16,11 +16,11 @@
         = select_tag 'day_end', options_from_collection_for_select((1..24), 'to_s', 'to_s', Configurable.day_end), autocomplete: :off
     .row
       .medium-6.columns
-        = label_tag 'primary_color', t('user.admin_panel.primary_color')
-        = text_field_tag 'primary_color', Configurable.primary_color, class: 'colorpicker'
-      .medium-6.columns
         = label_tag 'topbar_bg_color', t('user.admin_panel.topbar_bg_color')
         = text_field_tag 'topbar_bg_color', Configurable.topbar_bg_color, class: 'colorpicker'
+      .medium-6.columns
+        = label_tag 'primary_color', t('user.admin_panel.primary_color')
+        = text_field_tag 'primary_color', Configurable.primary_color, class: 'colorpicker'
   .form-actions
     .row
       .medium-12.columns

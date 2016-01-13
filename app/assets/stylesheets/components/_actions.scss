@@ -60,6 +60,7 @@ ul.actions {
   &.delete,
   &.save {
     &:before {
+      font-size: 20px;
       color: $button-font-color;
     }
   }
@@ -72,7 +73,7 @@ ul.actions {
   &.delete,
   &.save {
     &:before {
-      padding: 0 5px;
+      padding: 0 $padding-tiny;
     }
   }
 }

@@ -5,10 +5,10 @@
 
 .trainers {
   .row {
-    margin: 10px auto;
+    margin: $padding-small auto;
 
     @media #{$large-up} {
-      margin: 20px auto;
+      margin: $padding-medium auto;
     }
   }
 }
