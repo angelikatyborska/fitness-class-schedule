@@ -1,8 +1,11 @@
 = link_to t('shared.create'), new_admin_schedule_item_path, class: 'button create'
 
+-# TODO: scope by upcoming and past classes
 %table
   %thead
     %tr
+      %th
+        = t('schedule_item.attributes.fitness_class')
       %th
         = t('schedule_item.attributes.date')
       %th
@@ -10,9 +13,9 @@
       %th
         = t('schedule_item.attributes.end')
       %th
-        = t('schedule_item.attributes.fitness_class')
-      %th
         = t('schedule_item.attributes.capacity')
+      %th
+        = t('reservation.name').pluralize
       %th
         = t('schedule_item.attributes.trainer')
       %th
@@ -22,6 +25,9 @@
   %tbody
     - schedule_items.each do |item|
       %tr{id: item.decorate.css_id}
+        %td.fitness-class-name
+          %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
+          = item.fitness_class.name
         %td
           = l(item.start.in_website_time_zone, format: :simple_date)
         %td
@@ -29,9 +35,9 @@
         %td
           = l(item.stop.in_website_time_zone, format: :simple_time)
         %td
-          = item.fitness_class.name
-        %td
           = item.capacity
+        %td
+          = item.reservations.count
         %td
           = item.trainer.first_name
         %td
