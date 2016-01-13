@@ -1,32 +1,37 @@
-= link_to t('shared.create'), new_admin_trainer_path, class: 'button create'
-
-%table
-  %thead
-    %tr
-      %th
-        = t('trainer.attributes.photo')
-      %th
-        = t('trainer.attributes.first_name')
-      %th
-        = t('trainer.attributes.last_name')
-      %th
-        = t('trainer.attributes.description')
-      %th
-        = t('shared.actions')
-  %tbody
-    - trainers.each do |trainer|
-      %tr{ id: trainer.decorate.css_id }
-        %td
-          = image_tag trainer.photo.url, class: 'trainer-photo trainer-photo-thumbnail'
-        %td
-          = trainer.first_name
-        %td
-          = trainer.last_name
-        %td
-          = trainer.description
-        %td
-          %ul.actions
-            %li
-              = link_to t('shared.edit'), edit_admin_trainer_path(trainer), class: 'edit'
-            %li
-              = link_to t('shared.delete'), admin_trainer_path(trainer), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
+.row
+  .medium-12.columns
+    %h2
+      = t('trainer.name').pluralize
+      = link_to t('shared.create'), new_admin_trainer_path, class: 'button create right'
+.row
+  .medium-12.columns
+    %table
+      %thead
+        %tr
+          %th
+            = t('trainer.attributes.photo')
+          %th
+            = t('trainer.attributes.first_name')
+          %th
+            = t('trainer.attributes.last_name')
+          %th
+            = t('trainer.attributes.description')
+          %th
+            = t('shared.actions')
+      %tbody
+        - trainers.each do |trainer|
+          %tr{ id: trainer.decorate.css_id }
+            %td
+              = image_tag trainer.photo.url, class: 'trainer-photo trainer-photo-thumbnail'
+            %td
+              = trainer.first_name
+            %td
+              = trainer.last_name
+            %td
+              = trainer.description
+            %td
+              %ul.actions
+                %li
+                  = link_to t('shared.edit'), edit_admin_trainer_path(trainer), class: 'edit'
+                %li
+                  = link_to t('shared.delete'), admin_trainer_path(trainer), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'

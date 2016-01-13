@@ -1,50 +1,55 @@
-= link_to t('shared.create'), new_admin_schedule_item_path, class: 'button create'
-
--# TODO: scope by upcoming and past classes
-%table
-  %thead
-    %tr
-      %th
-        = t('schedule_item.attributes.fitness_class')
-      %th
-        = t('schedule_item.attributes.date')
-      %th
-        = t('schedule_item.attributes.hour')
-      %th
-        = t('schedule_item.attributes.end')
-      %th
-        = t('schedule_item.attributes.capacity')
-      %th
-        = t('reservation.name').pluralize
-      %th
-        = t('schedule_item.attributes.trainer')
-      %th
-        = t('schedule_item.attributes.room')
-      %th
-        = t('shared.actions')
-  %tbody
-    - schedule_items.each do |item|
-      %tr{id: item.decorate.css_id}
-        %td.fitness-class-name
-          %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
-          = item.fitness_class.name
-        %td
-          = l(item.start.in_website_time_zone, format: :simple_date)
-        %td
-          = l(item.start.in_website_time_zone, format: :simple_time)
-        %td
-          = l(item.stop.in_website_time_zone, format: :simple_time)
-        %td
-          = item.capacity
-        %td
-          = item.reservations.count
-        %td
-          = item.trainer.first_name
-        %td
-          = item.room.name
-        %td
-          %ul.actions
-            %li
-              = link_to t('shared.edit'), edit_admin_schedule_item_path(item), class: 'edit'
-            %li
-              = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
+.row
+  .medium-12.columns
+    %h2
+      = t('schedule_item.name').pluralize
+      = link_to t('shared.create'), new_admin_schedule_item_path, class: 'button create right'
+.row
+  .medium-12.columns
+    -# TODO: scope by upcoming and past classes
+    %table
+      %thead
+        %tr
+          %th
+            = t('schedule_item.attributes.fitness_class')
+          %th
+            = t('schedule_item.attributes.date')
+          %th
+            = t('schedule_item.attributes.hour')
+          %th
+            = t('schedule_item.attributes.end')
+          %th
+            = t('schedule_item.attributes.capacity')
+          %th
+            = t('reservation.name').pluralize
+          %th
+            = t('schedule_item.attributes.trainer')
+          %th
+            = t('schedule_item.attributes.room')
+          %th
+            = t('shared.actions')
+      %tbody
+        - schedule_items.each do |item|
+          %tr{id: item.decorate.css_id}
+            %td.fitness-class-name
+              %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
+              = item.fitness_class.name
+            %td
+              = l(item.start.in_website_time_zone, format: :simple_date)
+            %td
+              = l(item.start.in_website_time_zone, format: :simple_time)
+            %td
+              = l(item.stop.in_website_time_zone, format: :simple_time)
+            %td
+              = item.capacity
+            %td
+              = item.reservations.count
+            %td
+              = item.trainer.first_name
+            %td
+              = item.room.name
+            %td
+              %ul.actions
+                %li
+                  = link_to t('shared.edit'), edit_admin_schedule_item_path(item), class: 'edit'
+                %li
+                  = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
