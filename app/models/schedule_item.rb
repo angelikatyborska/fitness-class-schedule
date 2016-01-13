@@ -18,9 +18,13 @@ class ScheduleItem < ActiveRecord::Base
 
   default_scope { includes(:reservations, :fitness_class, :trainer, :room) }
 
-  scope :week, -> (time = Time.zone.now) { where('start >= ? AND start < ?', time.beginning_of_week, time.beginning_of_week + 1.week)}
+  scope :week, -> (time = Time.zone.now) do
+    where(
+      'start >= ? AND start < ?',
+      time.beginning_of_week,
+      time.beginning_of_week + 1.week)
+  end
 
-  # TODO: write specs
   scope :trainer, -> (trainer) { where('trainer_id = ?', trainer) }
   scope :room, -> (room) { where('room_id = ?', room) }
 

@@ -80,7 +80,7 @@ RSpec.describe ScheduleItem do
   end
 
   describe 'scopes' do
-    describe 'week' do
+    describe '#week' do
       let!(:today) { Time.zone.now }
       let!(:this_week_items) { create_list(:schedule_item_this_week, 2) }
       let!(:next_week_items) { create_list(:schedule_item_next_week, 2) }
@@ -109,6 +109,30 @@ RSpec.describe ScheduleItem do
           is_expected.not_to include *(this_week_items)
           is_expected.to include *(next_week_items)
         end
+      end
+    end
+
+    describe '#trainer' do
+      let!(:schedule_item) { create(:schedule_item) }
+      let!(:other_schedule_item) { create(:schedule_item) }
+
+      subject { described_class.trainer(schedule_item.trainer.id) }
+
+      it 'lists all schedule items that belong to a trainer with the given id' do
+        is_expected.to include schedule_item
+        is_expected.not_to include other_schedule_item
+      end
+    end
+
+    describe '#room' do
+      let!(:schedule_item) { create(:schedule_item) }
+      let!(:other_schedule_item) { create(:schedule_item) }
+
+      subject { described_class.room(schedule_item.room.id) }
+
+      it 'lists all schedule items that belong to a room with the given id' do
+        is_expected.to include schedule_item
+        is_expected.not_to include other_schedule_item
       end
     end
   end
