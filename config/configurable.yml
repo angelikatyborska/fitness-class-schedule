@@ -51,3 +51,13 @@ time_zone:
   name: Time Zone
   default: 'Hawaii'
   type: string
+
+primary_color:
+  name: Primary color
+  default: '#2b7ac5'
+  type: string
+
+topbar_bg_color:
+  name: Top bar background color
+  default: '#333333'
+  type: string

@@ -13,7 +13,8 @@ class ScheduleItemsController < ApplicationController
 
   expose(:schedule_item)
   expose(:week_offset) { params[:week_offset].to_i || 0 }
-  expose(:header) { filter_header }
+  expose(:filter_header) { filter_header }
+  expose(:filter_params) { filter_params }
 
   def index
     respond_to do |format|

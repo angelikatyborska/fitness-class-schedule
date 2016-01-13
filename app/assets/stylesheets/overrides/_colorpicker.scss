@@ -30,7 +30,7 @@
 
   &.ui-widget {
     button {
-      @include button(0.25rem, $topbar-bg);
+      @include button(0.25rem, $button-bg-color);
 
       margin: 0 0 10px 10px;
       background-image: none;

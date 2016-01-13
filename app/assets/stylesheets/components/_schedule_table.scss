@@ -25,7 +25,7 @@ $reserved-check-size: 18px;
       height: 34px;
       margin: 0 5px;
       padding: 5px 10px;
-      color: $white;
+      color: $topbar-link-color;
 
       &:hover {
         background-color: $topbar-link-bg-hover;
@@ -50,7 +50,7 @@ $reserved-check-size: 18px;
         transform: translateY(-50%);
         text-align: center;
         font-size: $paragraph-font-size;
-        color: $white;
+        color: $topbar-link-color;
       }
     }
 

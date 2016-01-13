@@ -118,3 +118,5 @@ en:
       day_start: 'Day starts at'
       time_zone: 'Schedule time zone'
       site_title: 'Site title'
+      primary_color: 'Button and links color'
+      topbar_bg_color: 'Topbar background color'
