@@ -68,12 +68,10 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def spots_left
-    # TODO: write spec
-    capacity - reservations.count
+    (capacity - reservations.count) < 0 ? 0 : (capacity - reservations.count)
   end
 
   def full?
-    # TODO: write spec
     spots_left < 1
   end
 

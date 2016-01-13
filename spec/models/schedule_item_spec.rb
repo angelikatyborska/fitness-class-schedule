@@ -198,8 +198,43 @@ RSpec.describe ScheduleItem do
 
   describe '#stop' do
     let!(:schedule_item) { create(:schedule_item, duration: 45) }
+
     subject { schedule_item.stop }
+
     it { is_expected.to eq schedule_item.start + 45.minutes }
+  end
+
+  describe '#full?' do
+    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
+
+    subject { schedule_item.full? }
+
+    context 'when schedule item has free spots' do
+      it { is_expected.to eq false }
+    end
+
+    context 'when schedule item has no spots' do
+      let!(:reservations) { create_list(:reservation, 2, schedule_item: schedule_item) }
+
+      it { is_expected.to eq true }
+    end
+  end
+
+  describe '#spots_left' do
+    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
+
+    it 'decreases with every reservation made down to zero' do
+      expect(schedule_item.spots_left).to eq 2
+
+      create(:reservation, schedule_item: schedule_item)
+      expect(schedule_item.spots_left).to eq 1
+
+      create(:reservation, schedule_item: schedule_item)
+      expect(schedule_item.spots_left).to eq 0
+
+      create(:reservation, schedule_item: schedule_item)
+      expect(schedule_item.spots_left).to eq 0
+    end
   end
 
   describe 'class methods' do
