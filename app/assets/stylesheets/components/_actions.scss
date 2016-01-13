@@ -7,6 +7,7 @@ ul.actions {
   }
 }
 
+.check-schedule,
 .create,
 .edit,
 .delete,
@@ -18,6 +19,12 @@ ul.actions {
 
     font-size: $paragraph-font-size;
     color: $body-font-color
+  }
+}
+
+.check-schedule {
+  &:before {
+    content: $fa-var-calendar;
   }
 }
 
@@ -47,6 +54,7 @@ ul.actions {
 
 
 .button {
+  &.check-schedule,
   &.create,
   &.edit,
   &.delete,
@@ -58,6 +66,7 @@ ul.actions {
 }
 
 :not(.button) {
+  &.check-schedule,
   &.create,
   &.edit,
   &.delete,

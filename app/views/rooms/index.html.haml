@@ -6,4 +6,4 @@
       %h3
         = room.name
       %p
-        = link_to t('room.check_out_schedule'), schedule_items_path(room: room.id)
+        = link_to t('room.check_out_schedule'), schedule_items_path(room: room.id), class: 'button check-schedule'
