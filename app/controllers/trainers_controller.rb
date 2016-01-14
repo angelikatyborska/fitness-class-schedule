@@ -1,4 +1,7 @@
 class TrainersController < ApplicationController
-  expose(:trainers)
+  expose(:trainers) do |default|
+    default.order(:first_name)
+  end
+
   expose(:trainer)
 end

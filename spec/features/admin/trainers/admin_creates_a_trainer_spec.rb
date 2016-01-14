@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Admin creates a trainer', js: true do
+feature 'Admin creates a trainer' do
   let!(:admin) { create(:admin_user) }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
 
     visit root_path
     click_link 'Admin panel'
@@ -19,9 +19,8 @@ feature 'Admin creates a trainer', js: true do
       fill_in 'First name', with: 'Ann'
       fill_in 'Last name', with: 'Kowalski'
       fill_in 'Description', with: 'A Zumba instructor licensed by Zumba Fitness, LLC.'
-      attach_file 'Photo', Rails.root.join('spec', 'fixtures', 'trainer.png')
+      attach_file 'Photo', Rails.root.join('spec', 'support', 'images', 'trainer.png')
       click_button 'Save'
-      wait_for_ajax
     }.to change(Trainer, :count).by(1)
 
     expect(page).to have_content 'Ann'

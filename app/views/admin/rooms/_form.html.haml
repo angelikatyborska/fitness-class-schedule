@@ -1,0 +1,11 @@
+= simple_form_for [:admin, room] do |f|
+  .form-inputs
+    .row
+      .medium-12.columns
+        = f.input :name
+      .medium-12.columns
+        = f.input :description, input_html: { rows: 5 }
+  .form-actions
+    .row
+      .medium-12.columns
+        = f.button :button, t('shared.save'), class: 'save'

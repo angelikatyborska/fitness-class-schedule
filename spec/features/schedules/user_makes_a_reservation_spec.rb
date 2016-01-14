@@ -21,7 +21,7 @@ feature 'User makes a reservation', js: true do
   context 'with logging in' do
     context 'when there are empty spots' do
       scenario 'adds reservation' do
-        log_in user
+        login_as(user, scope: :user)
         visit root_path
         click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Reserve']")
@@ -37,7 +37,7 @@ feature 'User makes a reservation', js: true do
       let!(:other_reservation) { create(:reservation, schedule_item: schedule_item) }
 
       scenario 'adds to waiting list' do
-        log_in user
+        login_as(user, scope: :user)
         visit root_path
         click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Add to waiting list']")

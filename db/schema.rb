@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112142344) do
+ActiveRecord::Schema.define(version: 20160114092534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,10 +55,18 @@ ActiveRecord::Schema.define(version: 20160112142344) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "room_photos", force: :cascade do |t|
+    t.string  "photo"
+    t.integer "room_id"
+  end
+
+  add_index "room_photos", ["room_id"], name: "index_room_photos_on_room_id", using: :btree
+
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.text     "description"
   end
 
   create_table "schedule_items", force: :cascade do |t|
@@ -114,6 +122,7 @@ ActiveRecord::Schema.define(version: 20160112142344) do
 
   add_foreign_key "reservations", "schedule_items"
   add_foreign_key "reservations", "users"
+  add_foreign_key "room_photos", "rooms"
   add_foreign_key "schedule_items", "fitness_classes"
   add_foreign_key "schedule_items", "rooms"
   add_foreign_key "schedule_items", "trainers"

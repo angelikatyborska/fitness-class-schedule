@@ -1,0 +1,51 @@
+.gallery {
+  text-align: center;
+
+  .columns {
+    padding: $padding-tiny;
+  }
+
+  .th {
+    width: 100%;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+
+.admin-gallery,
+*[class*="admin-"] .gallery {
+  min-width: 220px;
+
+  .th {
+    width: 100px;
+  }
+}
+
+.admin-gallery {
+  .th {
+    position: relative;
+
+    .actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      opacity: 0;
+      transition: $thumb-transition-speed opacity;
+      text-align: center;
+      background-color: $white;
+
+      li {
+        padding: 0 $padding-tiny;
+      }
+    }
+
+    &:hover {
+      .actions {
+        opacity: 1;
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+.rooms.admin-rooms
+  .row
+    .medium-12.columns
+      %h2
+        = t('room.name').pluralize
+        = link_to t('shared.create'), new_admin_room_path, class: 'button create right'
+  .row
+    .medium-12.columns
+      %table
+        %thead
+          %tr
+            %th
+              = t('room.attributes.name')
+            %th
+              = t('room.attributes.description')
+            %th
+              = t('room.attributes.room_photos')
+            %th
+              = t('shared.actions')
+        %tbody
+          - rooms.each do |room|
+            %tr{ id: room.decorate.css_id }
+              %td
+                = room.name
+              %td
+                = room.description
+              %td
+                = render 'rooms/gallery', room: room
+              %td
+                %ul.actions
+                  %li
+                    = link_to t('shared.edit'), edit_admin_room_path(room), class: 'edit'
+                  %li
+                    = link_to t('shared.delete'), admin_room_path(room), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'

@@ -1,11 +1,9 @@
 class RoomsController < ApplicationController
-  expose(:schedule_items) do |default|
-    default.order(:start).includes([:room, :trainer])
+  expose(:rooms) do |default|
+    default.order(:name)
   end
 
   expose(:room)
-
-  expose(:week_offset) { params[:week_offset].to_i || 0 }
 
   def next_week
     respond_to do |format|

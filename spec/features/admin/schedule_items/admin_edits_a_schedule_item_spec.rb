@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-feature 'Admin edits a schedule item', js: true do
+feature 'Admin edits a schedule item' do
   let!(:abt) { create(:fitness_class, name: 'ABT') }
   let!(:tbc) { create(:fitness_class, name: 'TBC') }
   let!(:schedule_item) { create(:schedule_item, fitness_class: abt) }
   let!(:admin) { create(:admin_user) }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
   end
 
   scenario 'with valid input' do
@@ -23,7 +23,6 @@ feature 'Admin edits a schedule item', js: true do
     expect {
       select 'TBC', from: 'Fitness class'
       click_button 'Save'
-      wait_for_ajax
     }.to change(ScheduleItem, :count).by(0)
 
     expect(current_path).to eq admin_schedule_items_path

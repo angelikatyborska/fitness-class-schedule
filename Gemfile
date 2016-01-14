@@ -15,6 +15,7 @@ gem 'rolify'
 gem 'configurable_engine', '~> 0.4'
 gem 'simple_form', '~> 3.2'
 gem 'carrierwave', '~> 0.10'
+gem 'rmagick', '~> 2.15.4'
 
 group :development, :test do
   gem 'byebug'

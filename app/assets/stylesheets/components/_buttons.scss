@@ -1,6 +1,14 @@
 .button {
   @include button;
 
+  width: 100%;
+  text-align: center;
+
+  @media #{$medium-up} {
+    width: auto;
+    text-align: inherit;
+  }
+
   &.tiny {
     @include button-size($padding:$button-tny);
   }

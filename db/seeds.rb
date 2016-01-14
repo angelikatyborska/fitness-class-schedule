@@ -13,8 +13,22 @@ FitnessClass.destroy_all
   )
 end
 
-fitness_hall = Room.create!(name: 'Fitness Hall')
-spinning_room = Room.create!(name: 'Spinning Room')
+fitness_hall = Room.create!(
+  name: 'Fitness Hall',
+  description: Faker::Lorem.paragraph(3)
+)
+
+spinning_room = Room.create!(
+  name: 'Spinning Room',
+  description: Faker::Lorem.paragraph(3)
+)
+
+3.times do |n|
+  RoomPhoto.create!(
+    room: fitness_hall,
+    photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+  )
+end
 
 fitness_classes_names_and_colors = [
   { name: 'Step', color: '#ff9000'},
@@ -32,21 +46,21 @@ spinning_classes_names_and_colors = [
 
 fitness_classes =
   fitness_classes_names_and_colors.each_with_object([]) do |fitness_class, classes|
-  classes << FitnessClass.create!(
-    name: fitness_class[:name],
-    description: Faker::Lorem.paragraph(3),
-    color: fitness_class[:color]
-  )
-end
+    classes << FitnessClass.create!(
+      name: fitness_class[:name],
+      description: Faker::Lorem.paragraph(3),
+      color: fitness_class[:color]
+    )
+  end
 
 spinning_classes =
   spinning_classes_names_and_colors.each_with_object([]) do |spinning_class, classes|
-  classes << FitnessClass.create!(
-    name: spinning_class[:name],
-    description: Faker::Lorem.paragraph(3),
-    color: spinning_class[:color]
-  )
-end
+    classes << FitnessClass.create!(
+      name: spinning_class[:name],
+      description: Faker::Lorem.paragraph(3),
+      color: spinning_class[:color]
+    )
+  end
 
 beginning_of_week = Time.zone.now.beginning_of_week
 available_hours = (0...(ScheduleItem.day_duration_in_hours)).to_a
@@ -65,7 +79,7 @@ room_classes_pairings.each_with_index do |pairing, index|
         start: ScheduleItem.beginning_of_day(beginning_of_week) + days.days + hours.hours,
         duration: 45,
         fitness_class: pairing[:classes].sample,
-        trainer: Trainer.all[(index * 3)..(index * 2 + 2)].sample,
+        trainer: Trainer.all[(index * 3)...((index + 1) * 3)].sample,
         room: pairing[:room],
         capacity: Faker::Number.between(5, 15)
       )

@@ -7,19 +7,23 @@ $fa-font-path: '/assets';
 'datetimepicker/jquery.datetimepicker.css',
 'jquery-ui/themes/ui-lightness/jquery-ui.css',
 'colorpicker/jquery.colorpicker.css',
+
 'utilities/variables',
 'utilities/mixins',
-'components/buttons',
+'utilities/base',
 
 'overrides/datetimepicker',
 'overrides/colorpicker',
 
+'components/buttons',
 'components/checkbox',
+'components/gallery',
 'components/table',
 'components/actions',
 'components/overlay',
 'components/forms',
 'components/trainers',
+'components/rooms',
 'components/fitness_classes',
 'components/schedule_table',
 'components/schedule_item';

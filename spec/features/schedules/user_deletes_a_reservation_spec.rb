@@ -14,7 +14,7 @@ feature 'User deletes a reservation', js: true do
   end
 
   scenario 'via user panel' do
-    log_in user
+    login_as(user, scope: :user)
     visit root_path
     click_link user.email
     click_link 'Reservations'
@@ -27,7 +27,7 @@ feature 'User deletes a reservation', js: true do
   end
 
   scenario 'via schedule item dialog box' do
-    log_in user
+    login_as(user, scope: :user)
     visit root_path
     click_link schedule_item
     expect(page).to have_link 'Cancel'

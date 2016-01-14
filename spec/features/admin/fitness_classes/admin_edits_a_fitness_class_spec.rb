@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-feature 'Admin creates a fitness class', js: true do
+feature 'Admin creates a fitness class' do
   let!(:admin) { create(:admin_user) }
   let!(:step) { create(:fitness_class, name: 'Step') }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
 
     visit root_path
     click_link 'Admin panel'

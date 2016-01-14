@@ -5,7 +5,7 @@ feature 'Admin deletes a fitness class', js: true do
   let!(:admin) { create(:admin_user) }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
   end
 
   scenario do

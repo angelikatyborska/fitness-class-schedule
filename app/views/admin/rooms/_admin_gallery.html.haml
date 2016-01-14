@@ -1,0 +1,8 @@
+.gallery.admin-gallery
+  - room.room_photos.each do |photo|
+    .th
+      %ul.actions
+        %li
+        = link_to t('shared.delete'), admin_room_room_photo_path(room, photo), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
+      %a{ href: photo.photo.url }
+        = image_tag photo.photo.thumb.url

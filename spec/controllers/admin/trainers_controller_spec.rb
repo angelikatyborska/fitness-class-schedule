@@ -14,6 +14,12 @@ RSpec.describe Admin::TrainersController do
       end
     end
 
+    describe 'GET #edit' do
+      it 'raises an error' do
+        expect { get :edit, id: create(:trainer) }.to require_admin_privileges
+      end
+    end
+
     describe 'POST #create' do
       it 'raises an error' do
         expect { post :create, trainer: build(:trainer) }.to require_admin_privileges

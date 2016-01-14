@@ -1,5 +1,8 @@
 require 'rails_helper'
 
+include Warden::Test::Helpers
+Warden.test_mode!
+
 feature 'Admin creates a schedule item', js: true do
   let!(:room) { create(:room) }
   let!(:trainer) { create(:trainer) }
@@ -8,7 +11,7 @@ feature 'Admin creates a schedule item', js: true do
   let!(:admin) { create(:admin_user) }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
 
     visit root_path
     click_link 'Admin panel'

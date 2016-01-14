@@ -13,7 +13,7 @@ feature 'Admin deletes a schedule item', js: true do
   end
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
   end
 
   scenario 'from schedule items admin panel' do

@@ -1,10 +1,10 @@
 require'rails_helper'
 
-feature 'admin edits system setting', js: true do
+feature 'admin edits system setting' do
   let!(:admin) { create(:admin_user) }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
   end
 
   scenario 'checks settings' do
@@ -23,7 +23,6 @@ feature 'admin edits system setting', js: true do
     click_link 'System settings'
     fill_in 'Site title', with: 'My Awesome Site'
     click_button 'Save'
-    wait_for_ajax
     visit root_path
     within 'nav' do
       expect(page).to have_content 'My Awesome Site'
@@ -49,7 +48,6 @@ feature 'admin edits system setting', js: true do
       select '23', from: 'Day ends'
       select 'UTC', from: 'Schedule time zone'
       click_button 'Save'
-      wait_for_ajax
 
       visit root_path
       within '.schedule' do
@@ -60,7 +58,6 @@ feature 'admin edits system setting', js: true do
       click_link 'System settings'
       select 'Hawaii', from: 'Schedule time zone'
       click_button 'Save'
-      wait_for_ajax
 
       visit root_path
       within '.schedule' do

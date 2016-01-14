@@ -89,6 +89,13 @@ en:
     name: 'Location'
     all_rooms: 'All locations'
     check_out_schedule: 'Check out the schedule for this location'
+    attributes:
+      name: 'Name'
+      description: 'Description'
+      room_photos: 'Gallery'
+  room_photo:
+    name: 'Room photo'
+    add: 'Add a photo to the gallery'
   reservation:
     name: 'Reservation'
     history: 'Past classes'

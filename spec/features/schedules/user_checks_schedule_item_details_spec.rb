@@ -33,7 +33,7 @@ feature 'User check schedule item details', js: true do
     let!(:user) { create(:user) }
 
     background do
-      log_in user
+      login_as(user, scope: :user)
     end
 
     scenario do

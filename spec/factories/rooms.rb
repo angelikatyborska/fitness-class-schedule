@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :room do
-    name { Faker::Lorem.word }
+    sequence(:name) { |n| "Room#{ n }" }
+    description { Faker::Lorem.paragraph(3) }
   end
 end

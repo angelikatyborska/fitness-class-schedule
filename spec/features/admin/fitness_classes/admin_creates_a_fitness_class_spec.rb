@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-feature 'Admin creates a fitness class', js: true do
+feature 'Admin creates a fitness class' do
   let!(:admin) { create(:admin_user) }
   let!(:step) { create(:fitness_class, name: 'Step') }
 
   background do
-    log_in admin
+    login_as(admin, scope: :user)
 
     visit root_path
     click_link 'Admin panel'
@@ -19,7 +19,6 @@ feature 'Admin creates a fitness class', js: true do
       fill_in 'Description', with: 'Abs, buttocks and tights. Shape up your body! Great for beginner.'
       fill_in 'Color', with: '#dddddd'
       click_button 'Save'
-      wait_for_ajax
     }.to change(FitnessClass, :count).by(1)
 
     expect(page).to have_content 'ABT'

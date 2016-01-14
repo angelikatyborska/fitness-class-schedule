@@ -1,6 +1,4 @@
 class ScheduleItemsController < ApplicationController
-  expose(:rooms)
-  expose(:room)
   expose(:schedule_items) do
     schedule_items = ScheduleItem.all
 

@@ -2,13 +2,3 @@
   max-width: 150px;
   max-height: 150px;
 }
-
-.trainers {
-  .row {
-    margin: $padding-small auto;
-
-    @media #{$large-up} {
-      margin: $padding-medium auto;
-    }
-  }
-}

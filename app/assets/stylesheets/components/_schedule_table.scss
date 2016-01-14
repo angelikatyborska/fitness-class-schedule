@@ -7,23 +7,48 @@ $reserved-check-size: 18px;
 .schedule-header {
   @include clearfix;
 
-  padding: $padding-small;
   background-color: $table-bg;
+
+  @media #{$medium-up} {
+    padding: $padding-small;
+  }
 
   .location {
     float: left;
     font-size: $h4-font-size;
   }
 
-  .navigation {
-    float: right;
+  .filter {
+    @media #{$medium-up} {
+      float: right;
+    }
 
     .button {
       display: block;
       float: left;
       height: 38px;
-      margin: 0 $padding-tiny;
+      margin: $padding-tiny 0;
       font-size: $paragraph-font-size-small;
+
+      @media #{$medium-up} {
+        margin: 0 $padding-tiny;
+      }
+
+      &.time-navigation {
+        width: calc(33.333333% - #{$padding-tiny});
+
+        @media #{$medium-up} {
+          width: inherit;
+        }
+
+        &:not(:last-of-type) {
+          margin-right: $padding-tiny;
+
+          @media #{$medium-up} {
+            margin-right: inherit;
+          }
+        }
+      }
     }
 
     .prev-week, .next-week {
