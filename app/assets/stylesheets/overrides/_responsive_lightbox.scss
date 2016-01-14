@@ -1,0 +1,30 @@
+.lightbox__nav--prev,
+.lightbox__nav--next {
+  color: $white;
+  background-image: none;
+
+  &:before {
+    @include fa-icon;
+  }
+
+  &:hover,
+  &:focus {
+    color: $white;
+  }
+}
+
+.lightbox__nav--prev {
+  &:before {
+    content: $fa-var-chevron-left;
+  }
+}
+
+.lightbox__nav--next {
+  background-image: none;
+
+  &:before {
+    @include fa-icon;
+
+    content: $fa-var-chevron-right;
+  }
+}

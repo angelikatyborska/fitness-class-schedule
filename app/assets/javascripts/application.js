@@ -21,6 +21,7 @@
 //= require foundation/js/foundation.min.js
 //= require datetimepicker/jquery.datetimepicker.js
 //= require colorpicker/jquery.colorpicker.js
+//= require responsive-lightbox/jquery.lightbox.min.js
 //= require turbolinks
 //= require_tree .
 
@@ -36,5 +37,7 @@ $(document).ready(function() {
   $('.colorpicker').colorpicker({
     colorFormat: '#HEX'
   });
+
+  $('.gallery a').lightbox();
 });
 

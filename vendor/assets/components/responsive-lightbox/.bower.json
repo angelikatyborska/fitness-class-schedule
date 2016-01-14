@@ -1,0 +1,14 @@
+{
+  "name": "responsive-lightbox",
+  "homepage": "https://github.com/duncanmcdougall/Responsive-Lightbox",
+  "_release": "8cf3612152",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "8cf36121525388438be24179dd46764fdd0e6baf"
+  },
+  "_source": "git://github.com/duncanmcdougall/Responsive-Lightbox.git",
+  "_target": "*",
+  "_originalSource": "responsive-lightbox",
+  "_direct": true
+}

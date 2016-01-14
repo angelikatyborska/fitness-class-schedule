@@ -7,6 +7,7 @@ $fa-font-path: '/assets';
 'datetimepicker/jquery.datetimepicker.css',
 'jquery-ui/themes/ui-lightness/jquery-ui.css',
 'colorpicker/jquery.colorpicker.css',
+'responsive-lightbox/scss/jquery.lightbox',
 
 'utilities/variables',
 'utilities/mixins',
@@ -14,6 +15,7 @@ $fa-font-path: '/assets';
 
 'overrides/datetimepicker',
 'overrides/colorpicker',
+'overrides/responsive_lightbox',
 
 'components/buttons',
 'components/checkbox',
