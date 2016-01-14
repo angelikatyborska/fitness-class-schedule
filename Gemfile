@@ -28,6 +28,7 @@ end
 group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
+  gem 'brakeman', '~> 3.1.4', require: false
 end
 
 group :test do
