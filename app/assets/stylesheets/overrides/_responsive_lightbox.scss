@@ -1,10 +1,22 @@
+.lightbox__close,
 .lightbox__nav--prev,
 .lightbox__nav--next {
+  width: 36px;
+  height: 36px;
   color: $white;
-  background-image: none;
+  background-color: $black;
+  border-radius: 50%;
+  text-align: center;
 
   &:before {
     @include fa-icon;
+
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
   }
 
   &:hover,
@@ -13,9 +25,16 @@
   }
 }
 
+.lightbox__close {
+  &:before {
+    content: $fa-var-times;
+  }
+}
+
 .lightbox__nav--prev {
   &:before {
     content: $fa-var-chevron-left;
+    padding-right: 2px;
   }
 }
 
@@ -26,5 +45,6 @@
     @include fa-icon;
 
     content: $fa-var-chevron-right;
+    padding-left: 2px;
   }
 }
