@@ -1,6 +1,6 @@
 - if current_user.admin?
   %li.has-dropdown.admin-panel
-    %a{href: '#'}
+    = link_to '#' do
       = t('user.admin_panel.name')
     %ul.dropdown
       %li

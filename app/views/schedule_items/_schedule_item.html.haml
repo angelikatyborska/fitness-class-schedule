@@ -1,15 +1,36 @@
 .schedule-item
   %span.title
-    = "#{ schedule_item.fitness_class.name } (#{ schedule_item.trainer })"
+    #{ schedule_item.fitness_class.name }
+    (#{ schedule_item.trainer })
+
     - if current_user && current_user.admin?
-      = link_to t('shared.edit'), edit_admin_schedule_item_path(schedule_item), class: 'edit'
-      = link_to t('shared.delete'), admin_schedule_item_path(schedule_item), method: :delete, data: { confirm: t('shared.confirm') }, remote: true, class: 'delete'
+      = link_to t('shared.edit'),
+        edit_admin_schedule_item_path(schedule_item),
+        class: 'edit'
+
+      = link_to t('shared.delete'), admin_schedule_item_path(schedule_item),
+        method: :delete,
+        data: { confirm: t('shared.confirm') },
+        remote: true,
+        class: 'delete'
+
   %span.details
-    = "#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)}, #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') } (#{ schedule_item.room.name })"
+    #{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)},
+    #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') }
+    (#{ schedule_item.room.name })
+
   %span.details
-    = "#{ t('reservation.emtpy_spots')}: #{ schedule_item.spots_left } / #{ schedule_item.capacity }"
+    #{ t('reservation.emtpy_spots')}:
+    #{ schedule_item.spots_left } / #{ schedule_item.capacity }
+
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)
-      = link_to t('reservation.delete'), user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)), method: :delete, remote: true, class: 'button button-delete'
+      = link_to t('reservation.delete'),
+        user_reservation_path(current_user.id,
+        current_user.reservation_for(schedule_item)),
+        method: :delete,
+        remote: true,
+        class: 'button button-delete'
+
     - else
       = render 'reservations/form', reservation: current_user.reservations.new, schedule_item: schedule_item

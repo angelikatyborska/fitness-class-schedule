@@ -4,6 +4,7 @@
       %h2
         = t('schedule_item.name').pluralize
         = link_to t('shared.create'), new_admin_schedule_item_path, class: 'button create right'
+
   .row
     .medium-12.columns
       -# TODO: scope by upcoming and past classes
@@ -53,4 +54,8 @@
                   %li
                     = link_to t('shared.edit'), edit_admin_schedule_item_path(item), class: 'edit'
                   %li
-                    = link_to t('shared.delete'), admin_schedule_item_path(item), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
+                    = link_to t('shared.delete'),
+                      admin_schedule_item_path(item),
+                      method: :delete,
+                      data: { confirm: t('shared.confirm') },
+                      class: 'delete'

@@ -1,12 +1,13 @@
 - unless items.nil?
   - items.each do |item|
-    .item{ style: "top: #{schedule_item_start_day_percentage(item)}%; left: #{schedule_item_left_position(item, items)}%; height: #{schedule_item_duration_day_percentage(item)}%; width: #{schedule_item_width(item, items)}%;"}
+    - item_style = "top: #{schedule_item_start_day_percentage(item)}%;"
+    - item_style << "left: #{schedule_item_left_position(item, items)}%;"
+    - item_style << "height: #{schedule_item_duration_day_percentage(item)}%;"
+    - item_style << "width: #{schedule_item_width(item, items)}%;"
+
+    .item{ style: item_style }
       - if item.stale?
-        .item-box.stale{ style: "background-color: #{ item.fitness_class.color };"}
-          = render 'schedule_items/schedule_table_item', item: item
+        = render 'schedule_table_item_stale', item: item
+
       - else
-        - item_box_class = 'item-box'
-        - if user_signed_in? && current_user.reservation_for?(item)
-          - item_box_class << ' reserved'
-        %a{ href: schedule_item_path(item), class: item_box_class, data: { remote: true }, style: "background-color: #{ item.fitness_class.color };" }
-          = render 'schedule_items/schedule_table_item', item: item
+        = render 'schedule_table_item_active', item: item

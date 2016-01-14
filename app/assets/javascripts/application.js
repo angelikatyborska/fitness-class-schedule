@@ -38,6 +38,6 @@ $(document).ready(function() {
     colorFormat: '#HEX'
   });
 
-  $('.gallery a').lightbox();
+  $('.gallery:not(.admin-gallery) a').lightbox();
 });
 

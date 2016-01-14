@@ -2,21 +2,43 @@
   .form-inputs
     .row
       .medium-12.columns
-        - selected = schedule_item.start ? schedule_item.start.in_website_time_zone : Time.zone.now.in_website_time_zone
-        = f.input :start, start_year: Time.zone.now.in_website_time_zone.year, end_year: Time.zone.now.in_website_time_zone.year + 1, selected: selected
+        - selected = if schedule_item.start
+          - schedule_item.start.in_website_time_zone
+        - else
+          - Time.zone.now.in_website_time_zone
+
+        = f.input :start,
+          start_year: Time.zone.now.in_website_time_zone.year,
+          end_year: Time.zone.now.in_website_time_zone.year + 1,
+          selected: selected
+
     .row
       .medium-6.columns
         = f.input :duration
+
       .medium-6.columns
         = f.input :capacity
+
     .row
       .medium-12.columns
-        = f.association :fitness_class, collection: FitnessClass.all.order(:name), value_method: :id, include_blank: false
+        = f.association :fitness_class,
+          collection: FitnessClass.all.order(:name),
+          value_method: :id,
+          include_blank: false
+
     .row
       .medium-6.columns
-        = f.association :trainer, collection: trainers.order(:first_name), value_method: :id, include_blank: false
+        = f.association :trainer,
+          collection: trainers.order(:first_name),
+          value_method: :id,
+          include_blank: false
+
       .medium-6.columns
-        = f.association :room, collection: rooms.order(:name), value_method: :id, include_blank: false
+        = f.association :room,
+          collection: rooms.order(:name),
+          value_method: :id,
+          include_blank: false
+
   .form-actions
     .row
       .medium-12.columns

@@ -6,24 +6,43 @@
           .small-2.columns
             %span.prefix
               %i.fa.fa-envelope-o.fa-fw
-          = f.input :email, required: true, autofocus: true, label: false, placeholder: t('devise.email'), wrapper_html: { class: 'small-10 columns' }
+          = f.input :email,
+            required: true,
+            autofocus: true,
+            label: false,
+            placeholder: t('devise.email'),
+            wrapper_html: { class: 'small-10 columns' }
+
     .row.collapse
       .medium-12.columns
         .row.collapse
           .small-2.columns
             %span.prefix
               %i.fa.fa-key.fa-fw
-          = f.input :password, required: true, label: false, placeholder: t('devise.password'), wrapper_html: { class: 'small-10 columns' }
+          = f.input :password,
+            required: true,
+            label: false,
+            placeholder: t('devise.password'),
+            wrapper_html: { class: 'small-10 columns' }
+
     .row.collapse
       .medium-12.columns
         .row.collapse
           .small-2.columns
             %span.prefix
               %i.fa.fa-key.fa-fw
-          = f.input :password_confirmation, required: true, label: false, placeholder: t('devise.password_confirmation'), wrapper_html: { class: 'small-10 columns' }
+          = f.input :password_confirmation,
+            required: true,
+            label: false,
+            placeholder: t('devise.password_confirmation'),
+            wrapper_html: { class: 'small-10 columns' }
+
   .form-actions
     .row.collapse
       .medium-12.columns
         = f.button :submit, t('user.signup')
-= render "devise/shared/links"
+
+.row
+  .medium-12.columns
+    = render 'devise/shared/links'
 

@@ -1,0 +1,10 @@
+- item_box_class = 'item-box'
+
+- if user_signed_in? && current_user.reservation_for?(item)
+  - item_box_class << ' reserved'
+
+= link_to schedule_item_path(item),
+  remote: true,
+  class: item_box_class,
+  style: "background-color: #{ item.fitness_class.color };" do
+  = render 'schedule_items/schedule_table_item', item: item

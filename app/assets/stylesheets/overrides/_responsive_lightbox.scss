@@ -5,6 +5,7 @@
   height: 36px;
   color: $white;
   background-color: $black;
+  background-image: none;
   border-radius: 50%;
   text-align: center;
 
@@ -39,8 +40,6 @@
 }
 
 .lightbox__nav--next {
-  background-image: none;
-
   &:before {
     @include fa-icon;
 

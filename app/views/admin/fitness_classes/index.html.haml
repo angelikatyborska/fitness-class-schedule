@@ -4,6 +4,7 @@
       %h2
         = t('fitness_class.name').pluralize
         = link_to t('shared.create'), new_admin_fitness_class_path, class: 'button create right'
+
   .row
     .medium-12.columns
       %table
@@ -15,9 +16,10 @@
               = t('fitness_class.attributes.description')
             %th
               = t('shared.actions')
+
         %tbody
           - fitness_classes.each do |fitness_class|
-            %tr{id: fitness_class.decorate.css_id}
+            %tr{ id: fitness_class.decorate.css_id }
               %td.fitness-class-name
                 %span.fitness-class-color{ style: "background-color: #{ fitness_class.color }"}
                 = fitness_class.name
@@ -26,6 +28,11 @@
               %td
                 %ul.actions
                   %li
-                    = link_to t('shared.edit'), edit_admin_fitness_class_path(fitness_class), class: 'edit'
+                    = link_to edit_admin_fitness_class_path(fitness_class), class: 'edit' do
+                      = t('shared.edit')
                   %li
-                    = link_to t('shared.delete'), admin_fitness_class_path(fitness_class), method: :delete, data: { confirm: t('shared.confirm') }, class: 'delete'
+                    = link_to t('shared.delete'),
+                      admin_fitness_class_path(fitness_class),
+                      method: :delete,
+                      data: { confirm: t('shared.confirm') },
+                      class: 'delete'

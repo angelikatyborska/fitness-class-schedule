@@ -1,1 +1,4 @@
-Overlay.show("<%= escape_javascript render template: 'devise/sessions/new', alert: flash[:alert] %>", "<%= t('user.login') %>");
+Overlay.show(
+    "<%= escape_javascript render template: 'devise/sessions/new',
+    alert: flash[:alert] %>", "<%= t('user.login') %>"
+);

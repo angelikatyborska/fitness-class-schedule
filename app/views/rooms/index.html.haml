@@ -3,10 +3,13 @@
     .row
       .medium-6.columns
         = render 'gallery', room: room
+
       .medium-6.columns
         %h3
           = room.name
         %p
           = room.description
         %p
-          = link_to t('room.check_out_schedule'), schedule_items_path(room: room.id), class: 'button check-schedule'
+          = link_to t('room.check_out_schedule'),
+            schedule_items_path(room: room.id),
+            class: 'button check-schedule'

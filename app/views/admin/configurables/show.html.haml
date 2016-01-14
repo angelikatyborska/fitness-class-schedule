@@ -2,25 +2,37 @@
   .form-inputs
     .row
       .medium-12.columns
-        = label_tag 'site_title', t('user.admin_panel.site_title')
+        = label_tag 'site_title' do
+          = t('user.admin_panel.site_title')
         = text_field_tag 'site_title', Configurable.site_title
+
     .row
       .small-12.medium-6.columns
-        = label_tag 'time_zone', t('user.admin_panel.time_zone')
-        = select_tag 'time_zone', options_from_collection_for_select(ActiveSupport::TimeZone.all, 'name', 'to_s', Configurable.time_zone), autocomplete: :off
+        = label_tag 'time_zone' do
+          = t('user.admin_panel.time_zone')
+        = select_tag 'time_zone', options_from_collection_for_select(ActiveSupport::TimeZone.all,'name','to_s',Configurable.time_zone), autocomplete: :off
+
       .small-6.medium-3.columns
-        = label_tag 'day_start', t('user.admin_panel.day_start')
+        = label_tag 'day_start' do
+          = t('user.admin_panel.day_start')
         = select_tag 'day_start', options_from_collection_for_select((0..23), 'to_s', 'to_s', Configurable.day_start), autocomplete: :off
+
       .small-6.medium-3.columns
-        = label_tag 'day_end', t('user.admin_panel.day_end')
+        = label_tag 'day_end' do
+          = t('user.admin_panel.day_end')
         = select_tag 'day_end', options_from_collection_for_select((1..24), 'to_s', 'to_s', Configurable.day_end), autocomplete: :off
+
     .row
       .medium-6.columns
-        = label_tag 'topbar_bg_color', t('user.admin_panel.topbar_bg_color')
+        = label_tag 'topbar_bg_color' do
+          = t('user.admin_panel.topbar_bg_color')
         = text_field_tag 'topbar_bg_color', Configurable.topbar_bg_color, class: 'colorpicker'
+
       .medium-6.columns
-        = label_tag 'primary_color', t('user.admin_panel.primary_color')
+        = label_tag 'primary_color' do
+          = t('user.admin_panel.primary_color')
         = text_field_tag 'primary_color', Configurable.primary_color, class: 'colorpicker'
+
   .form-actions
     .row
       .medium-12.columns

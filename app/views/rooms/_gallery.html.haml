@@ -2,5 +2,5 @@
   .gallery
     - room.room_photos.each do |photo|
       .small-6.large-4.columns
-        %a{ href: photo.photo.url, class: 'th' }
+        = link_to photo.photo.url, class: 'th' do
           = image_tag photo.photo.thumb.url

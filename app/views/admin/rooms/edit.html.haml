@@ -4,5 +4,9 @@
   .medium-10.medium-offset-1.large-8.large-offset-2.columns
     %h3
       = t('room.attributes.room_photos')
-      = link_to t('shared.create'), new_admin_room_room_photo_path(room), class: 'button create right', remote: true
+      = link_to t('shared.create'),
+        new_admin_room_room_photo_path(room),
+        class: 'button create right',
+        remote: true
+
     = render 'admin_gallery', room: room

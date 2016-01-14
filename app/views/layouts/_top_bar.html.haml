@@ -2,35 +2,24 @@
   %ul.title-area
     %li.name
       %h1
-        %a{href: root_path}
+        = link_to root_path do
           = Configurable.site_title
+
     %li.toggle-topbar.menu-icon
-      %a{href: '#'}
+      = link_to '#' do
         %span
           Menu
+
   %section.top-bar-section
     %ul.left
       %li
         = link_to t('room.name').pluralize, rooms_path
       %li
         = link_to t('trainer.name').pluralize, trainers_path
+
     %ul.right
       - if user_signed_in?
         = render 'layouts/top_bar_admin'
-        %li.has-dropdown
-          %a{href: '#'}
-            = current_user.email
-          %ul.dropdown
-            %li
-              = link_to t('reservation.name').pluralize, user_reservations_path(user_id: current_user.id)
-            %li
-              = link_to t('reservation.history'), user_reservations_path(user_id: current_user.id)
-            %li
-              = link_to t('user.settings'), edit_user_path(current_user)
-            %li
-              = link_to t('user.logout'), destroy_user_session_path, method: :delete, remote: true
+        = render 'layouts/top_bar_user'
       - else
-        %li
-          = link_to t('user.login'), new_user_session_path, remote: true
-        %li
-          = link_to t('user.signup'), new_user_registration_path, remote: true
+        = render 'layouts/top_bar_guest'

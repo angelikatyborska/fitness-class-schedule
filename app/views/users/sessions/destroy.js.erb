@@ -1,4 +1,4 @@
-// TODO: come up with a cleaner way to recognize that an admin logged out while browsing the admin panel
+<% # TODO: come up with a cleaner way to recognize that an admin logged out while browsing the admin panel %>
 <% if Rails.application.routes.recognize_path(request.referrer)[:controller].split('/').first == 'admin' %>
   window.location = "<%= escape_javascript root_path %>";
 <% else %>

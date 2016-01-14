@@ -2,6 +2,7 @@
   - unless alert.nil?
     .form-errors
       = alert
+
   .form-inputs
     .row.collapse
       .medium-12.columns
@@ -9,22 +10,37 @@
           .small-2.columns
             %span.prefix
               %i.fa.fa-envelope-o.fa-fw
-          = f.input :email, required: false, autofocus: true, label: false, placeholder: t('devise.email'), wrapper_html: { class: 'small-10 columns' }
+          = f.input :email,
+            required: false,
+            autofocus: true,
+            label: false,
+            placeholder: t('devise.email'),
+            wrapper_html: { class: 'small-10 columns' }
+
     .row.collapse
       .medium-12.columns
         .row.collapse
           .small-2.columns
             %span.prefix
               %i.fa.fa-key.fa-fw
-          = f.input :password, required: false, label: false, placeholder: t('devise.password'), wrapper_html: { class: 'small-10 columns' }
+          = f.input :password,
+            required: false,
+            label: false,
+            placeholder: t('devise.password'),
+            wrapper_html: { class: 'small-10 columns' }
+
     - if devise_mapping.rememberable?
       .row.collapse
         .medium-12.columns
-          = f.input :remember_me, as: :boolean, boolean_style: :inline
+          = f.input :remember_me,
+            as: :boolean,
+            boolean_style: :inline
+
   .form-actions
     .row.collapse
       .medium-12.columns
         = f.button :submit, t('user.login')
+
 .row
   .medium-12.columns
     = render 'devise/shared/links'

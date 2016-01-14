@@ -1,0 +1,26 @@
+%button{ href: '#',
+  class: 'button tiny secondary dropdown',
+  data: { 'dropdown': 'rooms-dropdown' } }
+  = t('room.name')
+
+%ul{ id: 'rooms-dropdown',
+  class: 'f-dropdown',
+  data: { 'dropdown-content': '' } }
+
+  %li
+    = link_to t('shared.all'), schedule_items_path(filter_params.except(:room))
+
+  = list_of rooms.order(:name) do |room|
+    = link_to room, schedule_items_path(filter_params.merge({ room: room.id }))
+
+%button{ href: '#',
+  class: 'button tiny secondary dropdown',
+  data: { 'dropdown': 'trainers-dropdown' } }
+  = t('trainer.name')
+
+%ul{ id: 'trainers-dropdown', class: 'f-dropdown', data: { 'dropdown-content': '' }}
+  %li
+    = link_to t('shared.all'), schedule_items_path(filter_params.except(:trainer))
+
+  = list_of trainers.order(:first_name) do |trainer|
+    = link_to trainer, schedule_items_path(filter_params.merge({ trainer: trainer.id }))
