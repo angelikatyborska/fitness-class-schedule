@@ -85,6 +85,8 @@ en:
     prev_week: 'Prev week'
     next_week: 'Next week'
     this_week: 'Today'
+    active: 'Upcoming'
+    stale: 'Past'
   room:
     name: 'Location'
     all_rooms: 'All locations'

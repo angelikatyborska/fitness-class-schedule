@@ -135,6 +135,46 @@ RSpec.describe ScheduleItem do
         is_expected.not_to include other_schedule_item
       end
     end
+
+    describe '#active' do
+      let!(:schedule_item_this_week) { create(:schedule_item_this_week) }
+      let!(:schedule_item_next_week) { create(:schedule_item_next_week) }
+
+      subject { described_class.active(Time.zone.now.end_of_week) }
+
+      before :all do
+        Timecop.freeze(Time.zone.now.beginning_of_week)
+      end
+
+      after :all do
+        Timecop.return
+      end
+
+      it 'lists all schedule items that start no soonar than the given dave' do
+        is_expected.not_to include schedule_item_this_week
+        is_expected.to include schedule_item_next_week
+      end
+    end
+
+    describe '#stale' do
+      let!(:schedule_item_this_week) { create(:schedule_item_this_week) }
+      let!(:schedule_item_next_week) { create(:schedule_item_next_week) }
+
+      subject { described_class.stale(Time.zone.now.end_of_week) }
+
+      before :all do
+        Timecop.freeze(Time.zone.now.beginning_of_week)
+      end
+
+      after :all do
+        Timecop.return
+      end
+
+      it 'lists all schedule items that start no soonar than the given dave' do
+        is_expected.to include schedule_item_this_week
+        is_expected.not_to include schedule_item_next_week
+      end
+    end
   end
 
   describe '#going_on_at?' do

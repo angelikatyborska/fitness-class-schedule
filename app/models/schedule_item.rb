@@ -28,6 +28,8 @@ class ScheduleItem < ActiveRecord::Base
   scope :trainer, -> (trainer) { where('trainer_id = ?', trainer) }
   scope :room, -> (room) { where('room_id = ?', room) }
 
+  scope :active, -> (time = Time.zone.now) { where('start >= ?', time) }
+  scope :stale, -> (time = Time.zone.now) { where('start < ?', time) }
 
   def start_cant_be_in_the_past
     unless start.nil?
