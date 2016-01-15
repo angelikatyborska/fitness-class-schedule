@@ -1,11 +1,7 @@
 - unless items.nil?
+  - items_styles = schedule_items_styles(items)
   - items.each do |item|
-    - item_style = "top: #{schedule_item_start_day_percentage(item)}%;"
-    - item_style << "left: #{schedule_item_left_position(item, items)}%;"
-    - item_style << "height: #{schedule_item_duration_day_percentage(item)}%;"
-    - item_style << "width: #{schedule_item_width(item, items)}%;"
-
-    .item{ style: item_style }
+    .item{ id: item.decorate.css_id, style: items_styles.for(item) }
       - if item.stale?
         = render 'schedule_table_item_stale', item: item
 

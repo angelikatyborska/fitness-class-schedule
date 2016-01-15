@@ -1,7 +1,14 @@
 $overlay-background: rgba(0, 0, 0, 0.5);
+$hightlight: orange;
 
 $padding-tiny: 5px;
 $padding-small: 10px;
 $padding-medium: 20px;
 
 $paragraph-font-size-small: rem-calc(14);
+
+@keyframes highlight {
+  0% { box-shadow: 0 0 0 0 transparent; }
+  20% { box-shadow: 0 0 7px 5px $hightlight; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}

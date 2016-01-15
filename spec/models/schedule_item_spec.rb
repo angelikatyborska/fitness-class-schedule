@@ -198,6 +198,15 @@ RSpec.describe ScheduleItem do
       end
     end
 
+    context 'with a schedule item that started 3 hours before' do
+      subject { build(:schedule_item, start: now - 3.hours, duration: 60) }
+
+      it 'returns false' do
+        subject.save(validate: false)
+        expect(subject.going_on_at?(now)).to eq false
+      end
+    end
+
     context 'with a schedule item that starts tomorrow' do
       subject { create(:schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60) }
 

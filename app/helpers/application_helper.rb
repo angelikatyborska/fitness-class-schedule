@@ -1,43 +1,14 @@
 module ApplicationHelper
-  def schedule_item_width(item, schedule_items)
-    n = schedule_items.count do |other_item|
-      other_item.going_on_between?(item.start, item.stop)
-    end
-
-    100.0 / n
+  def schedule_items_styles(schedule_items)
+    ScheduleItemsStyles.new(schedule_items)
   end
 
-  def schedule_item_left_position(item, schedule_items)
-    all_items_at_that_time = schedule_items.select do |other_item|
-      other_item.going_on_between?(item.start, item.stop)
-    end
-
-    i = all_items_at_that_time.find_index { |other_item| other_item == item}
-
-    schedule_item_width(item, schedule_items) * i
-  end
-
+  # TODO: write specs
   def in_set_timezone(time)
     time.in_time_zone(ActiveSupport::TimeZone[Configurable.time_zone])
   end
 
-
-  def schedule_item_start_day_percentage(item)
-    start = item.start.in_website_time_zone
-    day_start = ScheduleItem.beginning_of_day(start)
-    day_end = ScheduleItem.end_of_day(start)
-
-    (start - day_start) / (day_end - day_start) * 100
-  end
-
-  def schedule_item_duration_day_percentage(item)
-    start = item.start.in_website_time_zone
-    day_start = ScheduleItem.beginning_of_day(start)
-    day_end = ScheduleItem.end_of_day(start)
-
-    (start + item.duration.minutes - start) / (day_end - day_start) * 100
-  end
-
+  # TODO: write specs
   def order_by_weekdays(schedule_items, week_offset)
     week = Time.zone.now.in_website_time_zone.beginning_of_week + week_offset.weeks
     weekdays = {}

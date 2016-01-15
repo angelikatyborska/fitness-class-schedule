@@ -1,104 +1,251 @@
 RSpec.describe ApplicationHelper do
-  describe '#schedule_item_width' do
-    context 'with 3 schedule items going on at the same time' do
-      let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
-      let!(:schedule_items) do
-        3.times.with_object([]) do |n, items|
-          items << build(:schedule_item, start: tomorrow)
+  describe '#schedule_items_styles' do
+    describe '#for' do
+      let(:schedule_item) { build(:schedule_item) }
+
+      let(:styles) { schedule_items_styles([schedule_item]) }
+
+      subject { styles.for(schedule_item) }
+
+      it 'returns a string with css styles for a schedule item' do
+        is_expected.to match /top:\s?-?[\d\.]*%;/
+        is_expected.to match /left:\s?-?[\d\.]*%;/
+        is_expected.to match /width:\s?-?[\d\.]*%;/
+        is_expected.to match /height:\s?-?[\d\.]*%;/
+      end
+    end
+
+    describe '#left and #width' do
+      context 'witrooms' do
+        let!(:start) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
+        let!(:rooms) { 3.times.with_object([]) { |n, rooms| rooms << create(:room, name: "room#{n}") } }
+
+        context 'with 1 schedule items going on at the same time' do
+          # +------+      +------+
+          # |xx    |  =>  |xxxxxx|
+          # |xx    |      |xxxxxx|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = [build(:schedule_item, start: start, room: rooms[0])]
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(100) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+
+        end
+
+        context 'with 2 schedule items going on at the same time' do
+          # +------+      +------+
+          # |xx  @@|  =>  |xxx@@@|
+          # |xx  @@|      |xxx@@@|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
+        end
+
+        context 'with 3 schedule items going on at the same time' do
+          # +------+      +------+
+          # |xx^^@@|  =>  |xx^^@@|
+          # |xx^^@@|      |xx^^@@|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[1])
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(33.33) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(33.33) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(66.66) }
+        end
+
+        context 'with 2 schedule items going on at the different times' do
+          # +------+      +------+
+          # |xx    |  =>  |xxxxxx|
+          # |xx    |      |xxxxxx|
+          # |    @@|      |@@@@@@|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30,  room: rooms[0])
+            items << build(:schedule_item, start: start + 45.minutes, duration: 15, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(100) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(100) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(0) }
+        end
+
+        context 'with 2 schedule items overlapping' do
+          # +------+      +------+
+          # |xx    |  =>  |xxx   |
+          # |xx  @@|      |xxx@@@|
+          # |    @@|      |   @@@|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start + 15.minutes, duration: 30, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
+        end
+
+        context 'with 2 schedule items at max going on at the same time, the same item overlaps twice' do
+          # +------+      +------+
+          # |xx^^  |  =>  |^^^xxx|
+          # |xx^^  |      |^^^xxx|
+          # |  ^^@@|      |^^^@@@|
+          # |  ^^@@|      |^^^@@@|
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start, duration: 75, room: rooms[1])
+            items << build(:schedule_item, start: start + 45.minutes, duration: 30, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(50) }
+        end
+
+        context 'with 3 schedule items at max going on at the same time, the same item overlaps twice' do
+          # +------+      +------+
+          # |xx^^**|  =>  |^^xx**|
+          # |xx^^**|      |^^xx**|
+          # |  ^^@@|      |^^@@@ |
+          # |  ^^@@|      |^^@@@ |
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start, duration: 75, room: rooms[1])
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[2])
+            items << build(:schedule_item, start: start + 45.minutes, duration: 30, room: rooms[2])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[3])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(33.33) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(66.66) }
+          it { expect(subject.left(schedule_items[3])).to be_within(0.1).of(33.33) }
         end
       end
-
-      subject { schedule_item_width(schedule_items[0], schedule_items) }
-
-      it { is_expected.to be_within(0.1).of(33.33) }
     end
 
-    context 'with 3 schedule items going on at different times' do
-      let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
-      let!(:schedule_items) do
-        3.times.with_object([]) do |n, items|
-          items << build(:schedule_item, start: tomorrow + n.days)
-        end
+    describe '#top' do
+      let!(:today) { Time.zone.now.in_website_time_zone }
+
+      let(:schedule_item_beginning) { build(
+        :schedule_item,
+        start: ScheduleItem.beginning_of_day(today)
+      ) }
+
+      let(:schedule_item_middle) { build(
+        :schedule_item,
+        start: ScheduleItem.beginning_of_day(today) + (ScheduleItem.day_duration_in_quarters * 15 / 2).minutes
+      ) }
+
+      let(:schedule_item_end) { build(
+        :schedule_item,
+        start: ScheduleItem.end_of_day(today) - 1.hour
+      ) }
+
+      let(:styles) { schedule_items_styles([schedule_item_beginning, schedule_item_middle, schedule_item_end]) }
+
+      context 'starts at the beginning of the day' do
+        subject { styles.top(schedule_item_beginning) }
+        it { is_expected.to be_within(1).of(0) }
       end
 
-      subject { schedule_item_width(schedule_items[0], schedule_items) }
-
-      it { is_expected.to be_within(0.1).of(100) }
-    end
-  end
-
-  describe '#schedule_item_left_position' do
-    context 'with 3 schedule items going on at the same time' do
-      let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
-      let!(:schedule_items) do
-        3.times.with_object([]) do |n, items|
-          items << build(:schedule_item, start: tomorrow)
-        end
+      context 'starts in the middle of the day' do
+        subject { styles.top(schedule_item_middle) }
+        it { is_expected.to be_within(1).of(50) }
       end
 
-      it { expect(schedule_item_left_position(schedule_items[0], schedule_items)).to be_within(0.1).of(0) }
-      it { expect(schedule_item_left_position(schedule_items[1], schedule_items)).to be_within(0.1).of(33.33) }
-      it { expect(schedule_item_left_position(schedule_items[2], schedule_items)).to be_within(0.1).of(66.66) }
+      context 'starts at the end of the day' do
+        subject { styles.top(schedule_item_end) }
+        it { is_expected.to be_within(1).of(100 - (100 * 4 / ScheduleItem.day_duration_in_quarters)) }
+      end
     end
 
-    context 'with 3 schedule items going on at different times' do
-      let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
-      let!(:schedule_items) do
-        3.times.with_object([]) do |n, items|
-          items << build(:schedule_item, start: tomorrow + n.days)
-        end
+    describe '#height' do
+      let!(:today) { Time.zone.now.in_website_time_zone }
+
+      let(:one_hour_schedule_item) { build(
+        :schedule_item,
+        start: ScheduleItem.beginning_of_day(today),
+        duration: 60
+      ) }
+
+      let(:twenty_three_hour_schedule_item) { build(
+        :schedule_item,
+        start: ScheduleItem.beginning_of_day(today),
+        duration: ScheduleItem.day_duration_in_quarters * 15
+      ) }
+
+      let(:styles) { schedule_items_styles([one_hour_schedule_item, twenty_three_hour_schedule_item]) }
+
+      context 'is 1 hour long' do
+        subject { styles.height(one_hour_schedule_item) }
+        it { is_expected.to be_within(1).of((100 * 4 / ScheduleItem.day_duration_in_quarters)) }
       end
 
-      it { expect(schedule_item_left_position(schedule_items[0], schedule_items)).to be_within(0.1).of(0) }
-      it { expect(schedule_item_left_position(schedule_items[1], schedule_items)).to be_within(0.1).of(0) }
-      it { expect(schedule_item_left_position(schedule_items[2], schedule_items)).to be_within(0.1).of(0) }
-    end
-  end
-
-  describe '#start_day_percentage' do
-    let!(:today) { Time.zone.now.in_website_time_zone.middle_of_day }
-    let(:schedule_item) { build(:schedule_item, start: today, duration: 45)}
-
-    context 'starts at the beginning of the day' do
-      let(:schedule_item_beginning) { build(:schedule_item, start: ScheduleItem.beginning_of_day(today))}
-
-      subject { schedule_item_start_day_percentage(schedule_item_beginning) }
-      it {
-        is_expected.to be_within(1).of(0)
-      }
-    end
-
-    context 'starts in the middle of the day' do
-      let(:schedule_item_middle) { build(:schedule_item, start: ScheduleItem.beginning_of_day(today) + (ScheduleItem.day_duration_in_quarters * 15 / 2).minutes) }
-
-      subject { schedule_item_start_day_percentage(schedule_item_middle) }
-      it { is_expected.to be_within(1).of(50) }
-    end
-
-    context 'starts at the end of the day' do
-      let(:schedule_item_end) { build(:schedule_item, start: ScheduleItem.end_of_day(today) - 1.hour)}
-
-      subject { schedule_item_start_day_percentage(schedule_item_end) }
-      it { is_expected.to be_within(1).of(100 - (100 * 4 / ScheduleItem.day_duration_in_quarters)) }
-    end
-  end
-
-  describe '#duration_day_percentage' do
-    let!(:today) { Time.zone.now.in_website_time_zone.middle_of_day }
-    let(:schedule_item) { build(:schedule_item, start: today, duration: 45)}
-
-    context 'is 1 hour long' do
-      let(:one_hour_schedule_item) { build(:schedule_item, start: ScheduleItem.beginning_of_day(today), duration: 60)}
-
-      subject { schedule_item_duration_day_percentage(one_hour_schedule_item) }
-      it { is_expected.to be_within(1).of((100 * 4 / ScheduleItem.day_duration_in_quarters)) }
-    end
-
-    context 'is all day long' do
-      let(:twenty_three_hour_schedule_item) { build(:schedule_item, start: ScheduleItem.beginning_of_day(today), duration: ScheduleItem.day_duration_in_quarters * 15) }
-
-      subject { schedule_item_duration_day_percentage(twenty_three_hour_schedule_item) }
-      it { is_expected.to be_within(1).of(100) }
+      context 'is all day long' do
+        subject { styles.height(twenty_three_hour_schedule_item) }
+        it { is_expected.to be_within(1).of(100) }
+      end
     end
   end
 end

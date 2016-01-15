@@ -186,6 +186,14 @@ $reserved-check-size: 18px;
           }
         }
 
+        &.highlight {
+          .item-box {
+            box-shadow: 0 0 0 0 transparent;
+            animation-name: highlight;
+            animation-duration: 2s;
+          }
+        }
+
         .item-hours, .item-class {
           display: block;
           position: relative;
