@@ -7,7 +7,7 @@ RSpec.describe ApplicationHelper do
 
       subject { styles.for(schedule_item) }
 
-      it 'returns a string with css styles for a schedule item' do
+      it 'returns a string css styles for a schedule item' do
         is_expected.to match /top:\s?-?[\d\.]*%;/
         is_expected.to match /left:\s?-?[\d\.]*%;/
         is_expected.to match /width:\s?-?[\d\.]*%;/
@@ -16,11 +16,11 @@ RSpec.describe ApplicationHelper do
     end
 
     describe '#left and #width' do
-      context 'witrooms' do
+      context '3 rooms' do
         let!(:start) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day)}
         let!(:rooms) { 3.times.with_object([]) { |n, rooms| rooms << create(:room, name: "room#{n}") } }
 
-        context 'with 1 schedule items going on at the same time' do
+        context '1 schedule items going on at the same time' do
           # +------+      +------+
           # |xx    |  =>  |xxxxxx|
           # |xx    |      |xxxxxx|
@@ -38,7 +38,7 @@ RSpec.describe ApplicationHelper do
 
         end
 
-        context 'with 2 schedule items going on at the same time' do
+        context '2 schedule items going on at the same time' do
           # +------+      +------+
           # |xx  @@|  =>  |xxx@@@|
           # |xx  @@|      |xxx@@@|
@@ -59,7 +59,7 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
         end
 
-        context 'with 3 schedule items going on at the same time' do
+        context '3 schedule items going on at the same time' do
           # +------+      +------+
           # |xx^^@@|  =>  |xx^^@@|
           # |xx^^@@|      |xx^^@@|
@@ -83,7 +83,7 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(66.66) }
         end
 
-        context 'with 2 schedule items going on at the different times' do
+        context '2 schedule items going on at the different times' do
           # +------+      +------+
           # |xx    |  =>  |xxxxxx|
           # |xx    |      |xxxxxx|
@@ -105,7 +105,7 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(0) }
         end
 
-        context 'with 2 schedule items overlapping' do
+        context '2 schedule items overlapping' do
           # +------+      +------+
           # |xx    |  =>  |xxx   |
           # |xx  @@|      |xxx@@@|
@@ -127,7 +127,7 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
         end
 
-        context 'with 2 schedule items at max going on at the same time, the same item overlaps twice' do
+        context '2 schedule items at max going on at the same time, the same item overlaps twice' do
           # +------+      +------+
           # |xx^^  |  =>  |^^^xxx|
           # |xx^^  |      |^^^xxx|
@@ -153,7 +153,7 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(50) }
         end
 
-        context 'with 3 schedule items at max going on at the same time, the same item overlaps twice' do
+        context '3 schedule items at max going on at the same time, the same item overlaps twice' do
           # +------+      +------+
           # |xx^^**|  =>  |^^xx**|
           # |xx^^**|      |^^xx**|
@@ -179,6 +179,93 @@ RSpec.describe ApplicationHelper do
           it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(33.33) }
           it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(0) }
           it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(66.66) }
+          it { expect(subject.left(schedule_items[3])).to be_within(0.1).of(33.33) }
+        end
+
+        context '2 schedule items at max going on at the same time, alternating overlap' do
+          # +------+      +------+
+          # |xx    |  =>  |xxx   |
+          # |xx  **|      |xxx***|
+          # |  @@**|      |@@@***|
+          # |  @@  |      |@@@   |
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0])
+            items << build(:schedule_item, start: start + 20.minutes, duration: 30, room: rooms[2])
+            items << build(:schedule_item, start: start + 40.minutes, duration: 30, room: rooms[1])
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(0) }
+        end
+
+        context '3 schedule items at max going on at the same time, very long item on the right' do
+          # +------+      +------+
+          # |xx@@**|  =>  |**xx@@|
+          # |xx@@**|      |**xx@@|
+          # |    **|      |**    |
+          # |  ^^**|      |**^^^ |
+          # |    **|      |**    |
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0]) # x
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[1]) # @
+            items << build(:schedule_item, start: start, duration: 90, room: rooms[2]) # *
+            items << build(:schedule_item, start: start + 60.minutes, duration: 15, room: rooms[1]) # ^
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[3])).to be_within(0.1).of(50) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(33.33) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(66.66) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[3])).to be_within(0.1).of(33.33) }
+        end
+
+        context '3 schedule items at max going on at the same time, 3 long items forming \'stairs\'' do
+          # +------+      +------+
+          # |xx    |  =>  |xxx   |
+          # |xx@@  |      |xxx@@ |
+          # |  @@**|      |** @@ |
+          # |^^@@**|      |**^@@ |
+          # |^^  **|      |**^   |
+          # |    **|      |**    |
+          # +------+      +------+
+
+          let!(:schedule_items) do
+            items = []
+            items << build(:schedule_item, start: start, duration: 30, room: rooms[0]) # x
+            items << build(:schedule_item, start: start + 20.minutes, duration: 60, room: rooms[1]) # @
+            items << build(:schedule_item, start: start + 40.minutes, duration: 90, room: rooms[2]) # *
+            items << build(:schedule_item, start: start + 60.minutes, duration: 30, room: rooms[0]) # ^
+          end
+
+          subject { schedule_items_styles(schedule_items) }
+
+          it { expect(subject.width(schedule_items[0])).to be_within(0.1).of(50) }
+          it { expect(subject.width(schedule_items[1])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[2])).to be_within(0.1).of(33.33) }
+          it { expect(subject.width(schedule_items[3])).to be_within(0.1).of(25) }
+
+          it { expect(subject.left(schedule_items[0])).to be_within(0.1).of(0) }
+          it { expect(subject.left(schedule_items[1])).to be_within(0.1).of(50) }
+          it { expect(subject.left(schedule_items[2])).to be_within(0.1).of(0) }
           it { expect(subject.left(schedule_items[3])).to be_within(0.1).of(33.33) }
         end
       end
@@ -248,4 +335,6 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
+
+  describe '#in_website_time_zone'
 end

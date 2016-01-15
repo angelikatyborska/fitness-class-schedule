@@ -4,11 +4,6 @@ module ApplicationHelper
   end
 
   # TODO: write specs
-  def in_set_timezone(time)
-    time.in_time_zone(ActiveSupport::TimeZone[Configurable.time_zone])
-  end
-
-  # TODO: write specs
   def order_by_weekdays(schedule_items, week_offset)
     week = Time.zone.now.in_website_time_zone.beginning_of_week + week_offset.weeks
     weekdays = {}

@@ -1,14 +1,16 @@
 # TODO: refactor
 class ScheduleItemsStyles
   def initialize(schedule_items)
+    @time_points = time_points(schedule_items)
     @items_at_time_points = list_items_at_time_points(schedule_items)
     @items_at_time_points = sort_items_at_time_points_by_time_remaining(@items_at_time_points)
     @items_max_widths = calculate_items_max_widths(schedule_items)
+    @items_widths = {}
     @items_lefts = calculate_items_lefts(schedule_items)
   end
 
   def width(schedule_item)
-    @items_max_widths[schedule_item]
+    @items_widths[schedule_item]
   end
 
   def left(schedule_item)
@@ -32,24 +34,25 @@ class ScheduleItemsStyles
   end
 
   def for(item)
-    style = ""
-    style << "top: #{ top(item) }%;"
-    style << "left: #{ left(item) }%;"
-    style << "height: #{ height(item) }%;"
-    style << "width: #{ width(item) }%;"
+    "top: #{ top(item) }%;" \
+    "left: #{ left(item) }%;" \
+    "height: #{ height(item) }%;"\
+    "width: #{ width(item) }%;"
   end
 
   private
 
-  def list_items_at_time_points(schedule_items)
+  def time_points(schedule_items)
     time_points = schedule_items.each.with_object([]) do |item, time_points|
       time_points << item.start
       time_points << item.stop
     end
 
     time_points.sort!
+  end
 
-    time_points.each.with_object({}) do |point, points_items|
+  def list_items_at_time_points(schedule_items)
+    @time_points.each.with_object({}) do |point, points_items|
       if points_items[point].nil?
         points_items[point] = schedule_items.select { |item| item.going_on_at?(point) }
       end
@@ -69,12 +72,10 @@ class ScheduleItemsStyles
 
     items_at_time_points = list_items_at_time_points(schedule_items)
     items_at_time_points.each do |time_point, items|
-      max_width = 100.0 / items.count
+      max_width = (10000.0 / items.count).floor / 100.0
 
       items.each do |item|
-        if items_max_widths[item] > max_width
-          items_max_widths[item]  = max_width
-        end
+        items_max_widths[item]  = max_width if items_max_widths[item] > max_width
       end
     end
 
@@ -82,19 +83,82 @@ class ScheduleItemsStyles
   end
 
   def calculate_items_lefts(schedule_items)
-    items_lefts = {}
-
-    @items_at_time_points.each do |time_point, items|
-      starting_left_for_point = items.map { |item| items_lefts[item] ? @items_max_widths[item] : 0 }.sum
-
+    @items_at_time_points.each_with_object({}) do |(time_point, items), items_lefts|
       items.each do |item|
         if items_lefts[item].nil?
-          items_lefts[item] = starting_left_for_point
-          starting_left_for_point += @items_max_widths[item]
+
+          free_space = get_free_space_for_item(item, @items_max_widths[item])
+
+          items_lefts[item] = free_space[:from]
+          @items_widths[item] = free_space[:width]
+
+          reserve_space_for_item(item, free_space[:from], free_space[:width])
         end
       end
     end
+  end
 
-    items_lefts
+  def get_free_space_for_item(item, width)
+    if @reserved_space_at_time_points && @reserved_space_at_time_points[item.start]
+      get_exactly_matching_free_space_for_item(item, width) || get_a_narrower_free_space_for_item(item)
+    else
+      { from: 0, width: width }
+    end
+  end
+
+  def get_exactly_matching_free_space_for_item(item, width)
+    start = 0
+
+    @reserved_space_at_time_points[item.start].each do |reservation|
+      if reservation[:from] - start >= width
+        return { from: start, width: width }
+      else
+        start = reservation[:from] + reservation[:width]
+      end
+    end
+
+    if 100 - start >= width
+      { from: start, width: width }
+    else
+      nil
+    end
+  end
+
+  def get_a_narrower_free_space_for_item(item)
+    start = 0
+    from = 0
+    max = 0
+
+    @reserved_space_at_time_points[item.start].each do |reservation|
+      if reservation[:from] - start > max
+        max = reservation[:from] - start
+        from = start
+      end
+
+      start = reservation[:from] + reservation[:width]
+    end
+
+    { from: from, width: max }
+  end
+
+  def reserve_space_for_item(item, from, width)
+    each_item_time_point(item) do |point|
+      reserve_space_at_time_point(point, from, width)
+    end
+  end
+
+  def reserve_space_at_time_point(time_point, from, width)
+    @reserved_space_at_time_points ||= {}
+    @reserved_space_at_time_points[time_point] ||= []
+
+    @reserved_space_at_time_points[time_point] << { from: from, width: width }
+  end
+
+  def each_item_time_point(item, &block)
+    @time_points.each do |point|
+      if point >= item.start && point <= item.stop
+        yield point
+      end
+    end
   end
 end
