@@ -1,6 +1,6 @@
 module ApplicationHelper
   def schedule_items_styles(schedule_items)
-    ScheduleItemsStyles.new(schedule_items)
+    ScheduleItems::Styles.new(schedule_items)
   end
 
   # TODO: write specs

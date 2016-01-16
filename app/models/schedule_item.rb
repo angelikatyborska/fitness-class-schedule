@@ -58,7 +58,7 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def going_on_at?(time)
-    start <= time && start + duration.minutes >= time
+    start <= time && start + duration.minutes > time
   end
 
   def going_on_between?(from, to)
