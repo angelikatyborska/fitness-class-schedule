@@ -43,7 +43,9 @@ RSpec.describe ScheduleItemsController do
     context 'without params' do
       subject { get :index }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
 
       it 'exposes schedule items' do
         get :index
@@ -54,7 +56,9 @@ RSpec.describe ScheduleItemsController do
     context 'with week offset' do
       subject { get :index, week_offset: 1 }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
 
       it 'exposes schedule items' do
         get :index, week_offset: 1
@@ -65,7 +69,9 @@ RSpec.describe ScheduleItemsController do
     context 'with trainer' do
       subject { get :index, trainer_id: zumba_instructor.id }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
 
       it 'exposes schedule items' do
         get :index, trainer_id: zumba_instructor.id
@@ -76,7 +82,9 @@ RSpec.describe ScheduleItemsController do
     context 'with room' do
       subject { get :index, room_id: zumba_room.id }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
 
       it 'exposes schedule items' do
         get :index, room_id: zumba_room.id
@@ -87,7 +95,9 @@ RSpec.describe ScheduleItemsController do
     context 'with room and week offset' do
       subject { get :index, room_id: zumba_room.id, week_offset: 1 }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
 
       it 'exposes schedule items' do
         get :index, room_id: zumba_room.id, week_offset: 1
@@ -101,7 +111,9 @@ RSpec.describe ScheduleItemsController do
 
     subject { get :show, id: schedule_item }
 
-    it { is_expected.to render_template :show }
+    it 'renders template show' do
+      is_expected.to render_template :show
+    end
 
     it 'exposes the requested schedule item' do
       get :show, id: schedule_item

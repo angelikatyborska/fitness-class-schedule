@@ -54,7 +54,10 @@ RSpec.describe Admin::RoomsController do
       let!(:rooms) { create_list(:room, 3) }
       subject { get :index }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
+
       it 'exposes schedule items' do
         expect(controller.rooms).to match_array rooms
       end
@@ -64,7 +67,9 @@ RSpec.describe Admin::RoomsController do
       let!(:room) { create(:room) }
       subject { get :edit, id: room.id }
 
-      it { is_expected.to render_template :edit }
+      it 'renders template edit' do
+        is_expected.to render_template :edit
+      end
     end
 
     describe 'PUT #update' do

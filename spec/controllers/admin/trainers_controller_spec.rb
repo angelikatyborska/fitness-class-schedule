@@ -60,7 +60,10 @@ RSpec.describe Admin::TrainersController do
       let!(:trainers) { create_list(:trainer, 3) }
       subject { get :index }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
+
       it 'exposes schedule items' do
         expect(controller.trainers).to match_array trainers
       end
@@ -70,7 +73,9 @@ RSpec.describe Admin::TrainersController do
       let!(:trainer) { create(:trainer) }
       subject { get :edit, id: trainer.id }
 
-      it { is_expected.to render_template :edit }
+      it 'renders template edit' do
+        is_expected.to render_template :edit
+      end
     end
 
     describe 'PUT #update' do

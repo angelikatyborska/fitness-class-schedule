@@ -43,7 +43,9 @@ RSpec.describe Admin::RoomPhotosController do
     describe 'GET #new' do
       subject { xhr :get, :new, room_id: room.id }
 
-      it { is_expected.to render_template :new }
+      it 'renders template new' do
+        is_expected.to render_template :new
+      end
     end
 
     describe 'POST #create' do

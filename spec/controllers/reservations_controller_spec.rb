@@ -37,7 +37,9 @@ RSpec.describe ReservationsController do
       describe 'GET #index' do
         subject { get :index, user_id: other_user.id }
 
-        it { is_expected.to render_template :index }
+        it 'renders template index' do
+          is_expected.to render_template :index
+        end
 
         it 'exposes current user\'s reservations' do
           expect(controller.reservations).to eq other_user.reservations

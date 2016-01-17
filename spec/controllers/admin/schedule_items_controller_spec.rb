@@ -54,7 +54,10 @@ RSpec.describe Admin::ScheduleItemsController do
       let!(:schedule_items) { create_list(:schedule_item, 3) }
       subject { get :index }
 
-      it { is_expected.to render_template :index }
+      it 'renders template index' do
+        is_expected.to render_template :index
+      end
+
       it 'exposes schedule items' do
         expect(controller.schedule_items).to match_array schedule_items
       end
@@ -64,7 +67,9 @@ RSpec.describe Admin::ScheduleItemsController do
       let!(:schedule_item) { create(:schedule_item) }
       subject { get :edit, id: schedule_item.id }
 
-      it { is_expected.to render_template :edit }
+      it 'renders template edit' do
+        is_expected.to render_template :edit
+      end
     end
 
     describe 'PUT #update' do

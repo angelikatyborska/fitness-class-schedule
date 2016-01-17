@@ -1,4 +1,22 @@
 RSpec.describe ApplicationHelper do
+  describe '#order_by_weekdays' do
+    let!(:monday) { Time.zone.now.in_website_time_zone.beginning_of_week + 1.week }
+    let!(:schedule_item_next_monday) { create(:schedule_item, start: monday) }
+    let!(:schedule_item_next_tuesday) { create(:schedule_item, start: monday + 1.day) }
+
+    subject { order_by_weekdays(ScheduleItem.all, 1)}
+
+    it 'returns a hash with days as keys and arrays of schedule items as values' do
+      is_expected.to eq monday => [schedule_item_next_monday],
+                        (monday + 1.day) => [schedule_item_next_tuesday],
+                        (monday + 2.days) => [],
+                        (monday + 3.days) => [],
+                        (monday + 4.days) => [],
+                        (monday + 5.days) => [],
+                        (monday + 6.days) => []
+    end
+  end
+
   describe '#schedule_items_styles' do
     describe '#for' do
       let(:schedule_item) { build(:schedule_item) }
