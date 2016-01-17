@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe ScheduleItemsController do
+  before :all do
+    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
+  end
+
+  after :all do
+    Timecop.return
+  end
+
   describe 'GET #index' do
     let!(:zumba_instructor) { create(:trainer) }
     let!(:spinning_instructor) { create(:trainer) }
@@ -31,14 +39,6 @@ RSpec.describe ScheduleItemsController do
       trainer: spinning_instructor,
       room: spinning_room
     ) }
-
-    before :all do
-      Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
-    end
-
-    after :all do
-      Timecop.return
-    end
 
     context 'without params' do
       subject { get :index }
@@ -83,6 +83,17 @@ RSpec.describe ScheduleItemsController do
         expect(controller.schedule_items) =~ [zumba_this_week, zumba_next_week]
       end
     end
+
+    context 'with room and week offset' do
+      subject { get :index, room_id: zumba_room.id, week_offset: 1 }
+
+      it { is_expected.to render_template :index }
+
+      it 'exposes schedule items' do
+        get :index, room_id: zumba_room.id, week_offset: 1
+        expect(controller.schedule_items) =~ [zumba_next_week]
+      end
+    end
   end
 
   describe 'GET #show' do
@@ -96,5 +107,13 @@ RSpec.describe ScheduleItemsController do
       get :show, id: schedule_item
       expect(controller.schedule_item).to eq schedule_item
     end
+  end
+
+  describe 'GET #focus' do
+    let(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
+
+    subject { get :focus, id: schedule_item }
+
+    it { is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id }
   end
 end

@@ -13,9 +13,19 @@ $reserved-check-size: 18px;
     padding: $padding-small;
   }
 
-  .location {
-    float: left;
-    font-size: $h4-font-size;
+  .buttons {
+    text-align: center;
+
+    .button {
+      margin-right: auto;
+      margin-left: auto;
+
+      @media #{$medium-up} {
+        float: right;
+        margin-right: $padding-small;
+        margin-left: $padding-small;
+      }
+    }
   }
 
   .filter {

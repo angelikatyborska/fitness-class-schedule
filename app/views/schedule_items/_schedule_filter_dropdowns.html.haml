@@ -1,7 +1,7 @@
 %button{ href: '#',
   class: 'button tiny secondary dropdown',
   data: { 'dropdown': 'rooms-dropdown' } }
-  = t('room.name')
+  = filter_params[:room] ? rooms.find(filter_params[:room]) : t('room.name')
 
 %ul{ id: 'rooms-dropdown',
   class: 'f-dropdown',
@@ -16,7 +16,7 @@
 %button{ href: '#',
   class: 'button tiny secondary dropdown',
   data: { 'dropdown': 'trainers-dropdown' } }
-  = t('trainer.name')
+  = filter_params[:trainer] ? trainers.find(filter_params[:trainer]) : t('trainer.name')
 
 %ul{ id: 'trainers-dropdown', class: 'f-dropdown', data: { 'dropdown-content': '' }}
   %li

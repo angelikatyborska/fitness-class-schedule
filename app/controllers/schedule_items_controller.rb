@@ -29,16 +29,4 @@ class ScheduleItemsController < ApplicationController
   def filter_params
     params.slice(:room, :trainer)
   end
-
-  def filter_header
-    header = filter_params.any? ? '' : ''
-
-    filter_params.each_with_index.with_object(header) do |((key, value), index), header|
-      name = t("#{ key }.name")
-      globally_exposed_collection = eval(key.pluralize)
-
-      header << ', ' unless index == 0
-      header << "#{ name }: #{ globally_exposed_collection.find(value) }"
-    end
-  end
 end
