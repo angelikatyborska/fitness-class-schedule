@@ -58,7 +58,7 @@ RSpec.describe Admin::FitnessClassesController do
         is_expected.to render_template :index
       end
 
-      it 'exposes schedule items' do
+      it 'exposes fitness classes' do
         expect(controller.fitness_classes).to match_array fitness_classes
       end
     end
@@ -69,6 +69,11 @@ RSpec.describe Admin::FitnessClassesController do
 
       it 'renders template edit' do
         is_expected.to render_template :edit
+      end
+
+      it 'exposes fitness class' do
+        subject
+        expect(controller.fitness_class).to eq fitness_class
       end
     end
 

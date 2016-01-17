@@ -1,6 +1,6 @@
 class ScheduleItemsController < ApplicationController
   expose(:schedule_items)
-  expose(:schedule_item)
+  expose(:schedule_item, attributes: :schedule_item_params)
 
   expose(:week_offset) { params[:week_offset].to_i || 0 }
   expose(:filter_params) { filter_params }
@@ -23,7 +23,15 @@ class ScheduleItemsController < ApplicationController
     redirect_to action: :index, anchor: schedule_item.decorate.css_id, week_offset: week_offset
   end
 
+  def show
+    2+2
+  end
+
   private
+
+  def schedule_item_params
+    params.require(:schedule_item)
+  end
 
   def filter_params
     params.slice(:room, :trainer)

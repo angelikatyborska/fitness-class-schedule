@@ -70,6 +70,11 @@ RSpec.describe Admin::ScheduleItemsController do
       it 'renders template edit' do
         is_expected.to render_template :edit
       end
+
+      it 'exposes schedule item' do
+        subject
+        expect(controller.schedule_item).to eq schedule_item
+      end
     end
 
     describe 'PUT #update' do

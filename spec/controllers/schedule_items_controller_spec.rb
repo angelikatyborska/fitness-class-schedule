@@ -48,7 +48,6 @@ RSpec.describe ScheduleItemsController do
       end
 
       it 'exposes schedule items' do
-        get :index
         expect(controller.schedule_items) =~ [zumba_this_week, spinning_this_week]
       end
     end
@@ -61,7 +60,6 @@ RSpec.describe ScheduleItemsController do
       end
 
       it 'exposes schedule items' do
-        get :index, week_offset: 1
         expect(controller.schedule_items) =~ [zumba_next_week, spinning_next_week]
       end
     end
@@ -74,7 +72,6 @@ RSpec.describe ScheduleItemsController do
       end
 
       it 'exposes schedule items' do
-        get :index, trainer_id: zumba_instructor.id
         expect(controller.schedule_items) =~ [zumba_this_week, zumba_next_week]
       end
     end
@@ -87,7 +84,6 @@ RSpec.describe ScheduleItemsController do
       end
 
       it 'exposes schedule items' do
-        get :index, room_id: zumba_room.id
         expect(controller.schedule_items) =~ [zumba_this_week, zumba_next_week]
       end
     end
@@ -100,14 +96,13 @@ RSpec.describe ScheduleItemsController do
       end
 
       it 'exposes schedule items' do
-        get :index, room_id: zumba_room.id, week_offset: 1
         expect(controller.schedule_items) =~ [zumba_next_week]
       end
     end
   end
 
   describe 'GET #show' do
-    let(:schedule_item) { create(:schedule_item) }
+    let!(:schedule_item) { create(:schedule_item) }
 
     subject { get :show, id: schedule_item }
 
@@ -116,7 +111,7 @@ RSpec.describe ScheduleItemsController do
     end
 
     it 'exposes the requested schedule item' do
-      get :show, id: schedule_item
+      subject
       expect(controller.schedule_item).to eq schedule_item
     end
   end
@@ -126,6 +121,8 @@ RSpec.describe ScheduleItemsController do
 
     subject { get :focus, id: schedule_item }
 
-    it { is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id }
+    it 'redirects to index with an anchor and proper week offset' do
+      is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id
+    end
   end
 end

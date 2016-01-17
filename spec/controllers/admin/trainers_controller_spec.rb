@@ -76,6 +76,11 @@ RSpec.describe Admin::TrainersController do
       it 'renders template edit' do
         is_expected.to render_template :edit
       end
+
+      it 'exposes trainer' do
+        subject
+        expect(controller.trainer).to eq trainer
+      end
     end
 
     describe 'PUT #update' do

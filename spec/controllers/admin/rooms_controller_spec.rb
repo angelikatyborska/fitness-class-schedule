@@ -70,6 +70,11 @@ RSpec.describe Admin::RoomsController do
       it 'renders template edit' do
         is_expected.to render_template :edit
       end
+
+      it 'exposes room' do
+        subject
+        expect(controller.room).to eq room
+      end
     end
 
     describe 'PUT #update' do
