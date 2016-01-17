@@ -23,7 +23,7 @@ feature 'Admin creates a schedule item', js: true do
     expect {
       select_datetime tomorrow, from: 'schedule_item_start'
 
-      fill_in 'Duration', with: 45
+      select 45, from: 'Duration'
       fill_in 'Capacity', with: 10
       select fitness_class, from: 'Fitness class'
 
@@ -39,7 +39,7 @@ feature 'Admin creates a schedule item', js: true do
     expect {
       select_datetime (tomorrow - 2.days), from: 'schedule_item_start'
 
-      fill_in 'Duration', with: 45
+      select 45, from: 'Duration'
       fill_in 'Capacity', with: 10
       select fitness_class, from: 'Fitness class'
 

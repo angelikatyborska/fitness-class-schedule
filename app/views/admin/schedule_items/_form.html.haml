@@ -14,7 +14,7 @@
 
     .row
       .medium-6.columns
-        = f.input :duration
+        = f.input :duration, as: :select, collection: 30.step(360, 5)
 
       .medium-6.columns
         = f.input :capacity
@@ -43,3 +43,15 @@
     .row
       .medium-12.columns
         = f.button :button, t('shared.save'), class: 'save'
+
+- allowTimes = ScheduleItem.day_duration_in_quarters.times.with_object([]) do |n, array|
+  -  array << "'#{l(ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone.beginning_of_day) + (n * 15).minutes, format: :simple_time)}'"
+
+:javascript
+    $('.datetimepicker').datetimepicker({
+    format: 'Y-m-d H:i',
+    step: 15,
+    defaultTime: #{ allowTimes[0] },
+    allowTimes: [ #{ allowTimes.join(', ') } ],
+    mask: true
+  });

@@ -28,12 +28,6 @@
 $(document).ready(function() {
   $(document).foundation();
 
-  $('.datetimepicker').datetimepicker({
-    format: 'Y-m-d H:i',
-    defaultTime: '00:00',
-    mask: true
-  });
-
   $('.colorpicker').colorpicker({
     colorFormat: '#HEX'
   });
