@@ -25,7 +25,7 @@ feature 'Admin edits a schedule item' do
       click_button 'Save'
     }.to change(ScheduleItem, :count).by(0)
 
-    expect(current_path).to eq admin_schedule_items_path
+    expect(current_path).to eq schedule_items_path
 
     expect(page).not_to have_content 'ABT'
     expect(page).to have_content 'TBC'

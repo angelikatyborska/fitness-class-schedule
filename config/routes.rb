@@ -9,9 +9,8 @@ Rails.application.routes.draw do
   resources :rooms, only: [:index]
 
   resources :schedule_items, only: [:index, :show] do
-    collection do
-      get :prev_week
-      get :next_week
+    member do
+      get :focus
     end
   end
 

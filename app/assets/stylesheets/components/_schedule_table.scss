@@ -80,7 +80,6 @@ $reserved-check-size: 18px;
 }
 
 .schedule {
-  overflow: hidden;
   background-color: $table-bg;
 
   .week {
@@ -190,7 +189,7 @@ $reserved-check-size: 18px;
           .item-box {
             box-shadow: 0 0 0 0 transparent;
             animation-name: highlight;
-            animation-duration: 2s;
+            animation-duration: 5s;
           }
         }
 

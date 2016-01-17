@@ -8,10 +8,10 @@
   data: { 'dropdown-content': '' } }
 
   %li
-    = link_to t('shared.all'), schedule_items_path(filter_params.except(:room))
+    = link_to t('shared.all'), schedule_items_path(filter_params.except(:room).merge({ week_offset: week_offset }))
 
   = list_of rooms.order(:name) do |room|
-    = link_to room, schedule_items_path(filter_params.merge({ room: room.id }))
+    = link_to room, schedule_items_path(filter_params.merge({ room: room.id, week_offset: week_offset }))
 
 %button{ href: '#',
   class: 'button tiny secondary dropdown',
@@ -20,7 +20,7 @@
 
 %ul{ id: 'trainers-dropdown', class: 'f-dropdown', data: { 'dropdown-content': '' }}
   %li
-    = link_to t('shared.all'), schedule_items_path(filter_params.except(:trainer))
+    = link_to t('shared.all'), schedule_items_path(filter_params.except(:trainer).merge({ week_offset: week_offset }))
 
   = list_of trainers.order(:first_name) do |trainer|
-    = link_to trainer, schedule_items_path(filter_params.merge({ trainer: trainer.id }))
+    = link_to trainer, schedule_items_path(filter_params.merge({ trainer: trainer.id, week_offset: week_offset }))

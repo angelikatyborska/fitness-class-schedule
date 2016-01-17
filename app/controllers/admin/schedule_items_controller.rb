@@ -9,7 +9,7 @@ class Admin::ScheduleItemsController < Admin::AdminApplicationController
 
   def create
     if schedule_item.save
-      redirect_to action: :index, anchor: schedule_item.decorate.css_id
+      redirect_to focus_schedule_item_path(schedule_item)
     else
       render :new
     end
@@ -17,7 +17,7 @@ class Admin::ScheduleItemsController < Admin::AdminApplicationController
 
   def update
     if schedule_item.save
-      redirect_to action: :index, anchor: schedule_item.decorate.css_id
+      redirect_to focus_schedule_item_path(schedule_item)
     else
       render :edit
     end

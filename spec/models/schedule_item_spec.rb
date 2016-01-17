@@ -112,6 +112,37 @@ RSpec.describe ScheduleItem do
       end
     end
 
+    describe '#hourly_time_frame' do
+      let!(:schedule_item_at_3am) { create(
+        :schedule_item,
+        start: Time.zone.now.beginning_of_day + 1.day + 3.hours,
+        duration: 45
+      ) }
+
+      let!(:schedule_item_at_8am) { create(
+        :schedule_item,
+        start: Time.zone.now.beginning_of_day + 1.day + 8.hours,
+        duration: 45
+      ) }
+
+      let!(:schedule_item_at_10am) { create(
+        :schedule_item,
+        start: Time.zone.now.beginning_of_day + 1.day + 10.hours,
+        duration: 45
+      ) }
+
+      it 'lists all schedule items that take place between given hours' do
+        expect(described_class.hourly_time_frame(7, 12)).to match_array [schedule_item_at_8am, schedule_item_at_10am]
+        expect(described_class.hourly_time_frame(12, 7)).to match_array [schedule_item_at_3am]
+
+        expect(described_class.hourly_time_frame(7, 9)).to match_array [schedule_item_at_8am]
+        expect(described_class.hourly_time_frame(9, 7)).to match_array [schedule_item_at_3am, schedule_item_at_10am]
+
+        expect(described_class.hourly_time_frame(9, 12)).to match_array [schedule_item_at_10am]
+        expect(described_class.hourly_time_frame(12, 9)).to match_array [schedule_item_at_3am, schedule_item_at_8am]
+      end
+    end
+
     describe '#trainer' do
       let!(:schedule_item) { create(:schedule_item) }
       let!(:other_schedule_item) { create(:schedule_item) }

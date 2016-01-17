@@ -1,6 +1,6 @@
 class ScheduleItems::Column
   def initialize(schedule_items)
-    schedule_items.sort_by! { |item| item.start }
+    schedule_items.sort_by! { |item| [item.start, item.room.name] }
 
     schedule_items.each_cons(2) do |items|
       fail_on_overlapping_items(items[0], items[1]) if items[0].stop > items[1].start

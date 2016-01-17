@@ -29,8 +29,18 @@ ul.actions {
 }
 
 .create {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+
   &:before {
     content: $fa-var-plus;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
   }
 }
 

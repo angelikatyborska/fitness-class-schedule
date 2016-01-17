@@ -25,6 +25,18 @@ class ScheduleItem < ActiveRecord::Base
       time.beginning_of_week + 1.week)
   end
 
+  scope :hourly_time_frame, -> (from, to) do
+    if from < to
+      query = '((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?)'
+      args = [from, to, from, to]
+    else
+      query = '(((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?)) OR (((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?))'
+      args = [0, to, 0, to, from, 24, from, 24]
+    end
+
+    where(query, *args)
+  end
+
   scope :trainer, -> (trainer) { where('trainer_id = ?', trainer) }
   scope :room, -> (room) { where('room_id = ?', room) }
 
