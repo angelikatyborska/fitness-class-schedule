@@ -2,7 +2,7 @@
   text-align: center;
 
   .columns {
-    padding: $padding-tiny;
+    padding: $spacing-tiny;
   }
 
   .th {
@@ -38,7 +38,7 @@
       background-color: $white;
 
       li {
-        padding: 0 $padding-tiny;
+        padding: 0 $spacing-tiny;
       }
     }
 

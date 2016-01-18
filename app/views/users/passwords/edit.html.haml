@@ -1,0 +1,42 @@
+.devise-form-stand-alone
+  %h3
+    = t('devise.passwords.change')
+
+  = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+    .form-inputs
+      .row.collapse
+        .medium-12.columns
+          .row.collapse
+            .small-2.columns
+              %span.prefix
+                %i.fa.fa-key.fa-fw
+            = f.input :password,
+              required: true,
+              label: false,
+              placeholder: t('devise.password'),
+              wrapper_html: { class: 'small-10 columns' }
+
+      .row.collapse
+        .medium-12.columns
+          .row.collapse
+            .small-2.columns
+              %span.prefix
+                %i.fa.fa-key.fa-fw
+            = f.input :password_confirmation,
+              required: true,
+              label: false,
+              placeholder: t('devise.password_confirmation'),
+              wrapper_html: { class: 'small-10 columns' }
+        = f.input :reset_password_token, as: :hidden
+        = f.full_error :reset_password_token
+
+
+    .form-actions
+      .row.collapse
+        .medium-12.columns
+          = f.button :submit, t('shared.save')
+
+  .row
+    .medium-12.columns
+      = render 'devise/shared/links'
+

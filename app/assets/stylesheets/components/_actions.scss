@@ -83,7 +83,7 @@ ul.actions {
   &.delete,
   &.save {
     &:before {
-      padding: 0 $padding-tiny;
+      padding: 0 $spacing-tiny;
     }
   }
 }

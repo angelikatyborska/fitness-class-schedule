@@ -1,4 +1,11 @@
-= simple_form_for resource, as: resource_name, url: registration_path(resource_name), remote: true do |f|
+= simple_form_for resource, as: resource_name, url: session_path(resource_name), remote: remote do |f|
+  - unless flash[:alert].nil?
+    .row
+      .medium-12.columns
+        .form-errors
+          =  flash[:alert]
+          -  flash[:alert] = nil
+
   .form-inputs
     .row.collapse
       .medium-12.columns
@@ -7,7 +14,7 @@
             %span.prefix
               %i.fa.fa-envelope-o.fa-fw
           = f.input :email,
-            required: true,
+            required: false,
             autofocus: true,
             label: false,
             placeholder: t('devise.email'),
@@ -20,29 +27,23 @@
             %span.prefix
               %i.fa.fa-key.fa-fw
           = f.input :password,
-            required: true,
+            required: false,
             label: false,
             placeholder: t('devise.password'),
             wrapper_html: { class: 'small-10 columns' }
 
-    .row.collapse
-      .medium-12.columns
-        .row.collapse
-          .small-2.columns
-            %span.prefix
-              %i.fa.fa-key.fa-fw
-          = f.input :password_confirmation,
-            required: true,
-            label: false,
-            placeholder: t('devise.password_confirmation'),
-            wrapper_html: { class: 'small-10 columns' }
+    - if devise_mapping.rememberable?
+      .row.collapse
+        .medium-12.columns
+          = f.input :remember_me,
+            as: :boolean,
+            boolean_style: :inline
 
   .form-actions
     .row.collapse
       .medium-12.columns
-        = f.button :submit, t('user.signup')
+        = f.button :submit, t('user.login')
 
 .row
   .medium-12.columns
     = render 'devise/shared/links'
-

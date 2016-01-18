@@ -10,7 +10,7 @@ $reserved-check-size: 18px;
   background-color: $table-bg;
 
   @media #{$medium-up} {
-    padding: $padding-small;
+    padding: $spacing-small;
   }
 
   .buttons {
@@ -22,8 +22,8 @@ $reserved-check-size: 18px;
 
       @media #{$medium-up} {
         float: right;
-        margin-right: $padding-small;
-        margin-left: $padding-small;
+        margin-right: $spacing-small;
+        margin-left: $spacing-small;
       }
     }
   }
@@ -37,22 +37,22 @@ $reserved-check-size: 18px;
       display: block;
       float: left;
       height: 38px;
-      margin: $padding-tiny 0;
+      margin: $spacing-tiny 0;
       font-size: $paragraph-font-size-small;
 
       @media #{$medium-up} {
-        margin: 0 $padding-tiny;
+        margin: 0 $spacing-tiny;
       }
 
       &.time-navigation {
-        width: calc(33.333333% - #{$padding-tiny});
+        width: calc(33.333333% - #{$spacing-tiny});
 
         @media #{$medium-up} {
           width: inherit;
         }
 
         &:not(:last-of-type) {
-          margin-right: $padding-tiny;
+          margin-right: $spacing-tiny;
 
           @media #{$medium-up} {
             margin-right: inherit;
@@ -116,7 +116,7 @@ $reserved-check-size: 18px;
       .hour {
         position: absolute;
         width: 100%;
-        padding-left: $padding-small;
+        padding-left: $spacing-small;
         font-size: $paragraph-font-size-small;
         background-color: $table-even-row-bg;
 
@@ -150,7 +150,7 @@ $reserved-check-size: 18px;
           width: calc(100% - #{2 * $item-margin});
           height: 100%;
           margin: 0 (2 * $item-margin);
-          padding: $padding-tiny;
+          padding: $spacing-tiny;
           font-size: $paragraph-aside-font-size;
           color: $white;
           background-color: $topbar-bg;

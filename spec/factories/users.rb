@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "user#{ n }@example.com" }
     password { Faker::Internet.password(8, 16) }
+    confirmed_at { Time.zone.now }
 
     factory :admin_user do
       after(:create) do |user, evaluator|

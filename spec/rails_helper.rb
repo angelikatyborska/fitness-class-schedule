@@ -34,12 +34,12 @@ Shoulda::Matchers.configure do |config|
 end
 
 RSpec.configure do |config|
-  config.include Devise::TestHelpers, type: :controller
   config.include FactoryGirl::Syntax::Methods
-
-  # speed-up some feature specs skipping logging through the js gui and log in with warden instead
+  config.include Devise::TestHelpers, type: :controller
   include Warden::Test::Helpers
   Warden.test_mode!
+
+  # speed-up some feature specs skipping logging through the js gui and log in with warden instead
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)

@@ -1,8 +1,4 @@
-= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
-  .row
-    .medium-12.columns
-  = f.error_notification
-
+= simple_form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, remote: remote do |f|
   .form-inputs
     .row.collapse
       .medium-12.columns

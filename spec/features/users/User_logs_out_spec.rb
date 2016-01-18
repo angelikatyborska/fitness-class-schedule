@@ -9,6 +9,7 @@ feature 'User logs out', js: true do
     end
 
     scenario 'anywhere on the page' do
+      visit trainers_path
       old_path = current_path
       click_link user.email
       click_link 'Log out'

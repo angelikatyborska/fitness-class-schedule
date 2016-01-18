@@ -32,7 +32,7 @@
     button {
       @include button(0.25rem, $button-bg-color);
 
-      margin: 0 0 $padding-small $padding-small;
+      margin: 0 0 $spacing-small $spacing-small;
       background-image: none;
     }
   }
@@ -50,7 +50,7 @@
 }
 
 .ui-dialog .ui-dialog-buttonpane {
-  padding: $padding-small;
+  padding: $spacing-small;
 }
 
 .ui-widget-content {

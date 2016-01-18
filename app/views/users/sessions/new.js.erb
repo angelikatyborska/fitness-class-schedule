@@ -1,4 +1,4 @@
 Overlay.show(
-    "<%= escape_javascript render template: 'devise/sessions/new',
-    alert: flash[:alert] %>", "<%= t('user.login') %>"
+    "<%= escape_javascript render 'form', remote: true %>",
+    "<%= t('user.login') %>"
 );

@@ -1,6 +1,6 @@
 form {
   max-width: 640px;
-  margin: $padding-small auto;
+  margin: $spacing-small auto;
 
   .form-inputs {
     margin-bottom: 10px;
@@ -26,7 +26,22 @@ form {
   }
 
   .form-errors {
-    margin-bottom: $padding-small;
+    margin-bottom: $spacing-small;
+    text-align: center;
     color: $alert-color;
   }
+
+  .user_remember_me {
+    margin-bottom: $spacing-small;
+    text-align: center;
+  }
+}
+
+.devise-links {
+  text-align: center;
+  font-size: $paragraph-font-size-small;
+}
+
+.devise-form-stand-alone {
+  text-align: center;
 }

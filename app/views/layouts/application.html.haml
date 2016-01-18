@@ -12,8 +12,10 @@
     - if flash[:alert]
       :javascript
         Overlay.show('#{flash[:alert]}', '');
+      - flash[:alert] = nil
     - if flash[:notice]
       :javascript
         Overlay.show('#{flash[:notice]}', '');
+      - flash[:notice] = nil
     #content
       = yield

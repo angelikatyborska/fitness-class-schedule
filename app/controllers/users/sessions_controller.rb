@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   clear_respond_to
-  respond_to :js
+  respond_to :js, :html
 
   def failure
     warden.custom_failure!
@@ -22,6 +22,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   # overwrite to respond with destroy.js.erb (default rails behavior) instead of 204 no content (default devise behavior)
+
   def respond_to_on_destroy
   end
 end

@@ -117,12 +117,32 @@ RSpec.describe ScheduleItemsController do
   end
 
   describe 'GET #focus' do
-    let(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
+    before :all do
+      Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
+    end
 
-    subject { get :focus, id: schedule_item }
+    after :all do
+      Timecop.return
+    end
 
-    it 'redirects to index with an anchor and proper week offset' do
-      is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id
+    context 'with a schedule item this week' do
+      let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+
+      subject { get :focus, id: schedule_item }
+
+      it 'redirects to index with an anchor and proper week offset' do
+        is_expected.to redirect_to action: :index, week_offset: 0, anchor: schedule_item.decorate.css_id
+      end
+    end
+
+    context 'with a schedule item next week' do
+      let!(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
+
+      subject { get :focus, id: schedule_item }
+
+      it 'redirects to index with an anchor and proper week offset' do
+        is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id
+      end
     end
   end
 end

@@ -1,8 +1,8 @@
-<% if resource.persisted? %>
+<% unless resource.errors.messages.any? %>
   location.reload();
 <% else %>
   Overlay.show(
-      "<%= escape_javascript render template: 'devise/registrations/new' %>",
-      "<%= t('user.signup') %>"
+      "<%= escape_javascript render 'form', remote: true %>",
+      "<%= t('devise.passwords.forgot') %>"
   );
 <% end %>

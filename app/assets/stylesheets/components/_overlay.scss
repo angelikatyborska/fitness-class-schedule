@@ -22,7 +22,7 @@ $overlay-close-size: 23px;
 .overlay-header {
   position: relative;
   margin: 0;
-  padding: $padding-tiny;
+  padding: $spacing-tiny;
   min-height: 32px;
   text-align: center;
   color: $topbar-link-color;
@@ -64,5 +64,5 @@ $overlay-close-size: 23px;
 }
 
 .overlay-content {
-  padding: $padding-medium;
+  padding: $spacing-medium;
 }

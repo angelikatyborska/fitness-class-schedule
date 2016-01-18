@@ -1,13 +1,13 @@
 #content {
-   margin-top: $padding-medium;
+   margin-top: $spacing-medium;
  }
 
 .rows-bottom-margin {
   .row {
-    margin: 0 auto $padding-small;
+    margin: 0 auto $spacing-small;
 
     @media #{$large-up} {
-      margin: 0 auto $padding-medium;
+      margin: 0 auto $spacing-medium;
     }
   }
 }

@@ -1,0 +1,11 @@
+<% if resource.persisted? && !resource.errors.messages.any? %>
+Overlay.show(
+    "<%= escape_javascript t('devise.confirmations.send_instructions') %>",
+    "<%= t('devise.confirmations.didnt_receive_instructions') %>"
+);
+<% else %>
+  Overlay.show(
+      "<%= escape_javascript render 'form', remote: true %>",
+      "<%= t('devise.confirmations.didnt_receive_instructions') %>"
+  );
+<% end %>
