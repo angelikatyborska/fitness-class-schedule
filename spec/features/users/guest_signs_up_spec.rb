@@ -4,6 +4,8 @@ feature 'Guest signs up', js: true do
   scenario 'with a valid email' do
     visit root_path
     click_link 'Sign up'
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
     fill_in 'Email', with: 'user@example.com'
     within '.user_password' do
       fill_in 'Password', with: 'password1234'
@@ -18,16 +20,16 @@ feature 'Guest signs up', js: true do
   scenario 'with an invalid email' do
     create(:user, email: 'user@example.com')
 
-    expect {
-      visit root_path
-      click_link 'Sign up'
-      fill_in 'Email', with: 'user@example.com'
-      within '.user_password' do
-        fill_in 'Password', with: 'password1234'
-      end
-      fill_in 'Password confirmation', with: 'password1234'
-      click_button 'Sign up'
-    }.not_to change(User, :count)
+    visit root_path
+    click_link 'Sign up'
+    fill_in 'First name', with: 'John'
+    fill_in 'Last name', with: 'Doe'
+    fill_in 'Email', with: 'user@example.com'
+    within '.user_password' do
+      fill_in 'Password', with: 'password1234'
+    end
+    fill_in 'Password confirmation', with: 'password1234'
+    click_button 'Sign up'
 
     expect(page).to have_content 'has already been taken'
   end

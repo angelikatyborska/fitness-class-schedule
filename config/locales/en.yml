@@ -3,6 +3,7 @@ en:
     email: 'Email'
     password: 'Password'
     password_confirmation: 'Password confirmation'
+    current_password: 'Current password'
     failure:
       already_authenticated: "You are already logged in."
       timeout: "Your session expired. Please log in again to continue."
@@ -118,9 +119,14 @@ en:
       photo: 'Photo'
     check_out_schedule: 'Check out my schedule'
   user:
+    attributes:
+      first_name: 'First name'
+      last_name: 'Last name'
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'
+    destroy: 'Cancel my account'
+    change_password: 'Change password'
     settings: 'Settings'
     admin_panel:
       name: 'Admin panel'

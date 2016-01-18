@@ -7,7 +7,7 @@
           -  flash[:alert] = nil
 
   .form-inputs
-    .row.collapse
+    .row
       .medium-12.columns
         .row.collapse
           .small-2.columns
@@ -20,7 +20,7 @@
             placeholder: t('devise.email'),
             wrapper_html: { class: 'small-10 columns' }
 
-    .row.collapse
+    .row
       .medium-12.columns
         .row.collapse
           .small-2.columns
@@ -33,14 +33,14 @@
             wrapper_html: { class: 'small-10 columns' }
 
     - if devise_mapping.rememberable?
-      .row.collapse
+      .row
         .medium-12.columns
           = f.input :remember_me,
             as: :boolean,
             boolean_style: :inline
 
   .form-actions
-    .row.collapse
+    .row
       .medium-12.columns
         = f.button :submit, t('user.login')
 

@@ -6,6 +6,9 @@ class User < ActiveRecord::Base
   has_many :reservations, dependent: :destroy
   has_many :schedule_items, through: :reservations
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   default_scope { includes(:reservations)}
 
   def admin?

@@ -1,1 +1,8 @@
-location.reload();
+<% if resource.active_for_authentication? %>
+  location.reload();
+<% else %>
+Overlay.show(
+    "<%= escape_javascript render 'form', remote: true %>",
+    "<%= t('user.login') %>"
+);
+<%  end %>
