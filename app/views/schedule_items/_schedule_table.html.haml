@@ -3,17 +3,17 @@
 
 .schedule
   .week
-    .hours
-      .day-schedule{ style: "height: #{day_schedule_height}"}
-        - ScheduleItem.day_duration_in_hours.times do |n|
-          - hour_style = "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%;"
-          - hour_style << "height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"
-
-          .hour{ style: hour_style }
-            = l(ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone) + n.hours, format: :simple_time)
-
     - order_by_weekdays(schedule_items, week_offset).each do |day, items|
       .day
+        .hours
+          .day-schedule{ style: "height: #{day_schedule_height}"}
+            - ScheduleItem.day_duration_in_hours.times do |n|
+              - hour_style = "top: #{100.0 * n / ScheduleItem.day_duration_in_hours}%;"
+              - hour_style << "height: #{100.0 / ScheduleItem.day_duration_in_hours}%;"
+
+              .hour{ style: hour_style }
+                = l(ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone) + n.hours, format: :simple_time)
+
         - day_class = day.to_date == Time.zone.now.in_website_time_zone.to_date ? 'today' : ''
 
         .day-header{ class: day_class }
