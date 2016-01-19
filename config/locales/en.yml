@@ -102,6 +102,9 @@ en:
     add: 'Add a photo to the gallery'
   reservation:
     name: 'Reservation'
+    attributes:
+      queue: 'Queue'
+      attended: 'Attended?'
     history: 'Past classes'
     not_created: 'Something went wrong, your reservation has not been added.'
     created: 'Your reservation has been added.'
@@ -110,6 +113,7 @@ en:
     delete: 'Cancel'
     queue: 'Add to waiting list'
     emtpy_spots: 'Empty spots'
+    checkin: 'Check in'
   trainer:
     name: 'Trainer'
     attributes:
@@ -119,9 +123,11 @@ en:
       photo: 'Photo'
     check_out_schedule: 'Check out my schedule'
   user:
+    name: 'User'
     attributes:
       first_name: 'First name'
       last_name: 'Last name'
+      probability: 'Chance of showing up'
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'

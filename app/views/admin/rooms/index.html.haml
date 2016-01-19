@@ -3,7 +3,7 @@
     .medium-12.columns
       %h2
         = t('room.name').pluralize
-        = link_to t('shared.create'), new_admin_room_path, class: 'button create right'
+        = link_to t('shared.create'), new_admin_room_path, class: 'button action create right'
 
   .row
     .medium-12.columns
@@ -30,10 +30,10 @@
               %td
                 %ul.actions
                   %li
-                    = link_to t('shared.edit'), edit_admin_room_path(room), class: 'edit'
+                    = link_to t('shared.edit'), edit_admin_room_path(room), class: 'action edit'
                   %li
                     = link_to t('shared.delete'),
                       admin_room_path(room),
                       method: :delete,
                       data: { confirm: t('shared.confirm') },
-                      class: 'delete'
+                      class: 'action delete'

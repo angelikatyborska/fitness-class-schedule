@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
-    resources :schedule_items, except: :show
+    resources :schedule_items
     resources :fitness_classes, except: :show
     resources :trainers, except: :show
     resources :rooms, except: :show  do

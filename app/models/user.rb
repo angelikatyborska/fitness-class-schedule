@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  default_scope { includes(:reservations)}
+  default_scope { includes(:reservations) }
 
   def admin?
     has_role?(:admin)

@@ -6,13 +6,13 @@
     - if current_user && current_user.admin?
       = link_to t('shared.edit'),
         edit_admin_schedule_item_path(schedule_item),
-        class: 'edit'
+        class: 'action edit'
 
       = link_to t('shared.delete'), admin_schedule_item_path(schedule_item),
         method: :delete,
         data: { confirm: t('shared.confirm') },
         remote: true,
-        class: 'delete'
+        class: 'action delete'
 
   %span.details
     #{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)},

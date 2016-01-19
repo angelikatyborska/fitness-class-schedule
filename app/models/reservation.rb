@@ -2,16 +2,10 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   belongs_to :schedule_item
 
-  before_validation :set_initial_queue_position, on: :create
-  before_save :update_status
-  before_destroy :update_other_reservations
-
-  enum status: [:active, :queued, :missed]
+  enum status: [:active, :stale, :attended, :missed]
 
   validates :user, presence: true, uniqueness: { scope: :schedule_item_id }
   validates :schedule_item, presence: true
-  validates :status, presence: true, inclusion: { in: statuses.keys }
-  validates :queue_position, presence: true
   validate :schedule_item_cant_be_in_the_past
 
   def schedule_item_cant_be_in_the_past
@@ -22,28 +16,18 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def update_status
-    if queue_position > schedule_item.capacity
-      self.status = 'queued'
-    else
-      self.status = 'active'
-    end
+  def queued?
+    queue_position > schedule_item.capacity
   end
 
-  private
 
-  def update_other_reservations
-    schedule_item.reservations.each do |reservation|
-      reservation.queue_position -= 1 if reservation.queue_position > self.queue_position
-      reservation.save
-    end
-  end
-
-  def set_initial_queue_position
+  def queue_position
     if schedule_item && schedule_item.reservations
-      number_of_reservations_before = schedule_item.reservations.length
+      number_of_reservations_before = schedule_item.reservations.to_a.count do |reservation|
+        reservation.created_at.iso8601(10) < created_at.iso8601(10)
+      end
 
-      self.queue_position = number_of_reservations_before + 1
+      number_of_reservations_before + 1
     end
   end
 end

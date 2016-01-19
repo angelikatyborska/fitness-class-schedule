@@ -2,8 +2,12 @@ puts "Seeds: start"
 
 Trainer.destroy_all
 Room.destroy_all
+Reservation.destroy_all
 ScheduleItem.destroy_all
 FitnessClass.destroy_all
+User.destroy_all
+
+puts 'Creating trainers...'
 
 6.times do
   Trainer.create!(
@@ -22,6 +26,8 @@ spinning_room = Room.create!(
   name: 'Spinning Room',
   description: Faker::Lorem.paragraph(3)
 )
+
+puts 'Creating rooms...'
 
 3.times do |n|
   RoomPhoto.create!(
@@ -44,6 +50,8 @@ spinning_classes_names_and_colors = [
   { name: 'Spinning Strength', color: '#2b36a1'},
 ]
 
+puts 'Creating classes...'
+
 fitness_classes =
   fitness_classes_names_and_colors.each_with_object([]) do |fitness_class, classes|
     classes << FitnessClass.create!(
@@ -62,30 +70,61 @@ spinning_classes =
     )
   end
 
+puts 'Creating schedule items...'
+
 beginning_of_week = Time.zone.now.beginning_of_week
 available_hours = (0...(ScheduleItem.day_duration_in_hours)).to_a
 
-Timecop.freeze(beginning_of_week)
+Timecop.travel(Time.zone.now - 1.month)
 
 room_classes_pairings = [
   { room: fitness_hall, classes: fitness_classes},
   { room: spinning_room, classes: spinning_classes }
 ]
 
-room_classes_pairings.each_with_index do |pairing, index|
+schedule_items = room_classes_pairings.each_with_index.with_object([]) do |(pairing, index), items|
   10.times do |days|
-    available_hours.sample(available_hours.length * 1 / 2).each do |hours|
-      ScheduleItem.create!(
+    available_hours.sample(available_hours.length * 1 / 3).each do |hours|
+      items << {
         start: ScheduleItem.beginning_of_day(beginning_of_week) + days.days + hours.hours,
         duration: 45,
         fitness_class: pairing[:classes].sample,
         trainer: Trainer.all[(index * 3)...((index + 1) * 3)].sample,
         room: pairing[:room],
-        capacity: Faker::Number.between(5, 15)
-      )
+        capacity: Faker::Number.between(3, 10)
+      }
     end
   end
 end
+
+ScheduleItem.create!(schedule_items)
+
+puts 'Creating users...'
+
+users = 7.times.with_object([]) do |n, users|
+  users << {
+    email: "user#{ n }@example.com",
+    password: Faker::Internet.password(8),
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    confirmed_at: Time.zone.now
+  }
+end
+
+User.create!(users)
+
+puts 'Creating reservations...'
+
+reservations = ScheduleItem.all.each.with_object([]) do |item, reservations|
+  User.all.sample(5).each do |user|
+    reservations <<{ user: user, schedule_item: item }
+  end
+end
+
+Reservation.create!(reservations)
+
+admin = User.create!(email: 'admin@example.com', password: 'password', first_name: 'John', last_name: 'Doe', confirmed_at: Time.zone.now)
+admin.add_role(:admin)
 
 Timecop.return
 

@@ -1,0 +1,52 @@
+.row
+  .medium-12.columns
+    %h3
+      %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
+      #{ schedule_item.fitness_class }
+      (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },
+      #{ t('schedule_item.attributes.capacity') }: #{ schedule_item.capacity })
+.row
+  .medium-12.columns
+    %table
+      %thead
+        %tr
+          %th
+            = t('user.name')
+          %th
+            = t('reservation.attributes.queue')
+          %th
+            = t('reservation.attributes.attended')
+          %th
+            = t('user.attributes.probability')
+          %th
+            = t('shared.actions')
+      %tbody
+        - schedule_item.reservations.order(:created_at).each do |reservation|
+          - queue_class = reservation.queued? ? 'queued' : 'active'
+          %tr{ id: reservation.decorate.css_id, class: queue_class }
+            %td
+              = "#{ reservation.user.last_name }, #{ reservation.user.first_name }"
+            %td
+              = reservation.queue_position
+            %td.status
+              - if reservation.attended?
+                %span.attended
+                  Yes
+              - elsif reservation.missed?
+                %span.missed
+                  No
+              - else
+                %span.unknown
+                  ?
+            %td
+              - # TODO: implement
+              100%
+            %td
+              %ul.actions
+                = link_to t('shared.delete'),
+                  '#',
+                  method: :delete,
+                  data: { confirm: t('shared.confirm') },
+                  remote: true,
+                  class: 'action delete'
+

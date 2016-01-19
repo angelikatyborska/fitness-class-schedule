@@ -8,6 +8,13 @@ RSpec.describe Admin::ScheduleItemsController do
       end
     end
 
+
+    describe 'GET #show' do
+      it 'raises an error' do
+        expect { get :show, id: create(:schedule_item) }.to require_admin_privileges
+      end
+    end
+
     describe 'GET #new' do
       it 'raises an error' do
         expect { get :new }.to require_admin_privileges
@@ -60,6 +67,20 @@ RSpec.describe Admin::ScheduleItemsController do
 
       it 'exposes schedule items' do
         expect(controller.schedule_items).to match_array schedule_items
+      end
+    end
+
+    describe 'GET #show' do
+      let!(:schedule_item) { create(:schedule_item) }
+      subject { get :show, id: schedule_item.id }
+
+      it 'renders template edit' do
+        is_expected.to render_template :show
+      end
+
+      it 'exposes schedule item' do
+        subject
+        expect(controller.schedule_item).to eq schedule_item
       end
     end
 

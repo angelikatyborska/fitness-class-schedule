@@ -7,7 +7,7 @@
           admin_room_room_photo_path(room, photo),
           method: :delete,
           data: { confirm: t('shared.confirm') },
-          class: 'delete'
+          class: 'action delete'
 
       = link_to photo.photo.url do
         = image_tag photo.photo.thumb.url

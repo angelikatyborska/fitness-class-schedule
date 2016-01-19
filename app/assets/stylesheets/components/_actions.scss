@@ -7,11 +7,7 @@ ul.actions {
   }
 }
 
-.check-schedule,
-.create,
-.edit,
-.delete,
-.save {
+.action {
   @include hide-text;
 
   &:before {
@@ -62,13 +58,14 @@ ul.actions {
   }
 }
 
+.checkin {
+  &:before {
+    content: $fa-var-calendar-check-o;
+  }
+}
 
 .button {
-  &.check-schedule,
-  &.create,
-  &.edit,
-  &.delete,
-  &.save {
+  &.action {
     &:before {
       font-size: 20px;
       color: $button-font-color;
@@ -77,11 +74,7 @@ ul.actions {
 }
 
 :not(.button) {
-  &.check-schedule,
-  &.create,
-  &.edit,
-  &.delete,
-  &.save {
+  &.action {
     &:before {
       padding: 0 $spacing-tiny;
     }

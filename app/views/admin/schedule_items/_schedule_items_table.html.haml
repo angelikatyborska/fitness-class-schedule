@@ -34,7 +34,7 @@
         %td
           = item.capacity
         %td
-          = item.reservations.count
+          = item.reservations.size
         %td
           = item.trainer.first_name
         %td
@@ -42,10 +42,16 @@
         %td
           %ul.actions
             %li
-              = link_to t('shared.edit'), edit_admin_schedule_item_path(item), class: 'edit'
+              = link_to t('reservation.checkin'),
+                admin_schedule_item_path(item),
+                class: 'action checkin'
+            %li
+              = link_to t('shared.edit'),
+                edit_admin_schedule_item_path(item),
+                class: 'action edit'
             %li
               = link_to t('shared.delete'),
                 admin_schedule_item_path(item),
                 method: :delete,
                 data: { confirm: t('shared.confirm') },
-                class: 'delete'
+                class: 'action delete'

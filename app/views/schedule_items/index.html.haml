@@ -1,7 +1,7 @@
 .schedule-header
   - if user_signed_in? && current_user.admin?
     .buttons
-      = link_to t('shared.create'), new_admin_schedule_item_path, class: 'button create'
+      = link_to t('shared.create'), new_admin_schedule_item_path, class: 'button action create'
 
   .filter
     = render 'schedule_filter_dropdowns'

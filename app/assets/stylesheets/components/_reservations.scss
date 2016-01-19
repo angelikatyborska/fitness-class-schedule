@@ -1,0 +1,7 @@
+tr.queued {
+  border-top: 2px dashed $alert-button-border-color;
+
+ & + & {
+    border-top: 0;
+  }
+}
