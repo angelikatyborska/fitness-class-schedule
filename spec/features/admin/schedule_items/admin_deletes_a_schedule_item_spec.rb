@@ -20,7 +20,7 @@ feature 'Admin deletes a schedule item', js: true do
     visit root_path
 
     click_link 'Admin panel'
-    click_link 'Schedule items'
+    click_link I18n.t('user.admin_panel.schedule_items')
 
     expect(page).to have_content schedule_item
     expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_date)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Guest check schedules for rooms' do
+feature 'Guest check schedules for a trainer' do
   let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
   let!(:other_schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
 

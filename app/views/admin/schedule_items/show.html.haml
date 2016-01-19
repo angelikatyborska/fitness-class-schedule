@@ -48,7 +48,6 @@
               100%
             %td
               %ul.actions
-                - # TODO: feature specs
                 = link_to t('reservation.attend'),
                   admin_reservation_path(reservation, reservation: { status: 'attended' }),
                   method: :put,

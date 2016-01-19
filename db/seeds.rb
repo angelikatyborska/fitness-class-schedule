@@ -91,7 +91,7 @@ schedule_items = room_classes_pairings.each_with_index.with_object([]) do |(pair
         fitness_class: pairing[:classes].sample,
         trainer: Trainer.all[(index * 3)...((index + 1) * 3)].sample,
         room: pairing[:room],
-        capacity: Faker::Number.between(3, 7)
+        capacity: Faker::Number.between(3, 5)
       }
     end
   end
@@ -116,7 +116,7 @@ User.create!(users)
 puts 'Creating reservations...'
 
 reservations = ScheduleItem.all.each.with_object([]) do |item, reservations|
-  User.all.sample(5).each do |user|
+  User.all.sample((rand 4) + 3).each do |user|
     reservations <<{ user: user, schedule_item: item }
   end
 end

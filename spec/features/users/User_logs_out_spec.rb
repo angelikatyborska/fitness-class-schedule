@@ -29,7 +29,7 @@ feature 'User logs out', js: true do
 
     scenario 'browsing the admin panel' do
       click_link 'Admin panel'
-      click_link 'Schedule items'
+      click_link I18n.t('user.admin_panel.schedule_items')
       click_link user.email
       click_link 'Log out'
       wait_for_ajax

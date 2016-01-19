@@ -141,6 +141,7 @@ en:
     settings: 'Settings'
     admin_panel:
       name: 'Admin panel'
+      schedule_items: 'Schedule'
       settings: 'System settings'
       day_end: 'Day ends at'
       day_start: 'Day starts at'
