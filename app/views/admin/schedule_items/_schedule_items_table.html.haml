@@ -10,8 +10,6 @@
       %th
         = t('schedule_item.attributes.end')
       %th
-        = t('schedule_item.attributes.capacity')
-      %th
         = t('reservation.name').pluralize
       %th
         = t('schedule_item.attributes.trainer')
@@ -23,8 +21,9 @@
     - schedule_items.each do |item|
       %tr{ id: item.decorate.css_id }
         %td.fitness-class-name
-          %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
-          = item.fitness_class.name
+          = link_to focus_schedule_item_path(item) do
+            %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
+            = item.fitness_class.name
         %td
           = l(item.start.in_website_time_zone, format: :simple_date)
         %td
@@ -32,9 +31,7 @@
         %td
           = l(item.stop.in_website_time_zone, format: :simple_time)
         %td
-          = item.capacity
-        %td
-          = item.reservations.size
+          #{ item.reservations.size } / #{ item.capacity }
         %td
           = item.trainer.first_name
         %td
@@ -44,14 +41,17 @@
             %li
               = link_to t('reservation.checkin'),
                 admin_schedule_item_path(item),
-                class: 'action checkin'
+                class: 'action checkin',
+                title: t('reservation.checkin')
             %li
               = link_to t('shared.edit'),
                 edit_admin_schedule_item_path(item),
-                class: 'action edit'
+                class: 'action edit',
+                title: t('shared.edit')
             %li
               = link_to t('shared.delete'),
                 admin_schedule_item_path(item),
                 method: :delete,
                 data: { confirm: t('shared.confirm') },
-                class: 'action delete'
+                class: 'action delete',
+                title: t('shared.delete')

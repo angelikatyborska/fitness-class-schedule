@@ -91,7 +91,7 @@ schedule_items = room_classes_pairings.each_with_index.with_object([]) do |(pair
         fitness_class: pairing[:classes].sample,
         trainer: Trainer.all[(index * 3)...((index + 1) * 3)].sample,
         room: pairing[:room],
-        capacity: Faker::Number.between(3, 10)
+        capacity: Faker::Number.between(3, 7)
       }
     end
   end

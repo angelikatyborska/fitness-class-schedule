@@ -3,7 +3,10 @@
     .medium-12.columns
       %h2
         = t('fitness_class.name').pluralize
-        = link_to t('shared.create'), new_admin_fitness_class_path, class: 'button action create right'
+        = link_to t('shared.create'),
+          new_admin_fitness_class_path,
+          class: 'button action create right',
+          title: t('shared.create')
 
   .row
     .medium-12.columns
@@ -28,11 +31,14 @@
               %td
                 %ul.actions
                   %li
-                    = link_to edit_admin_fitness_class_path(fitness_class), class: 'action edit' do
-                      = t('shared.edit')
+                    = link_to t('shared.edit'),
+                      edit_admin_fitness_class_path(fitness_class),
+                      class: 'action edit',
+                      title: t('shared.edit')
                   %li
                     = link_to t('shared.delete'),
                       admin_fitness_class_path(fitness_class),
                       method: :delete,
                       data: { confirm: t('shared.confirm') },
-                      class: 'action delete'
+                      class: 'action delete',
+                      title: t('shared.delete')

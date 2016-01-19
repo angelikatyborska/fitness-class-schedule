@@ -1,11 +1,14 @@
 = link_to t('schedule_item.prev_week'),
   schedule_items_path(filter_params.merge({ week_offset: week_offset - 1 })),
-  class: 'button tiny secondary time-navigation prev-week'
+  class: 'button tiny secondary time-navigation prev-week',
+  title: t('schedule_item.prev_week')
 
 = link_to t('schedule_item.this_week'),
   schedule_items_path(filter_params.merge({ week_offset: 0 })),
-  class: 'button tiny secondary time-navigation this-week'
+  class: 'button tiny secondary time-navigation this-week',
+  title: t('schedule_item.this_week')
 
 = link_to t('schedule_item.next_week'),
   schedule_items_path(filter_params.merge({ week_offset: week_offset + 1 })),
-  class: 'button tiny secondary time-navigation next-week'
+  class: 'button tiny secondary time-navigation next-week',
+  title: t('schedule_item.next_week')
