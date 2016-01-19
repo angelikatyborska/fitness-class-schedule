@@ -1,0 +1,12 @@
+= simple_form_for [:admin, reservation], remote: true do |f|
+  .form-inputs
+    .row
+      .medium-12.columns
+        = f.hidden_field :schedule_item_id, value: reservation.schedule_item.id
+        = f.association :user, label: false, collection: User.without_reservation(reservation.schedule_item).order(:last_name), label_method: :to_s, include_blank: false
+
+  .form-actions
+    .row
+      .medium-12.columns
+        - label = reservation.schedule_item.full? ? t('reservation.queue') : t('reservation.create')
+        = f.button :submit, label

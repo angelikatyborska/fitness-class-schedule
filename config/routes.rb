@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   namespace 'admin' do
     resources :schedule_items
     resources :fitness_classes, except: :show
+    resources :reservations, only: [:new, :create, :update, :destroy]
     resources :trainers, except: :show
     resources :rooms, except: :show  do
       resources :room_photos, only: [:new, :create, :destroy]

@@ -27,6 +27,35 @@ RSpec.describe Reservation do
         expect(subject.errors[:user]).to include('has already been taken')
       end
     end
+
+    context 'when trying to change something after create' do
+      let!(:reservation) { create(:reservation) }
+
+      subject { reservation }
+
+      context 'changing user' do
+        it 'is invalid' do
+          reservation.user = create(:user)
+          is_expected.to be_invalid
+          expect(subject.errors[:user_id]).to include('only reservation\'s status can be changed')
+        end
+      end
+
+      context 'changing schedule item' do
+        it 'is invalid' do
+          reservation.schedule_item = create(:schedule_item)
+          is_expected.to be_invalid
+          expect(subject.errors[:schedule_item_id]).to include('only reservation\'s status can be changed')
+        end
+      end
+
+      context 'changing status' do
+        it 'is valid' do
+          reservation.status = 'missed'
+          is_expected.to be_valid
+        end
+      end
+    end
   end
 
   describe 'database columns' do
@@ -37,13 +66,13 @@ RSpec.describe Reservation do
     context 'with all reservations for the same schedule item created at the same time' do
       let!(:schedule_item) { create(:schedule_item) }
 
-      let!(:reservations) {
+      let!(:reservations) do
         reservations = 4.times.with_object([]) do |n, reservations|
           reservations << { user: create(:user), schedule_item: schedule_item }
         end
 
         Reservation.create!(reservations)
-      }
+      end
 
       it 'queues reservations in the same order they were created' do
         expect(reservations[0].reload.queue_position).to eq 1
@@ -61,13 +90,13 @@ RSpec.describe Reservation do
     end
 
     context 'with reservations for different schedule items created at the same time' do
-      let!(:reservations) {
+      let!(:reservations) do
         reservations = 4.times.with_object([]) do |n, reservations|
           reservations << { user: create(:user), schedule_item: create(:schedule_item) }
         end
 
         Reservation.create!(reservations)
-      }
+      end
 
       it 'queues each reservation seperately' do
         expect(reservations[0].queue_position).to eq 1
@@ -97,13 +126,13 @@ RSpec.describe Reservation do
     end
 
     context 'created at the same time for a schedule item with no empty spots' do
-      let!(:reservations) {
+      let!(:reservations) do
         reservations = 3.times.with_object([]) do |n, reservations|
           reservations << { user: create(:user), schedule_item: schedule_item_with_one_spot }
         end
 
         Reservation.create!(reservations)
-      }
+      end
 
       it 'queues reservations that overflow capacity' do
         expect(reservations[0].queued?).to eq false

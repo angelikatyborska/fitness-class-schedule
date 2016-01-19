@@ -1,0 +1,5 @@
+Overlay.show(
+    "<%= escape_javascript render 'form' %>",
+    "<%= escape_javascript "#{ reservation.schedule_item.fitness_class }
+      (#{ l(reservation.schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) })" %>"
+);

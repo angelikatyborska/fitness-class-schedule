@@ -21,7 +21,7 @@
     - schedule_items.each do |item|
       %tr{ id: item.decorate.css_id }
         %td.fitness-class-name
-          = link_to focus_schedule_item_path(item) do
+          = link_to focus_schedule_item_path(item), title: t('schedule_item.focus') do
             %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
             = item.fitness_class.name
         %td

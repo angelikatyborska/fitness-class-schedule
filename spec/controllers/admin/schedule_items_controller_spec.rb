@@ -74,13 +74,21 @@ RSpec.describe Admin::ScheduleItemsController do
       let!(:schedule_item) { create(:schedule_item) }
       subject { get :show, id: schedule_item.id }
 
-      it 'renders template edit' do
+      it 'renders template show' do
         is_expected.to render_template :show
       end
 
       it 'exposes schedule item' do
         subject
         expect(controller.schedule_item).to eq schedule_item
+      end
+    end
+
+    describe 'GET #new' do
+      subject { get :new }
+
+      it 'renders template new' do
+        is_expected.to render_template :new
       end
     end
 

@@ -64,6 +64,26 @@ ul.actions {
   }
 }
 
+.attended {
+  &:before {
+    content: $fa-var-check;
+    color: $success-color
+  }
+}
+
+.missed {
+  &:before {
+    content: $fa-var-times;
+    color: $alert-color;
+  }
+}
+
+.unknown {
+  &:before {
+    content: $fa-var-question;
+  }
+}
+
 .button {
   &.action {
     &:before {

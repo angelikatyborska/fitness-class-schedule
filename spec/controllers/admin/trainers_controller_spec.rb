@@ -69,6 +69,14 @@ RSpec.describe Admin::TrainersController do
       end
     end
 
+    describe 'GET #new' do
+      subject { get :new }
+
+      it 'renders template new' do
+        is_expected.to render_template :new
+      end
+    end
+
     describe 'GET #edit' do
       let!(:trainer) { create(:trainer) }
       subject { get :edit, id: trainer.id }

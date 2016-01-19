@@ -63,6 +63,14 @@ RSpec.describe Admin::FitnessClassesController do
       end
     end
 
+    describe 'GET #new' do
+      subject { get :new }
+
+      it 'renders template edit' do
+        is_expected.to render_template :new
+      end
+    end
+
     describe 'GET #edit' do
       let!(:fitness_class) { create(:fitness_class) }
       subject { get :edit, id: fitness_class.id }

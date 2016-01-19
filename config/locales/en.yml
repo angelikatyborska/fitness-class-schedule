@@ -51,7 +51,9 @@ en:
     reservation:
       cant_make_reservations_in_the_past: "can't make reservations for items from the past"
       cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"
+      only_status_can_be_changed: "only reservation's status can be changed"
     occupied: "is already occupied at this time"
+    generic: 'Oops, something went wrong.'
   shared:
     created: "%{resource} has been created!"
     updated: "%{resource} has been updated!"
@@ -89,6 +91,7 @@ en:
     this_week: 'Today'
     active: 'Upcoming'
     stale: 'Past'
+    focus: 'Show on the schedule'
   room:
     name: 'Location'
     all_rooms: 'All locations'
@@ -114,6 +117,8 @@ en:
     queue: 'Add to waiting list'
     emtpy_spots: 'Empty spots'
     checkin: 'Check in'
+    attend: 'Confirm attendance'
+    missed: 'Confirm absence'
   trainer:
     name: 'Trainer'
     attributes:

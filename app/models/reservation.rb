@@ -6,12 +6,21 @@ class Reservation < ActiveRecord::Base
 
   validates :user, presence: true, uniqueness: { scope: :schedule_item_id }
   validates :schedule_item, presence: true
-  validate :schedule_item_cant_be_in_the_past
+  validate :schedule_item_cant_be_in_the_past, on: :create
+  validate :only_status_can_be_changed, on: :update
 
   def schedule_item_cant_be_in_the_past
     unless schedule_item.nil?
       if schedule_item.start < Time.zone.now
         errors.add(:schedule_item, I18n.t('errors.reservation.cant_make_reservations_in_the_past'))
+      end
+    end
+  end
+
+  def only_status_can_be_changed
+    changed.each do |attribute|
+      if attribute != 'status'
+        errors.add(attribute.to_sym, I18n.t('errors.reservation.only_status_can_be_changed'))
       end
     end
   end

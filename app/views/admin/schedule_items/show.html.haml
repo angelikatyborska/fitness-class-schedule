@@ -5,6 +5,11 @@
       #{ schedule_item.fitness_class }
       (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },
       #{ t('schedule_item.attributes.capacity') }: #{ schedule_item.capacity })
+      = link_to t('shared.create'),
+        new_admin_reservation_path(schedule_item: schedule_item),
+        class: 'button action create right',
+        title: t('shared.create'),
+        remote: true
 .row
   .medium-12.columns
     %table
@@ -25,26 +30,41 @@
           - queue_class = reservation.queued? ? 'queued' : 'active'
           %tr{ id: reservation.decorate.css_id, class: queue_class }
             %td
-              = "#{ reservation.user.last_name }, #{ reservation.user.first_name }"
+              = reservation.user
             %td
               = reservation.queue_position
             %td.status
               - if reservation.attended?
-                %span.attended
+                %span.action.attended
                   Yes
               - elsif reservation.missed?
-                %span.missed
+                %span.action.missed
                   No
               - else
-                %span.unknown
+                %span.action.unknown
                   ?
             %td
               - # TODO: implement
               100%
             %td
               %ul.actions
+                - # TODO: feature specs
+                = link_to t('reservation.attend'),
+                  admin_reservation_path(reservation, reservation: { status: 'attended' }),
+                  method: :put,
+                  remote: true,
+                  class: 'action attended',
+                  title: t('reservation.attend')
+
+                = link_to t('reservation.missed'),
+                  admin_reservation_path(reservation, reservation: { status: 'missed' }),
+                  method: :put,
+                  remote: true,
+                  class: 'action missed',
+                  title: t('reservation.missed')
+
                 = link_to t('shared.delete'),
-                  '#',
+                  admin_reservation_path(reservation),
                   method: :delete,
                   data: { confirm: t('shared.confirm') },
                   remote: true,
