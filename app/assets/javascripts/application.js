@@ -29,7 +29,14 @@ $(document).ready(function() {
   $(document).foundation();
 
   $('.colorpicker').colorpicker({
-    colorFormat: '#HEX'
+    colorFormat: '#HEX',
+    parts: ['map', 'bar', 'preview', 'footer'],
+    inline: true,
+    layout: {
+      map: [0, 0, 1, 1],
+      bar: [1, 0, 1, 1],
+      preview: [0, 1, 1, 1]
+    }
   });
 
   $('.gallery:not(.admin-gallery) a').lightbox();

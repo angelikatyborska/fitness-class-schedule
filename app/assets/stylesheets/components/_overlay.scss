@@ -27,6 +27,7 @@ $overlay-close-size: 23px;
   left: 0;
   overflow-x: hidden;
   overflow-y: scroll;
+  text-align: center;
   background-color: $white;
 
   @media #{$large-up} {
@@ -37,6 +38,7 @@ $overlay-close-size: 23px;
     left: 50%;
     max-width: 500px;
     transform: translateY(-50%) translateX(-50%);
+    text-align: unset;
   }
 }
 
@@ -56,7 +58,7 @@ $overlay-close-size: 23px;
 
   h6 {
     margin: 0;
-    padding-right: 1.5 * $overlay-close-size;
+    padding: 0 (1.5 * $overlay-close-size);
     color: inherit;
   }
 

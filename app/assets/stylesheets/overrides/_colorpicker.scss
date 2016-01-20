@@ -50,11 +50,40 @@
 }
 
 .ui-dialog .ui-dialog-buttonpane {
-  padding: $spacing-small;
+  @include clearfix;
+
+  padding: 0 $spacing-small;
 }
 
 .ui-widget-content {
   border: 0;
   border-radius: 0;
   background: $ghost;
+}
+
+.ui-colorpicker-map,
+.ui-colorpicker-map > * {
+  width: 150px;
+  height: 150px;
+}
+
+.ui-colorpicker-map-layer-1,
+.ui-colorpicker-map-layer-2 {
+  background-size: 100%;
+}
+
+.ui-colorpicker-bar, .ui-colorpicker-bar > * {
+  height: 150px;
+}
+.ui-colorpicker-bar-layer-1 {
+  background-size: auto (100% * 3895/256);
+}
+
+.ui-colorpicker-preview {
+  width: 100%;
+}
+
+.ui-colorpicker-preview-initial,
+.ui-colorpicker-preview-current {
+  width: 50%;
 }
