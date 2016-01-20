@@ -21,17 +21,24 @@
           class: 'action delete',
           title: t('shared.delete')
   %span.title
-    #{ schedule_item.fitness_class.name }
-    (#{ schedule_item.trainer })
+    %span.nowrap
+      #{ schedule_item.fitness_class.name }
+    %span.nowrap
+      (#{ schedule_item.trainer })
 
   %span.details
-    #{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)},
-    #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') }
-    (#{ schedule_item.room.name })
+    %span.nowrap
+      #{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)},
+    %span.nowrap
+      #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') }
+    %span.nowrap
+      (#{ schedule_item.room.name })
 
   %span.details
-    #{ t('reservation.emtpy_spots')}:
-    #{ schedule_item.spots_left } / #{ schedule_item.capacity }
+    %span.nowrap
+      #{ t('reservation.emtpy_spots')}:
+    %span.nowrap
+      #{ schedule_item.spots_left } / #{ schedule_item.capacity }
 
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)

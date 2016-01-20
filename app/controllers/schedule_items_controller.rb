@@ -8,10 +8,14 @@ class ScheduleItemsController < ApplicationController
   def index
     week = Time.zone.now.in_website_time_zone.beginning_of_week + week_offset.weeks
 
-    self.schedule_items = ScheduleItem.week(week).hourly_time_frame(
-      (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_start.hours).utc.hour,
-      (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_end.hours).utc.hour
-    )
+    if Configurable.day_start > Configurable.day_end
+      self.schedule_items = schedule_items.none
+    else
+      self.schedule_items = ScheduleItem.week(week).hourly_time_frame(
+        (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_start.hours).utc.hour,
+        (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_end.hours).utc.hour
+      )
+    end
 
     filter_params.each do |key, value|
       self.schedule_items = schedule_items.public_send(key, value)

@@ -1,10 +1,13 @@
 .row.admin-table-header
   .medium-10.columns
     %h3
-      %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
+      %span.nowrap
+        %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
       #{ schedule_item.fitness_class }
-      (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },
-      #{ t('schedule_item.attributes.capacity') }: #{ schedule_item.capacity })
+      %span.nowrap
+        (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },
+      %span.nowrap
+        #{ t('schedule_item.attributes.capacity') }: #{ schedule_item.capacity })
 
   .medium-2.columns
     = link_to t('shared.create'),

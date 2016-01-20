@@ -37,7 +37,7 @@ feature 'admin edits system setting' do
     end
 
     after :all do
-      Timecop.release
+      Timecop.return
     end
 
     scenario 'edits schedule time zone' do
@@ -62,6 +62,32 @@ feature 'admin edits system setting' do
       visit root_path
       within '.schedule' do
         expect(page).to have_content '02:00'
+      end
+    end
+
+    scenario 'edits day start so that it\'s later than day end' do
+      visit root_path
+      click_link 'Admin panel'
+      click_link 'System settings'
+      select '0', from: 'Day starts'
+      select '23', from: 'Day ends'
+      select 'UTC', from: 'Schedule time zone'
+      click_button 'Save'
+
+      visit root_path
+      within '.schedule' do
+        expect(page).to have_content '12:00'
+      end
+
+      click_link 'Admin panel'
+      click_link 'System settings'
+      select '23', from: 'Day starts'
+      select '15', from: 'Day ends'
+      click_button 'Save'
+
+      visit root_path
+      within '.schedule' do
+        expect(page).not_to have_content '12:00'
       end
     end
   end
