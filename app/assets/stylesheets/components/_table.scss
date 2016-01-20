@@ -1,7 +1,103 @@
+$small-header-width: 50%;
+$medium-header-width: 30%;
+
 table {
   width: 100%;
+  border: 0;
+
+  @media #{$large-up} {
+    border: $table-border-style $table-border-size $table-border-color;
+  }
+
+  thead {
+    display: none;
+
+    @media #{$large-up} {
+      display: table-header-group;
+    }
+  }
+
+  tbody {
+    tr {
+      display: block;
+
+      @media #{$large-up} {
+        display: table-row;
+      }
+
+      td {
+        display: block;
+        padding-left: $small-header-width;
+        border: $table-border-style $table-border-size $table-border-color;
+        border-bottom: 0;
+        background: $table-bg;
+
+        @media #{$medium-up} {
+          padding-left: $medium-header-width;
+        }
+
+        @media #{$large-up} {
+          display: table-cell;
+          padding: $table-head-padding;
+          border: 0;
+          background: transparent;
+        }
+
+        &:before {
+          content: attr(data-label);
+          display: block;
+          float: left;
+          width: (100% * ($small-header-width / (100% - $small-header-width)));
+          margin-left: (-1 * (100% * ($small-header-width / (100% - $small-header-width))));
+          line-height: 1.5;
+          font-weight: bold;
+
+          @media #{$medium-up} {
+            width: (100% * ($medium-header-width / (100% - $medium-header-width)));
+            margin-left: ((-1 * (100% * ($medium-header-width / (100% - $medium-header-width)))) + 1%);
+          }
+
+          @media #{$large-up} {
+            content: none;
+          }
+        }
+
+        &:last-child {
+          margin-bottom: $spacing-big;
+          border-bottom: $table-border-style $table-border-size $table-border-color;
+
+          @media #{$large-up} {
+            margin-bottom: 0;
+            border-bottom: 0;
+          }
+        }
+
+        &:nth-of-type(even) {
+          background: $table-even-row-bg;
+
+          @media #{$large-up} {
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
 
   th {
     white-space: nowrap;
+  }
+}
+
+.admin-table-header {
+  text-align: center;
+
+  @media #{$medium-up} {
+    text-align: left;
+  }
+
+  .button {
+    @media #{$medium-up} {
+      float: right;
+    }
   }
 }

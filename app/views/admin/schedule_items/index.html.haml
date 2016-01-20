@@ -1,12 +1,13 @@
 .schedule-items.admin-schedule-items
-  .row
-    .medium-12.columns
+  .row.admin-table-header
+    .medium-10.columns
       %h2
         = t('user.admin_panel.schedule_items')
-        = link_to t('shared.create'),
-          new_admin_schedule_item_path,
-          class: 'button action create right',
-          title: t('shared.create')
+    .medium-2.columns
+      = link_to t('shared.create'),
+        new_admin_schedule_item_path,
+        class: 'button action create',
+        title: t('shared.create')
 
   .row
     .medium-12.columns

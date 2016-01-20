@@ -1,5 +1,7 @@
 .fitness-class-name {
-  white-space: nowrap;
+  @media #{$medium-up} {
+    white-space: nowrap;
+  }
 }
 
 .fitness-class-color {

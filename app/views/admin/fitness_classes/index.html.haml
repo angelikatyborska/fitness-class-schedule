@@ -1,12 +1,13 @@
 .fitness-classes.admin-fitness-classes
-  .row
-    .medium-12.columns
+  .row.admin-table-header
+    .medium-10.columns
       %h2
         = t('fitness_class.name').pluralize
-        = link_to t('shared.create'),
-          new_admin_fitness_class_path,
-          class: 'button action create right',
-          title: t('shared.create')
+    .medium-2.columns
+      = link_to t('shared.create'),
+        new_admin_fitness_class_path,
+        class: 'button action create',
+        title: t('shared.create')
 
   .row
     .medium-12.columns
@@ -23,12 +24,14 @@
         %tbody
           - fitness_classes.each do |fitness_class|
             %tr{ id: fitness_class.decorate.css_id }
-              %td.fitness-class-name
+              %td.fitness-class-name{ data: { label: t('fitness_class.attributes.name') } }
                 %span.fitness-class-color{ style: "background-color: #{ fitness_class.color }"}
                 = fitness_class.name
-              %td
+
+              %td{ data: { label: t('fitness_class.attributes.description') } }
                 = fitness_class.description
-              %td
+
+              %td{ data: { label: t('shared.actions') } }
                 %ul.actions
                   %li
                     = link_to t('shared.edit'),

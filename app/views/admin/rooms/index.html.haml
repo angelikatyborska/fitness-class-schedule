@@ -1,12 +1,13 @@
 .rooms.admin-rooms
-  .row
-    .medium-12.columns
+  .row.admin-table-header
+    .medium-10.columns
       %h2
         = t('room.name').pluralize
-        = link_to t('shared.create'),
-          new_admin_room_path,
-          class: 'button action create right',
-          title: t('shared.create')
+    .medium-2.columns
+      = link_to t('shared.create'),
+        new_admin_room_path,
+        class: 'button action create',
+        title: t('shared.create')
 
   .row
     .medium-12.columns
@@ -24,13 +25,16 @@
         %tbody
           - rooms.each do |room|
             %tr{ id: room.decorate.css_id }
-              %td
+              %td{ data: { label: t('room.attributes.name') } }
                 = room.name
-              %td
+
+              %td{ data: { label: t('room.attributes.description') } }
                 = room.description
-              %td
+
+              %td{ data: { label: t('room.attributes.room_photos') } }
                 = render 'rooms/gallery', room: room
-              %td
+
+              %td{ data: { label: t('shared.actions') } }
                 %ul.actions
                   %li
                     = link_to t('shared.edit'),

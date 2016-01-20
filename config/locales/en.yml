@@ -132,7 +132,7 @@ en:
     attributes:
       first_name: 'First name'
       last_name: 'Last name'
-      probability: 'Chance of showing up'
+      probability: 'Past attendance'
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'

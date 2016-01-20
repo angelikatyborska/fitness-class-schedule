@@ -1,6 +1,6 @@
-.row-collapse
-  .gallery
+.gallery
+  .row-collapse
     - room.room_photos.each do |photo|
-      .small-6.large-4.columns
+      .small-6.medium-4.columns
         = link_to photo.photo.url, class: 'th' do
           = image_tag photo.photo.thumb.url

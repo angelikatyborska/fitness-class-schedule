@@ -1,4 +1,6 @@
 .gallery {
+  @include clearfix;
+
   text-align: center;
 
   .columns {
@@ -21,7 +23,9 @@
 
 .admin-gallery,
 *[class*="admin-"] .gallery {
-  min-width: 220px;
+  @media #{$large-up} {
+    min-width: 250px;
+  }
 
   .th {
     width: 100px;

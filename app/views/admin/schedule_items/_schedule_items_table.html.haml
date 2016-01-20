@@ -20,23 +20,30 @@
   %tbody
     - schedule_items.each do |item|
       %tr{ id: item.decorate.css_id }
-        %td.fitness-class-name
+        %td.fitness-class-name{ data: { label: t('schedule_item.attributes.fitness_class') } }
           = link_to focus_schedule_item_path(item), title: t('schedule_item.focus') do
             %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
             = item.fitness_class.name
-        %td
+
+        %td{ data: { label: t('schedule_item.attributes.date') } }
           = l(item.start.in_website_time_zone, format: :simple_date)
-        %td
+
+        %td{ data: { label: t('schedule_item.attributes.hour') } }
           = l(item.start.in_website_time_zone, format: :simple_time)
-        %td
+
+        %td{ data: { label: t('schedule_item.attributes.end') } }
           = l(item.stop.in_website_time_zone, format: :simple_time)
-        %td
+
+        %td{ data: { label: t('reservation.name').pluralize } }
           #{ item.reservations.size } / #{ item.capacity }
-        %td
+
+        %td{ data: { label:t('schedule_item.attributes.trainer') } }
           = item.trainer.first_name
-        %td
+
+        %td{ data: { label: t('schedule_item.attributes.room') } }
           = item.room.name
-        %td
+
+        %td{ data: { label: t('shared.actions') } }
           %ul.actions
             %li
               = link_to t('reservation.checkin'),

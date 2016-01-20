@@ -26,15 +26,19 @@
         %tbody
           - trainers.each do |trainer|
             %tr{ id: trainer.decorate.css_id }
-              %td
+              %td{ data: { label: t('trainer.attributes.photo') } }
                 = image_tag trainer.photo.url, class: 'trainer-photo trainer-photo-thumbnail'
-              %td
+
+              %td{ data: { label: t('trainer.attributes.first_name') } }
                 = trainer.first_name
-              %td
+
+              %td{ data: { label: t('trainer.attributes.last_name') } }
                 = trainer.last_name
-              %td
+
+              %td{ data: { label: t('trainer.attributes.description') } }
                 = trainer.description
-              %td
+
+              %td{ data: { label: t('shared.actions') } }
                 %ul.actions
                   %li
                     = link_to t('shared.edit'),

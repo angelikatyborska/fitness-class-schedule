@@ -1,9 +1,29 @@
 ul.actions {
+  @include clearfix;
+
+  display: inline-block;
   margin: 0;
+  vertical-align: middle;
   list-style: none;
 
+  @media #{$large-up} {
+    white-space: nowrap;
+  }
+
   li {
-    float: left;
+    display: inline-block;
+
+    &:not(:last-child) {
+      margin-right: $spacing-medium;
+
+      @media #{$large-up} {
+        margin-right: $spacing-tiny;
+      }
+    }
+
+    a {
+      display: inline-block;
+    }
   }
 }
 
@@ -96,7 +116,13 @@ ul.actions {
 :not(.button) {
   &.action {
     &:before {
-      padding: 0 $spacing-tiny;
+      padding: $spacing-small;
+      font-size: 1.5rem;
+
+      @media #{$large-up} {
+        padding: $spacing-tiny;
+        font-size: 1rem;
+      }
     }
   }
 }
