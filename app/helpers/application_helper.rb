@@ -3,7 +3,6 @@ module ApplicationHelper
     ScheduleItems::Styles.new(schedule_items)
   end
 
-  # TODO: write specs
   def order_by_weekdays(schedule_items, week_offset)
     week = Time.zone.now.in_website_time_zone.beginning_of_week + week_offset.weeks
     weekdays = {}

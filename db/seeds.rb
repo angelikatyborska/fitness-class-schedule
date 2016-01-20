@@ -1,4 +1,4 @@
-puts "Seeds: start"
+puts 'Seeds: start'
 
 Trainer.destroy_all
 Room.destroy_all
@@ -13,7 +13,7 @@ puts 'Creating trainers...'
   Trainer.create!(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    description: Faker::Lorem.paragraph(3)
+    description: Faker::Lorem.paragraph(6)
   )
 end
 
@@ -128,4 +128,4 @@ admin.add_role(:admin)
 
 Timecop.return
 
-puts "Seeds: done"
+puts 'Seeds: done'

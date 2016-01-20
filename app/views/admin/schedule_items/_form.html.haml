@@ -42,7 +42,7 @@
   .form-actions
     .row
       .medium-12.columns
-        = f.button :button, t('shared.save'), class: 'save'
+        = f.button :button, t('shared.save'), class: 'button action save'
 
 - allowTimes = ScheduleItem.day_duration_in_quarters.times.with_object([]) do |n, array|
   -  array << "'#{l(ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone.beginning_of_day) + (n * 15).minutes, format: :simple_time)}'"

@@ -3,6 +3,10 @@
 
   .columns {
     padding: $spacing-tiny;
+
+    + .columns:last-child {
+      float: left;
+    }
   }
 
   .th {

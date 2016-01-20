@@ -1493,9 +1493,8 @@ $topbar-dropdown-toggle-color: $topbar-link-color;
 $topbar-menu-link-color: $topbar-link-color;
 $topbar-menu-icon-color: $topbar-link-color;
 
-// TODO: figure out a prettier color
-// $topbar-menu-link-color-toggled: $jumbo;
-// $topbar-menu-icon-color-toggled: $jumbo;
+$topbar-menu-link-color-toggled: $topbar-menu-link-color;
+$topbar-menu-icon-color-toggled: $topbar-menu-link-color;
 // $topbar-menu-icon-position: $opposite-direction; // Change to $default-float for a left menu icon
 
 // Transitions and breakpoint styles
