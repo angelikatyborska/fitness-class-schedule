@@ -108,7 +108,7 @@ en:
     attributes:
       queue: 'Queue'
       attended: 'Attended?'
-    history: 'Past classes'
+    history: 'History'
     not_created: 'Something went wrong, your reservation has not been added.'
     created: 'Your reservation has been added.'
     create: 'Reserve'
@@ -132,7 +132,7 @@ en:
     attributes:
       first_name: 'First name'
       last_name: 'Last name'
-      probability: 'Past attendance'
+      reliability: 'Reliability'
     login: 'Log in'
     logout: 'Log out'
     signup: 'Sign up'

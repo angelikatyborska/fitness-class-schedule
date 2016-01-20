@@ -2,7 +2,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :user
   belongs_to :schedule_item
 
-  enum status: [:active, :stale, :attended, :missed]
+  enum status: [:active, :attended, :missed]
 
   validates :user, presence: true, uniqueness: { scope: :schedule_item_id }
   validates :schedule_item, presence: true

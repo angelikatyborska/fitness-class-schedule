@@ -28,7 +28,7 @@
           %th
             = t('reservation.attributes.attended')
           %th
-            = t('user.attributes.probability')
+            = t('user.attributes.reliability')
           %th
             = t('shared.actions')
       %tbody
@@ -51,9 +51,9 @@
               - else
                 %span.action.unknown
                   ?
-            %td{ data: { label: t('user.attributes.probability') } }
+            %td{ data: { label: t('user.attributes.reliability') } }
               - # TODO: implement
-              100%
+              = number_to_percentage(reservation.user.reliability * 100, precision: 0)
 
             %td{ data: { label: t('shared.actions') } }
               %ul.actions

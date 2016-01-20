@@ -30,4 +30,20 @@ class User < ActiveRecord::Base
   def to_s
     last_name + ', ' + first_name
   end
+
+  def reliability
+    past_reservations = reservations.to_a.count do |reservation|
+      reservation.missed? || reservation.attended?
+    end
+
+    attended_reservations = reservations.to_a.count do |reservation|
+      reservation.attended?
+    end
+
+    if past_reservations > 0
+      attended_reservations.to_f / past_reservations
+    else
+      1
+    end
+  end
 end
