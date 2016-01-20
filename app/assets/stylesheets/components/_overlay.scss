@@ -1,5 +1,14 @@
 $overlay-close-size: 23px;
 
+.no-scroll {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+}
+
 .overlay-background {
   position: fixed;
   z-index: 1000;
@@ -12,21 +21,38 @@ $overlay-close-size: 23px;
 
 .overlay-box {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  max-width: 500px;
-  transform: translateY(-50%) translateX(-50%);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background-color: $white;
+
+  @media #{$large-up} {
+    position: absolute;
+    top: 50%;
+    right: unset;
+    bottom: unset;
+    left: 50%;
+    max-width: 500px;
+    transform: translateY(-50%) translateX(-50%);
+  }
 }
 
 .overlay-header {
   position: relative;
   margin: 0;
-  padding: $spacing-tiny;
-  min-height: 32px;
+  padding: $spacing-small;
+  min-height: 42px;
   text-align: center;
   color: $topbar-link-color;
   background-color: $topbar-bg-color;
+
+  @media #{$large-up} {
+    min-height: 32px;
+    padding: $spacing-tiny;
+  }
 
   h6 {
     margin: 0;
@@ -44,7 +70,6 @@ $overlay-close-size: 23px;
     bottom: 0;
     width: 1.5 * $overlay-close-size;
     padding: 0;
-    font-size: $overlay-close-size;
     line-height: $overlay-close-size;
     border: 0;
     background-color: transparent;
@@ -59,7 +84,12 @@ $overlay-close-size: 23px;
       right: 0;
       left: 0;
       text-align: center;
+      font-size: 2rem;
       color: $topbar-link-color;
+
+      @media #{$large-up} {
+        font-size: $overlay-close-size;
+      }
     }
   }
 }

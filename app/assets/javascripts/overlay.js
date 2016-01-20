@@ -16,7 +16,7 @@ var Overlay = (function () {
 
     set_content(body, header);
 
-    $('body').prepend(this.overlay_background);
+    $('body').prepend(this.overlay_background).addClass('no-scroll');
 
     $(document).click(function(event) {
       var $target = $(event.target);
@@ -28,6 +28,7 @@ var Overlay = (function () {
 
   function destroy() {
     this.overlay_background.remove();
+    $('body').removeClass('no-scroll');
   }
 
   function set_content(body, header) {

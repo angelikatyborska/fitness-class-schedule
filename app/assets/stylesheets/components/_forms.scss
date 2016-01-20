@@ -4,7 +4,10 @@ form {
 
   .form-inputs {
     margin-bottom: 10px;
-    min-width: 300px;
+
+    @media #{$large-up} {
+      min-width: 300px;
+    }
   }
 
   .form-actions {
