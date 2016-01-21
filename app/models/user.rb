@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  default_scope { includes(:reservations) }
+  default_scope { includes(reservations: [:schedule_item]) }
 
   scope :without_reservation, -> (schedule_item) do
     self.where.not(id: schedule_item.users.map(&:id)).order(:last_name)

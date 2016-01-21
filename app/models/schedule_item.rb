@@ -16,8 +16,6 @@ class ScheduleItem < ActiveRecord::Base
   validate :room_cant_be_already_occupied
   validate :trainer_cant_be_already_occupied
 
-  default_scope { includes(:reservations, :fitness_class, :trainer, :room) }
-
   scope :week, -> (time = Time.zone.now) do
     where(
       'start >= ? AND start < ?',

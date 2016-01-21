@@ -1,5 +1,7 @@
 class ScheduleItemsController < ApplicationController
-  expose(:schedule_items)
+  expose(:schedule_items) do |default|
+    default.order(:start).includes([:reservations, :fitness_class, :room, :trainer])
+  end
   expose(:schedule_item, attributes: :schedule_item_params)
 
   expose(:week_offset) { params[:week_offset].to_i || 0 }

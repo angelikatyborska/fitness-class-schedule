@@ -17,6 +17,8 @@
       %li
         = link_to t('trainer.name').pluralize, trainers_path
 
+        -# TODO: add classes
+
     %ul.right
       - if user_signed_in?
         = render 'layouts/top_bar_admin'

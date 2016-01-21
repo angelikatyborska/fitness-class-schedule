@@ -20,8 +20,8 @@ RSpec.describe User do
 
   describe 'scopes' do
     describe 'default scope' do
-      it 'includes reservations' do
-        expect(described_class.all.includes_values).to match_array [:reservations]
+      it 'includes reservations with schedule items' do
+        expect(described_class.all.includes_values).to eq [reservations: [:schedule_item]]
       end
     end
 
