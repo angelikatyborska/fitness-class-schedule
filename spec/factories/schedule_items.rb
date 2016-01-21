@@ -29,6 +29,14 @@ FactoryGirl.define do
       start { random_start_during_week.call(Time.zone.now.in_website_time_zone.beginning_of_week + 7.days) }
     end
 
+    factory :full_schedule_item do
+      capacity { 1 }
+
+      after(:create) do |schedule_item, evaluator|
+        create(:reservation, schedule_item: schedule_item)
+      end
+    end
+
     after(:create) do |schedule_item, evaluator|
       evaluator.room.reload
       evaluator.trainer.reload

@@ -1,11 +1,15 @@
 class Admin::ScheduleItemsController < Admin::AdminApplicationController
   expose(:schedule_items) do |default|
-    default.order(:start).includes(:fitness_class, :room, :trainer, reservations: [:user])
+    default.order(:start).includes([:fitness_class, :room, :trainer])
   end
 
   expose(:schedule_item, attributes: :schedule_item_params)
 
   before_action :convert_start_to_website_time_zone, only: [:create, :update]
+
+  def show
+    self.schedule_item = ScheduleItem.includes([:fitness_class, reservations: [user: [:reservations]]]).find(params[:id])
+  end
 
   def create
     if schedule_item.save

@@ -8,7 +8,7 @@ feature 'Admin creates a fitness class' do
     login_as(admin, scope: :user)
 
     visit root_path
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     click_link 'Classes'
     click_link 'Add'
   end

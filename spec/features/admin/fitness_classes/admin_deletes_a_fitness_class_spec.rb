@@ -11,7 +11,7 @@ feature 'Admin deletes a fitness class', js: true do
   scenario do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     click_link 'Classes'
 
     expect(page).to have_content fitness_class

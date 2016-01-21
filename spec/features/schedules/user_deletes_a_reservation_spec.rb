@@ -17,7 +17,7 @@ feature 'User deletes a reservation', js: true do
     login_as(user, scope: :user)
     visit root_path
     click_link user.email
-    click_link 'My reservations'
+    click_link 'My Reservations'
     expect(page).to have_link 'Cancel'
     expect {
       click_link 'Cancel'

@@ -14,7 +14,7 @@ feature 'Admin creates a schedule item', js: true do
     login_as(admin, scope: :user)
 
     visit root_path
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     click_link I18n.t('user.admin_panel.schedule_items')
     click_link 'Add'
   end

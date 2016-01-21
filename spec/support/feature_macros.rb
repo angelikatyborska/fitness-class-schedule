@@ -14,10 +14,10 @@ module FeatureMacros
 
   def log_in(user)
     visit root_path
-    click_link 'Log in'
+    click_link 'Log In'
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_button 'Log in'
+    click_button 'Log In'
     wait_for_ajax
     click_button 'Close'
   end

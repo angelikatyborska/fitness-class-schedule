@@ -9,7 +9,7 @@
         = t('schedule_item.attributes.hour')
       %th
         = t('schedule_item.attributes.room')
-      - if reservations.any? { |reservation| reservation.queued? }
+      - if reservations.any? { |reservation| reservation.active? && reservation.queued? }
         %th
           = t('reservation.queue_position')
       - if reservations.any? { |reservation| reservation.active? }
@@ -32,7 +32,7 @@
         %td{ data: { label: t('schedule_item.attributes.room') } }
           = reservation.schedule_item.room.name
 
-        - if reservation.queued?
+        - if reservation.active? && reservation.queued?
           %td{ data: { label: t('reservation.queue_position') } }
             #{ reservation.queue_position - reservation.schedule_item.capacity }
 

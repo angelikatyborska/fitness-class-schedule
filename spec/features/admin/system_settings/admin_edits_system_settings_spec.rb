@@ -9,8 +9,8 @@ feature 'admin edits system setting' do
 
   scenario 'checks settings' do
     visit root_path
-    click_link 'Admin panel'
-    click_link 'System settings'
+    click_link 'Admin Panel'
+    click_link 'System Settings'
     expect(page).to have_content 'Day starts'
     expect(page).to have_content 'Day ends'
     expect(page).to have_content 'Site title'
@@ -19,8 +19,8 @@ feature 'admin edits system setting' do
 
   scenario 'edits site title' do
     visit root_path
-    click_link 'Admin panel'
-    click_link 'System settings'
+    click_link 'Admin Panel'
+    click_link 'System Settings'
     fill_in 'Site title', with: 'My Awesome Site'
     click_button 'Save'
     visit root_path
@@ -42,8 +42,8 @@ feature 'admin edits system setting' do
 
     scenario 'edits schedule time zone' do
       visit root_path
-      click_link 'Admin panel'
-      click_link 'System settings'
+      click_link 'Admin Panel'
+      click_link 'System Settings'
       select '0', from: 'Day starts'
       select '23', from: 'Day ends'
       select 'UTC', from: 'Schedule time zone'
@@ -54,8 +54,8 @@ feature 'admin edits system setting' do
         expect(page).to have_content '12:00'
       end
 
-      click_link 'Admin panel'
-      click_link 'System settings'
+      click_link 'Admin Panel'
+      click_link 'System Settings'
       select 'Hawaii', from: 'Schedule time zone'
       click_button 'Save'
 
@@ -67,8 +67,8 @@ feature 'admin edits system setting' do
 
     scenario 'edits day start so that it\'s later than day end' do
       visit root_path
-      click_link 'Admin panel'
-      click_link 'System settings'
+      click_link 'Admin Panel'
+      click_link 'System Settings'
       select '0', from: 'Day starts'
       select '23', from: 'Day ends'
       select 'UTC', from: 'Schedule time zone'
@@ -79,8 +79,8 @@ feature 'admin edits system setting' do
         expect(page).to have_content '12:00'
       end
 
-      click_link 'Admin panel'
-      click_link 'System settings'
+      click_link 'Admin Panel'
+      click_link 'System Settings'
       select '23', from: 'Day starts'
       select '15', from: 'Day ends'
       click_button 'Save'

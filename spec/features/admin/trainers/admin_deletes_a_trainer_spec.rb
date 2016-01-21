@@ -11,7 +11,7 @@ feature 'Admin deletes a trainer', js: true do
   scenario do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     within '.admin-panel' do
       click_link 'Trainers'
     end

@@ -24,19 +24,19 @@ feature 'User edits account', js: true do
       expect(page).to have_content user.email
       click_link user.email
 
-      click_link 'Log out'
+      click_link 'Log Out'
       expect(page).to have_content 'Logged out successfully'
       click_button 'Close'
       expect(page).not_to have_content user.email
 
-      click_link 'Log in'
+      click_link 'Log In'
 
       fill_in 'Email', with: user.email
       within '.user_password' do
         fill_in 'Password', with: 'password1234'
       end
 
-      click_button 'Log in'
+      click_button 'Log In'
       expect(page).to have_content user.email
     end
 end

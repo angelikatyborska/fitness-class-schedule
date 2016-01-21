@@ -13,7 +13,7 @@ feature 'Admin edits a schedule item' do
   scenario 'with valid input' do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     click_link I18n.t('user.admin_panel.schedule_items')
 
     expect(page).to have_content 'ABT'

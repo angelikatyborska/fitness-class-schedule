@@ -11,7 +11,7 @@ feature 'Admin edits a room', js: true do
   scenario 'with valid input' do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     within '.admin-panel' do
       click_link 'Locations'
     end
@@ -30,7 +30,7 @@ feature 'Admin edits a room', js: true do
   scenario 'by adding and deleting a photo' do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     within '.admin-panel' do
       click_link 'Locations'
     end

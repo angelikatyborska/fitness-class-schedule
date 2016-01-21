@@ -19,7 +19,7 @@ feature 'Admin deletes a schedule item', js: true do
   scenario 'from schedule items admin panel' do
     visit root_path
 
-    click_link 'Admin panel'
+    click_link 'Admin Panel'
     click_link I18n.t('user.admin_panel.schedule_items')
 
     expect(page).to have_content schedule_item

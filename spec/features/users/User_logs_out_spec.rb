@@ -12,7 +12,7 @@ feature 'User logs out', js: true do
       visit trainers_path
       old_path = current_path
       click_link user.email
-      click_link 'Log out'
+      click_link 'Log Out'
       wait_for_ajax
       expect(page).to have_content 'Logged out successfully.'
       click_button 'Close'
@@ -28,10 +28,10 @@ feature 'User logs out', js: true do
     end
 
     scenario 'browsing the admin panel' do
-      click_link 'Admin panel'
+      click_link 'Admin Panel'
       click_link I18n.t('user.admin_panel.schedule_items')
       click_link user.email
-      click_link 'Log out'
+      click_link 'Log Out'
       wait_for_ajax
       expect(page).to have_content 'Logged out successfully.'
       click_button 'Close'

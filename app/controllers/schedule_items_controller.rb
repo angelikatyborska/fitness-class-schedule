@@ -1,4 +1,12 @@
 class ScheduleItemsController < ApplicationController
+  expose(:current_user) do
+    if devise_current_user.nil?
+      nil
+    else
+      User.includes(reservations: [:schedule_item]).find(devise_current_user.id)
+    end
+  end
+
   expose(:schedule_items) do |default|
     default.order(:start).includes([:fitness_class, :room])
   end

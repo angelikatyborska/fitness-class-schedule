@@ -56,6 +56,6 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.alert = true
     Bullet.bullet_logger = true
-    Bullet.console = true
+    Bullet.add_whitelist type: :unused_eager_loading, class_name: 'Reservation', association: :schedule_item
   end
 end

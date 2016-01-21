@@ -1,6 +1,6 @@
 class Reservation < ActiveRecord::Base
   belongs_to :user
-  belongs_to :schedule_item
+  belongs_to :schedule_item, counter_cache: true
 
   enum status: [:active, :attended, :missed]
 

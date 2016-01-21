@@ -19,12 +19,6 @@ RSpec.describe User do
   end
 
   describe 'scopes' do
-    describe 'default scope' do
-      it 'includes reservations with schedule items' do
-        expect(described_class.all.includes_values).to eq [reservations: [:schedule_item]]
-      end
-    end
-
     describe '#without_reservation' do
       let!(:users) { create_list(:user, 3) }
       let!(:reservation) { create(:reservation, user: users[0]) }
