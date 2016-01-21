@@ -52,7 +52,6 @@
                 %span.action.unknown
                   ?
             %td{ data: { label: t('user.attributes.reliability') } }
-              - # TODO: implement
               = number_to_percentage(reservation.user.reliability * 100, precision: 0)
 
             %td{ data: { label: t('shared.actions') } }

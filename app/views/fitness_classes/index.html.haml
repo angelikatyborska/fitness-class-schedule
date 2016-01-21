@@ -1,0 +1,11 @@
+.fitness-classes.rows-bottom-margin
+  - fitness_classes.each do |fitness_class|
+    .row
+      .medium-6.columns
+
+
+      .medium-6.columns
+        %h3
+          = fitness_class.name
+        %p
+          = fitness_class.description

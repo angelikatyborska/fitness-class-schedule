@@ -7,6 +7,9 @@ class ScheduleItemsController < ApplicationController
     end
   end
 
+  expose(:rooms)
+  expose(:trainers)
+
   expose(:schedule_items) do |default|
     default.order(:start).includes([:fitness_class, :room])
   end
@@ -35,10 +38,6 @@ class ScheduleItemsController < ApplicationController
   def focus
     week_offset = ((schedule_item.start.in_website_time_zone.beginning_of_week - Time.zone.now.in_website_time_zone.beginning_of_week) / 1.week).round
     redirect_to action: :index, anchor: schedule_item.decorate.css_id, week_offset: week_offset
-  end
-
-  def show
-    2+2
   end
 
   private

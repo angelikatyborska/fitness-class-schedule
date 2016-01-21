@@ -1,4 +1,7 @@
 class Admin::ScheduleItemsController < Admin::AdminApplicationController
+  expose(:rooms)
+  expose(:trainers)
+
   expose(:schedule_items) do |default|
     default.order(:start).includes([:fitness_class, :room, :trainer])
   end

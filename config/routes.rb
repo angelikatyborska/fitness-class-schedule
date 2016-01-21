@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :trainers, only: [:index]
   resources :rooms, only: [:index]
+  resources :fitness_classes, only: [:index]
 
   resources :schedule_items, only: [:index, :show] do
     member do

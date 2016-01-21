@@ -8,9 +8,6 @@ class ApplicationController < ActionController::Base
     strategy DecentExposure::StrongParametersStrategy
   end
 
-  expose(:rooms)
-  expose(:trainers)
-
   protected
 
   def configure_permitted_parameters

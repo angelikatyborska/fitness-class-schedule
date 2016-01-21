@@ -20,21 +20,11 @@ class ScheduleItem < ActiveRecord::Base
     where(
       'start >= ? AND start < ?',
       time.beginning_of_week,
-      time.beginning_of_week + 1.week)
+      time.beginning_of_week + 1.week
+    )
   end
 
-  # TODO: refactor
-  scope :hourly_time_frame, -> (from, to) do
-    if from < to
-      query = '((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?)'
-      args = [from, to, from, to]
-    else
-      query = '(((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?)) OR (((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?))'
-      args = [0, to, 0, to, from, 24, from, 24]
-    end
-
-    where(query, *args)
-  end
+  scope :hourly_time_frame, -> (from, to) { fitting_in_hourly_time_frame(from, to) }
 
   scope :trainer, -> (trainer) { where('trainer_id = ?', trainer) }
   scope :room, -> (room) { where('room_id = ?', room) }
@@ -105,6 +95,24 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   private
+
+  def self.fitting_in_hourly_time_frame(from, to)
+    start_hour = '( extract(hour from start) )'
+    stop_hour = '( extract(hour from start) + duration/60.0 )'
+
+    if from < to
+      query = "( #{ start_hour } BETWEEN ? AND ? ) AND ( #{ stop_hour } BETWEEN ? AND ? )"
+      args = [from, to, from, to]
+    else
+      query =
+        "(( #{ start_hour } BETWEEN ? AND ?) AND ( #{ stop_hour } BETWEEN ? AND ?)) " \
+        "OR "\
+        "(( #{ start_hour } BETWEEN ? AND ?) AND ( #{ stop_hour } BETWEEN ? AND ?))"
+      args = [0, to, 0, to, from, 24, from, 24]
+    end
+
+    where(query, *args)
+  end
 
   def self.day_start
     Configurable.day_start
