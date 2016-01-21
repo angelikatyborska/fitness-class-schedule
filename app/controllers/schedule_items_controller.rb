@@ -1,6 +1,6 @@
 class ScheduleItemsController < ApplicationController
   expose(:schedule_items) do |default|
-    default.order(:start).includes([:reservations, :fitness_class, :room, :trainer])
+    default.order(:start).includes([:fitness_class, :room])
   end
   expose(:schedule_item, attributes: :schedule_item_params)
 
@@ -13,7 +13,7 @@ class ScheduleItemsController < ApplicationController
     if Configurable.day_start > Configurable.day_end
       self.schedule_items = schedule_items.none
     else
-      self.schedule_items = ScheduleItem.week(week).hourly_time_frame(
+      self.schedule_items = self.schedule_items.week(week).hourly_time_frame(
         (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_start.hours).utc.hour,
         (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_end.hours).utc.hour
       )

@@ -1,6 +1,6 @@
 class Admin::RoomsController < Admin::AdminApplicationController
   expose(:rooms) do |default|
-    default.order(:name)
+    default.order(:name).includes(:room_photos)
   end
 
   expose(:room, attributes: :room_params)

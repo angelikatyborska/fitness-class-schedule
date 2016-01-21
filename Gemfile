@@ -30,6 +30,7 @@ group :development do
   gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'brakeman', '~> 3.1.4', require: false
+  gem 'bullet',  '~> 5.0.0'
 end
 
 group :test do

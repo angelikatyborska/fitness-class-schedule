@@ -1,7 +1,7 @@
 class ReservationsController < ApplicationController
   expose(:user)
   expose(:reservations, ancestor: :user) do |default|
-    default.includes(schedule_item: [:reservations]).order('schedule_items.start asc')
+    default.includes(schedule_item: [:reservations, :fitness_class, :room]).order('schedule_items.start asc')
   end
   expose(:reservation, attributes: :reservation_params)
 
