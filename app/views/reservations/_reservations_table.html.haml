@@ -1,0 +1,48 @@
+%table.mobile
+  %thead
+    %tr
+      %th
+        = t('schedule_item.attributes.fitness_class')
+      %th
+        = t('schedule_item.attributes.date')
+      %th
+        = t('schedule_item.attributes.hour')
+      %th
+        = t('schedule_item.attributes.room')
+      - if reservations.any? { |reservation| reservation.queued? }
+        %th
+          = t('reservation.queue_position')
+      - if reservations.any? { |reservation| reservation.active? }
+        %th
+          = t('reservation.delete')
+  %tbody
+    - reservations.each do |reservation|
+      %tr{ id: reservation.schedule_item.decorate.css_id }
+        %td.fitness-class-name{ data: { label: t('schedule_item.attributes.fitness_class') } }
+          = link_to focus_schedule_item_path(reservation.schedule_item), title: t('schedule_item.focus') do
+            %span.fitness-class-color{ style: "background-color: #{ reservation.schedule_item.fitness_class.color }"}
+            = reservation.schedule_item.fitness_class.name
+
+        %td{ data: { label: t('schedule_item.attributes.date') } }
+          = l(reservation.schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_weekday)
+
+        %td{ data: { label: t('schedule_item.attributes.hour') } }
+          = l(reservation.schedule_item.start.in_website_time_zone, format: :simple_time)
+
+        %td{ data: { label: t('schedule_item.attributes.room') } }
+          = reservation.schedule_item.room.name
+
+        - if reservation.queued?
+          %td{ data: { label: t('reservation.queue_position') } }
+            #{ reservation.queue_position - reservation.schedule_item.capacity }
+
+        - if reservation.active?
+          %td{ data: { label: t('reservation.delete') } }
+            %ul.actions
+              %li
+                = link_to t('reservation.delete'),
+                  user_reservation_path(current_user.id, reservation),
+                  method: :delete,
+                  remote: true,
+                  title: t('reservation.delete'),
+                  class: 'action delete'

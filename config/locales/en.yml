@@ -33,7 +33,8 @@ en:
     formats:
       simple_time: '%H:%M'
       simple_date: '%Y-%m-%d'
-      human_friendly_date_with_time: '%e %B %H:%M'
+      human_friendly_date_with_time: '%e %B, %H:%M'
+      human_friendly_date_with_weekday: '%e %B (%A)'
       weekday: '%A'
       datetimepicker: '%Y-%m-%d %H:%M'
   errors:
@@ -108,7 +109,6 @@ en:
     attributes:
       queue: 'Queue'
       attended: 'Attended?'
-    history: 'History'
     not_created: 'Something went wrong, your reservation has not been added.'
     created: 'Your reservation has been added.'
     create: 'Reserve'
@@ -118,7 +118,12 @@ en:
     emtpy_spots: 'Empty spots'
     checkin: 'Check in'
     attend: 'Confirm attendance'
-    missed: 'Confirm absence'
+    miss: 'Confirm absence'
+    active: 'Current reservations'
+    queued: 'Waiting list'
+    missed: 'Missed reservations'
+    attended: 'Past reservations'
+    queue_position: 'Waiting list position'
   trainer:
     name: 'Trainer'
     attributes:
@@ -139,6 +144,7 @@ en:
     destroy: 'Cancel my account'
     change_password: 'Change password'
     settings: 'Settings'
+    reservations: 'My reservations'
     admin_panel:
       name: 'Admin panel'
       schedule_items: 'Schedule'

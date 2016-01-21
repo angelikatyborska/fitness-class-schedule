@@ -35,6 +35,13 @@ RSpec.describe ReservationsController do
 
     context 'for the same user' do
       describe 'GET #index' do
+        let!(:schedule_item) { create(:schedule_item, capacity: 1) }
+        let!(:someone_elses_reservation) { create(:reservation, schedule_item: schedule_item) }
+        let!(:queued_reservation) { create(:reservation, user: other_user, schedule_item: schedule_item) }
+        let!(:active_reservation) { create(:reservation, user: other_user, status: 'active') }
+        let!(:attended_reservation) { create(:reservation, user: other_user, status: 'attended') }
+        let!(:missed_reservation) { create(:reservation, user: other_user, status: 'missed') }
+
         subject { get :index, user_id: other_user.id }
 
         it 'renders template index' do
@@ -42,7 +49,13 @@ RSpec.describe ReservationsController do
         end
 
         it 'exposes current user\'s reservations' do
-          expect(controller.reservations).to eq other_user.reservations
+          subject
+          expect(controller.reservations).to match_array [queued_reservation, active_reservation, attended_reservation, missed_reservation]
+          expect(controller.not_queued_reservations).to eq [active_reservation]
+
+          expect(controller.queued_reservations).to match_array [queued_reservation]
+          expect(controller.attended_reservations).to match_array [attended_reservation]
+          expect(controller.missed_reservations).to match_array [missed_reservation]
         end
       end
 

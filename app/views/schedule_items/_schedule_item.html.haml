@@ -20,6 +20,7 @@
           remote: true,
           class: 'action delete',
           title: t('shared.delete')
+
   %span.title
     %span.nowrap
       #{ schedule_item.fitness_class.name }
@@ -43,8 +44,7 @@
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)
       = link_to t('reservation.delete'),
-        user_reservation_path(current_user.id,
-        current_user.reservation_for(schedule_item)),
+        user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)),
         method: :delete,
         remote: true,
         class: 'button button-delete'

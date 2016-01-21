@@ -1,12 +1,15 @@
 $overlay-close-size: 23px;
 
-.no-scroll {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  overflow: hidden;
+body {
+  overflow-y: scroll;
+
+  &.no-scroll {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 .overlay-background {
@@ -26,7 +29,7 @@ $overlay-close-size: 23px;
   bottom: 0;
   left: 0;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   text-align: center;
   background-color: $white;
 

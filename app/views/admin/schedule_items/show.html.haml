@@ -64,12 +64,12 @@
                   class: 'action attended',
                   title: t('reservation.attend')
 
-                = link_to t('reservation.missed'),
+                = link_to t('reservation.miss'),
                   admin_reservation_path(reservation, reservation: { status: 'missed' }),
                   method: :put,
                   remote: true,
                   class: 'action missed',
-                  title: t('reservation.missed')
+                  title: t('reservation.miss')
 
                 = link_to t('shared.delete'),
                   admin_reservation_path(reservation),

@@ -29,7 +29,6 @@ class Reservation < ActiveRecord::Base
     queue_position > schedule_item.capacity
   end
 
-
   def queue_position
     if schedule_item && schedule_item.reservations
       number_of_reservations_before = schedule_item.reservations.to_a.count do |reservation|

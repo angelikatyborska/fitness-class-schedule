@@ -125,6 +125,11 @@ $bar-color: color_from_configurables('topbar_bg_color');
 $primary-color: color_from_configurables('primary_color');
 $secondary-color: $white-smoke;
 
+$bar-font-color: $light-font-color;
+@if (lightness($bar-color) > $font-color-ligtness-boundry) {
+  $bar-font-color: $dark-font-color;
+}
+
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
 // $warning-color: #f08a24;
@@ -339,17 +344,18 @@ $secondary-color: $white-smoke;
 
 // $include-html-accordion-classes: $include-html-classes;
 
-// $accordion-navigation-padding: rem-calc(16);
-// $accordion-navigation-bg-color: $silver;
-// $accordion-navigation-hover-bg-color: scale-color($accordion-navigation-bg-color, $lightness: -5%);
-// $accordion-navigation-active-bg-color: scale-color($accordion-navigation-bg-color, $lightness: -3%);
-// $accordion-navigation-active-font-color: $jet;
-// $accordion-navigation-font-color: $jet;
-// $accordion-navigation-font-size: rem-calc(16);
-// $accordion-navigation-font-family: $body-font-family;
+$accordion-navigation-padding: rem-calc(16);
+$accordion-navigation-bg-color: $secondary-color;
+$accordion-navigation-hover-bg-color: scale-color($accordion-navigation-bg-color, $lightness: -5%);
+$accordion-navigation-active-bg-color: scale-color($accordion-navigation-bg-color, $lightness: -3%);
+$accordion-navigation-active-font-color: $dark-font-color;
+$accordion-navigation-font-color: $dark-font-color;
+$accordion-navigation-font-size: rem-calc(16);
+$accordion-navigation-font-family: inherit;
 
-// $accordion-content-padding: ($column-gutter/2);
-// $accordion-content-active-bg-color: $white;
+$accordion-content-padding: inherit;
+$accordion-content-active-bg-color: inherit;
+
 
 // 02. Alert Boxes
 // - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1434,11 +1440,7 @@ $topbar-bg: $topbar-bg-color;
 
 // Set the link colors and styles for top-level nav
 
-$topbar-link-color: $light-font-color;
-
-@if (lightness($bar-color) > $font-color-ligtness-boundry) {
-  $topbar-link-color: $dark-font-color;
-}
+$topbar-link-color: $bar-font-color;
 
 $topbar-link-color-hover: $topbar-link-color;
 $topbar-link-color-active: $topbar-link-color;

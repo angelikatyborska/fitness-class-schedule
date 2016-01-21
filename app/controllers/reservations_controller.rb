@@ -1,14 +1,16 @@
 class ReservationsController < ApplicationController
   expose(:user)
   expose(:reservations, ancestor: :user) do |default|
-    default.includes(schedule_item: [:reservations])
+    default.includes(schedule_item: [:reservations]).order('schedule_items.start asc')
   end
   expose(:reservation, attributes: :reservation_params)
 
-  before_action :authorize_user!
+  expose(:not_queued_reservations) { reservations.active.to_a.select { |reservation| !reservation.queued? } }
+  expose(:queued_reservations) { reservations.active.to_a.select { |reservation| reservation.queued? } }
+  expose(:attended_reservations) { reservations.attended }
+  expose(:missed_reservations) { reservations.missed }
 
-  def index
-  end
+  before_action :authorize_user!
 
   def create
     respond_to do |format|

@@ -6,6 +6,7 @@ Reservation.destroy_all
 ScheduleItem.destroy_all
 FitnessClass.destroy_all
 User.destroy_all
+Configurable.destroy_all
 
 puts 'Creating trainers...'
 
@@ -38,9 +39,9 @@ end
 
 fitness_classes_names_and_colors = [
   { name: 'Step', color: '#ff9000'},
-  { name: 'ABT', color: '#ea1186'},
-  { name: 'TBC', color: '#8725bf'},
-  { name: 'HIIT', color: '#161616'},
+  { name: 'ABT', color: '#cf2580'},
+  { name: 'TBC', color: '#7835a2'},
+  { name: 'HIIT', color: '#71360b'},
   { name: 'Zumba', color: '#ef2222'},
   { name: 'Pilates', color: '#12ae28'}
 ]
@@ -72,39 +73,61 @@ spinning_classes =
 
 puts 'Creating schedule items...'
 
-beginning_of_week = Time.zone.now.beginning_of_week
-available_hours = (0...(ScheduleItem.day_duration_in_hours)).to_a
+beginning_of_last_week = Time.zone.now.in_website_time_zone.beginning_of_week - 1.week
+available_hours = (0...(ScheduleItem.day_duration_in_hours))
+now = Time.zone.now.in_website_time_zone
 
-Timecop.travel(Time.zone.now - 1.month)
+Timecop.travel(Time.zone.now.in_website_time_zone - 1.month)
 
 room_classes_pairings = [
-  { room: fitness_hall, classes: fitness_classes},
-  { room: spinning_room, classes: spinning_classes }
+  { room: fitness_hall, classes: fitness_classes, duration: 50 },
+  { room: spinning_room, classes: spinning_classes, duration: 90 }
 ]
 
-schedule_items = room_classes_pairings.each_with_index.with_object([]) do |(pairing, index), items|
-  10.times do |days|
-    available_hours.sample(available_hours.length * 1 / 3).each do |hours|
+fitness_schedule_items = 21.times.with_object([]) do |days, items|
+    available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
+      start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
+      duration = 45
+      trainer = Trainer.all.sample while trainer.nil? || trainer.occupied?(start, start + duration)
+
       items << {
-        start: ScheduleItem.beginning_of_day(beginning_of_week) + days.days + hours.hours,
-        duration: 45,
-        fitness_class: pairing[:classes].sample,
-        trainer: Trainer.all[(index * 3)...((index + 1) * 3)].sample,
-        room: pairing[:room],
+        start: start,
+        duration: duration,
+        fitness_class: fitness_classes.sample,
+        trainer: trainer,
+        room: fitness_hall,
         capacity: Faker::Number.between(3, 5)
       }
     end
+end
+
+available_hours = available_hours.step(1.5)
+
+spinning_items = 21.times.with_object([]) do |days, items|
+  available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
+    start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
+    duration = 75
+    trainer = Trainer.all.sample while trainer.nil? || trainer.occupied?(start, start + duration)
+
+    items << {
+      start: start,
+      duration: duration,
+      fitness_class: spinning_classes.sample,
+      trainer: trainer,
+      room: spinning_room,
+      capacity: Faker::Number.between(3, 5)
+    }
   end
 end
 
-ScheduleItem.create!(schedule_items)
+ScheduleItem.create!(fitness_schedule_items + spinning_items)
 
 puts 'Creating users...'
 
-users = 7.times.with_object([]) do |n, users|
+users = 10.times.with_object([]) do |n, users|
   users << {
     email: "user#{ n }@example.com",
-    password: Faker::Internet.password(8),
+    password: 'password',
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     confirmed_at: Time.zone.now
@@ -116,8 +139,14 @@ User.create!(users)
 puts 'Creating reservations...'
 
 reservations = ScheduleItem.all.each.with_object([]) do |item, reservations|
-  User.all.sample((rand 4) + 3).each do |user|
-    reservations <<{ user: user, schedule_item: item }
+  User.all.sample((rand 5) + 3).each do |user|
+    status = if item.start < now
+      (rand 5) == 0 ? 'missed' : 'attended'
+    else
+      'active'
+    end
+
+    reservations << { user: user, schedule_item: item, status: status }
   end
 end
 

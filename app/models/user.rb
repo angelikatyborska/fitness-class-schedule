@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
 
-  default_scope { includes(:reservations) }
+  # default_scope { includes(:reservations) }
 
   scope :without_reservation, -> (schedule_item) do
-    where.not(id: schedule_item.users.map(&:id)).order(:last_name)
+    self.where.not(id: schedule_item.users.map(&:id)).order(:last_name)
   end
 
   def admin?

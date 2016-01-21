@@ -1,0 +1,37 @@
+.accordion {
+  border: $table-border-style $table-border-size $table-border-color;
+
+  .accordion-navigation {
+    > a {
+      position: relative;
+      padding-left: rem-calc(32) + 1.5rem;
+
+      &:before {
+        @include fa-icon;
+
+        content: $fa-var-plus-circle;
+        position: absolute;
+        top: 50%;
+        left: rem-calc(16);
+        transform: translateY(-50%);
+        font-size: 1.5rem;
+      }
+    }
+
+    &.active {
+      > a {
+        &:before {
+          content: $fa-var-minus-circle;
+        }
+      }
+    }
+
+    > .content {
+      padding: $spacing-medium;
+
+      table {
+        margin: 0;
+      }
+    }
+  }
+}

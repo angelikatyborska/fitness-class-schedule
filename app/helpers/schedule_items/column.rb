@@ -40,6 +40,6 @@ class ScheduleItems::Column
   private
 
   def fail_on_overlapping_items(item1, item2)
-    fail ArgumentError "#{ item1 } (#{ item1.start } - #{ item1.stop }) and #{ item2 } (#{ item2.start } - #{ item2.stop }) cannot be in the same column"
+    fail ArgumentError.new "#{ item1 } (#{ item1.start } - #{ item1.stop }) and #{ item2 } (#{ item2.start } - #{ item2.stop }) cannot be in the same column"
   end
 end

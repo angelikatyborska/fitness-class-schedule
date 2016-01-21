@@ -1,7 +1,7 @@
 .schedule-items.admin-schedule-items
   .row.admin-table-header
     .medium-10.columns
-      %h2
+      %h3
         = t('user.admin_panel.schedule_items')
     .medium-2.columns
       = link_to t('shared.create'),
@@ -11,12 +11,15 @@
 
   .row
     .medium-12.columns
-      %h3
-        = t('schedule_item.active')
-      = render 'schedule_items_table', schedule_items: schedule_items.active
+      %ul.accordion.schedule-items.user-reservations{ data: { accordion: '' } }
+        %li.accordion-navigation
+          %a{ href: '#table-active' }
+            = t('schedule_item.active')
+          #table-active.content.active
+            = render 'schedule_items_table', schedule_items: schedule_items.active
 
-  .row
-    .medium-12.columns
-      %h3
-        = t('schedule_item.stale')
-      = render 'schedule_items_table', schedule_items: schedule_items.stale
+        %li.accordion-navigation
+          %a{ href: '#table-stale' }
+            = t('schedule_item.stale')
+          #table-stale.content
+            = render 'schedule_items_table', schedule_items: schedule_items.stale
