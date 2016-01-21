@@ -19,6 +19,12 @@ RSpec.describe User do
   end
 
   describe 'scopes' do
+    describe 'default scope' do
+      it 'includes reservations' do
+        expect(described_class.all.includes_values).to match_array [:reservations]
+      end
+    end
+
     describe '#without_reservation' do
       let!(:users) { create_list(:user, 3) }
       let!(:reservation) { create(:reservation, user: users[0]) }

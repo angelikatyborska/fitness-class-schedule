@@ -25,6 +25,7 @@ class ScheduleItem < ActiveRecord::Base
       time.beginning_of_week + 1.week)
   end
 
+  # TODO: refactor
   scope :hourly_time_frame, -> (from, to) do
     if from < to
       query = '((extract(hour from start)) BETWEEN ? AND ?) AND ((extract(hour from start) + duration/60.0) BETWEEN ? AND ?)'

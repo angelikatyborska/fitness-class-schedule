@@ -80,6 +80,12 @@ RSpec.describe ScheduleItem do
   end
 
   describe 'scopes' do
+    describe 'default scope' do
+      it 'includes reservations, fitness class, trainer and room' do
+        expect(described_class.all.includes_values).to match_array [:reservations, :fitness_class, :trainer, :room]
+      end
+    end
+
     describe '#week' do
       let!(:today) { Time.zone.now }
       let!(:this_week_items) { create_list(:schedule_item_this_week, 2) }
