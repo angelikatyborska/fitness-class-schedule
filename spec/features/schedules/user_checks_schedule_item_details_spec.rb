@@ -1,9 +1,7 @@
 require 'rails_helper'
 
 feature 'User check schedule item details', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
-
-  before :all do
+   before :all do
     Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
 
@@ -11,7 +9,9 @@ feature 'User check schedule item details', js: true do
     Timecop.return
   end
 
-  context 'without logging in' do
+   let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+
+   context 'without logging in' do
     scenario do
       visit root_path
       click_link schedule_item

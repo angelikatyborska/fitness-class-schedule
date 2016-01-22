@@ -25,8 +25,12 @@ class ReservationsController < ApplicationController
   end
 
   def destroy
-    reservation.destroy
-    flash[:notice] = I18n.t('reservation.deleted')
+    if reservation.schedule_item.start > (Time.zone.now + Configurable.cancellation_deadline.hours)
+      reservation.destroy
+      flash[:notice] = I18n.t('reservation.deleted')
+    else
+      flash[:alert] = I18n.t('errors.reservation.cancellation_deadline', quantity: Configurable.cancellation_deadline, unit: 'hour'.pluralize(Configurable.cancellation_deadline))
+    end
 
     respond_to do |format|
       format.js

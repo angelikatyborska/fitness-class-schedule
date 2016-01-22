@@ -1,6 +1,14 @@
 require 'rails_helper'
 
 feature 'Guest check schedules for rooms', js: true do
+  before :all do
+    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
+  end
+
+  after :all do
+    Timecop.return
+  end
+
   let!(:small_room) { create(:room, name: 'Small room') }
   let!(:big_room) { create(:room, name: 'Big room') }
   let!(:small_schedule_item_this_monday) do
@@ -36,14 +44,6 @@ feature 'Guest check schedules for rooms', js: true do
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 6.days + 9.hours + 15.minutes,
       capacity: 20
     )
-  end
-
-  before :all do
-    Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
-  end
-
-  after :all do
-    Timecop.return
   end
 
   context 'at the beginning of the week' do
@@ -107,6 +107,7 @@ feature 'Guest check schedules for rooms', js: true do
   context 'on a wednesday' do
     scenario 'all rooms' do
       Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week + 3.days)
+
       visit root_path
       expect(page).to have_content small_schedule_item_this_monday
       expect(page).to have_no_link small_schedule_item_this_monday

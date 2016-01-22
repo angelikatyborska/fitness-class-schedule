@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 feature 'User makes a reservation', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, capacity: 1) }
-  let!(:user) { create(:user) }
-
   before :all do
     Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
@@ -11,6 +8,9 @@ feature 'User makes a reservation', js: true do
   after :all do
     Timecop.return
   end
+
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, capacity: 1) }
+  let!(:user) { create(:user) }
 
   scenario 'without logging in' do
     visit root_path

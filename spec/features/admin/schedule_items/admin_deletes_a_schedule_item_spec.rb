@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 feature 'Admin deletes a schedule item', js: true do
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
-  let!(:admin) { create(:admin_user) }
-
   before :all do
     Timecop.freeze(Time.zone.now.in_website_time_zone.beginning_of_week)
   end
@@ -11,6 +8,9 @@ feature 'Admin deletes a schedule item', js: true do
   after :all do
     Timecop.return
   end
+
+  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+  let!(:admin) { create(:admin_user) }
 
   background do
     login_as(admin, scope: :user)

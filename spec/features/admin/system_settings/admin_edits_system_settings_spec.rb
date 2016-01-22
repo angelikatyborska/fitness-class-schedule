@@ -15,6 +15,7 @@ feature 'admin edits system setting' do
     expect(page).to have_content 'Day ends'
     expect(page).to have_content 'Site title'
     expect(page).to have_content 'Schedule time zone'
+    expect(page).to have_content 'Block reservation cancellation'
   end
 
   scenario 'edits site title' do
@@ -31,8 +32,6 @@ feature 'admin edits system setting' do
   end
 
   context 'with a schedule item' do
-    let!(:schedule_item) { create(:schedule_item, start: Time.now.utc.beginning_of_day +  12.hours ) }
-
     before :all do
       Timecop.freeze(Time.now.utc.beginning_of_day)
     end
@@ -40,6 +39,8 @@ feature 'admin edits system setting' do
     after :all do
       Timecop.return
     end
+
+    let!(:schedule_item) { create(:schedule_item, start: Time.now.utc.beginning_of_day +  12.hours ) }
 
     scenario 'edits schedule time zone' do
       visit root_path

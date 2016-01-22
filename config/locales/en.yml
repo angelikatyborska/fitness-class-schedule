@@ -50,6 +50,7 @@ en:
       cant_start_before_day_start: "can't be that early"
       cant_end_after_day_end: "can't be that late"
     reservation:
+      cancellation_deadline: "We're sorry, but cancellations are only allowed up to %{quantity} %{unit} before class."
       cant_make_reservations_in_the_past: "can't make reservations for items from the past"
       cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"
       only_status_can_be_changed: "only reservation's status can be changed"
@@ -155,3 +156,4 @@ en:
       site_title: 'Site title'
       primary_color: 'Button and links color'
       topbar_bg_color: 'Topbar background color'
+      cancellation_deadline: 'Block reservation cancellation'

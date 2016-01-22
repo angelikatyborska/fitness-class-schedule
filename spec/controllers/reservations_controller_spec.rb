@@ -63,7 +63,25 @@ RSpec.describe ReservationsController do
         let!(:reservation) { create(:reservation, user: other_user) }
         subject { xhr :delete, :destroy, user_id: other_user.id, id: reservation.id }
 
-        it { expect{ subject }.to change(other_user.reservations, :count).by(-1) }
+        context 'within time allowed for cancellations' do
+          it 'deletes the reservation' do
+            Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours - 1.hour)
+
+            expect{ subject }.to change(other_user.reservations, :count).by(-1)
+
+            Timecop.return
+          end
+        end
+
+        context 'after time allowed for cancellations has passed' do
+          it 'does not delete the reservation' do
+            Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours + 15.minutes)
+
+            expect{ subject }.not_to change(other_user.reservations, :count)
+
+            Timecop.return
+          end
+        end
       end
 
       describe 'POST #create' do

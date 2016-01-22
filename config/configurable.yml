@@ -61,3 +61,8 @@ topbar_bg_color:
   name: Top bar background color
   default: '#333333'
   type: string
+
+cancellation_deadline:
+  name: Reservation cancellation deadline
+  default: 12
+  type: integer
