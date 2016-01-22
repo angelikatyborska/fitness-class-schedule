@@ -9,7 +9,7 @@ feature 'Admin creates a fitness class' do
 
     visit root_path
     click_link 'Admin Panel'
-    click_link 'Classes'
+    find('.admin-panel').click_link 'Classes'
     click_link 'Add'
   end
 

@@ -148,7 +148,7 @@ en:
     admin_panel:
       name: 'Admin Panel'
       schedule_items: 'Schedule'
-      settings: 'System Settings'
+      settings: 'Site Settings'
       day_end: 'Day ends at'
       day_start: 'Day starts at'
       time_zone: 'Schedule time zone'

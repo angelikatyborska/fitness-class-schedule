@@ -25,7 +25,7 @@
           - fitness_classes.each do |fitness_class|
             %tr{ id: fitness_class.decorate.css_id }
               %td.fitness-class-name{ data: { label: t('fitness_class.attributes.name') } }
-                %span.fitness-class-color{ style: "background-color: #{ fitness_class.color }"}
+                %span.fitness-class-color{ style: "background-color: #{ fitness_class.color }" }
                 = fitness_class.name
 
               %td{ data: { label: t('fitness_class.attributes.description') } }

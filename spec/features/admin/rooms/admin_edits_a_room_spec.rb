@@ -12,9 +12,7 @@ feature 'Admin edits a room', js: true do
     visit root_path
 
     click_link 'Admin Panel'
-    within '.admin-panel' do
-      click_link 'Locations'
-    end
+    find('.admin-panel').click_link 'Locations'
 
     expect(page).to have_content 'Spinning room'
     expect(page).not_to have_content 'Spinning hall'
@@ -31,25 +29,19 @@ feature 'Admin edits a room', js: true do
     visit root_path
 
     click_link 'Admin Panel'
-    within '.admin-panel' do
-      click_link 'Locations'
-    end
+    find('.admin-panel').click_link 'Locations'
 
     click_link 'Edit'
     expect(page).not_to have_selector('.admin-gallery img')
 
     click_link 'Add'
     attach_file 'room_photo[photo]', Rails.root.join('spec', 'support', 'images', 'room.jpg')
-    within '.new_room_photo' do
-      click_button 'Save'
-    end
+    find( '.new_room_photo').click_button 'Save'
 
     expect(page).to have_selector('.admin-gallery img')
 
-    within '.admin-gallery' do
-      click_link 'Delete'
-      page.driver.browser.switch_to.alert.accept
-    end
+    find('.admin-gallery').click_link 'Delete'
+    page.driver.browser.switch_to.alert.accept
 
     expect(page).not_to have_selector('.admin-gallery img')
   end

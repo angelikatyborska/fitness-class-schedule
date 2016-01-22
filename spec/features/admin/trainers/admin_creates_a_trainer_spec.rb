@@ -8,9 +8,7 @@ feature 'Admin creates a trainer' do
 
     visit root_path
     click_link 'Admin Panel'
-    within '.admin-panel' do
-      click_link 'Trainers'
-    end
+    find('.admin-panel').click_link 'Trainers'
     click_link 'Add'
   end
 

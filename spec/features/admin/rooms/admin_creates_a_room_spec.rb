@@ -8,9 +8,7 @@ feature 'Admin creates a room' do
 
     visit root_path
     click_link 'Admin Panel'
-    within '.admin-panel' do
-      click_link 'Locations'
-    end
+    find('.admin-panel').click_link 'Locations'
     click_link 'Add'
   end
 

@@ -1,16 +1,15 @@
 $overlay-close-size: 23px;
 
+html,
 body {
-  overflow-y: scroll;
-
-  &.no-scroll {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
+  height: 100%;
 }
+
+.page-wrapper {
+  height: 100%;
+  overflow: auto;
+}
+
 
 .overlay-background {
   position: fixed;

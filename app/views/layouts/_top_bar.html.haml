@@ -16,8 +16,8 @@
         = link_to t('room.name').pluralize, rooms_path
       %li
         = link_to t('trainer.name').pluralize, trainers_path
-
-        -# TODO: add classes
+      %li
+        = link_to t('fitness_class.name').pluralize, fitness_classes_path
 
     %ul.right
       - if user_signed_in?

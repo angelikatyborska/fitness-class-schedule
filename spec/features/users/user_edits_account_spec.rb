@@ -11,9 +11,7 @@ feature 'User edits account', js: true do
       visit root_path
       click_link user.email
       click_link 'Settings'
-      within '.user_password' do
-        fill_in 'Password', with: 'password1234'
-      end
+      find('.user_password').fill_in 'Password', with: 'password1234'
       fill_in 'Password confirmation', with: 'password1234'
       fill_in 'Current password', with: user.password
 
@@ -32,9 +30,7 @@ feature 'User edits account', js: true do
       click_link 'Log In'
 
       fill_in 'Email', with: user.email
-      within '.user_password' do
-        fill_in 'Password', with: 'password1234'
-      end
+      find('.user_password').fill_in 'Password', with: 'password1234'
 
       click_button 'Log In'
       expect(page).to have_content user.email

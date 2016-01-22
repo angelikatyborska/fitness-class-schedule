@@ -1,11 +1,13 @@
-.fitness-classes.rows-bottom-margin
-  - fitness_classes.each do |fitness_class|
-    .row
-      .medium-6.columns
-
-
-      .medium-6.columns
-        %h3
-          = fitness_class.name
-        %p
-          = fitness_class.description
+.row
+  .fitness-classes
+    - fitness_classes.each do |fitness_class|
+      - klass = 'small-12 medium-6 large-4'
+      - if fitness_classes.last == fitness_class
+        - klass << ' end'
+      .columns{ class: klass }
+        .fitness-class-box
+          .fitness-class-box-content
+            %h3{ style: "border-color: #{ fitness_class.color }"  }
+              = fitness_class.name
+            %p
+              = fitness_class.description

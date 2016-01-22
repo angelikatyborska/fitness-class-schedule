@@ -13,3 +13,15 @@
   margin-right: $spacing-tiny;
   border-radius: 50%;
 }
+
+.fitness-class-box {
+  margin: ($column-gutter / 2) 0;
+}
+
+.fitness-class-box-content {
+  padding: $spacing-medium;
+
+  h3 {
+    border-bottom: 5px solid;
+  }
+}

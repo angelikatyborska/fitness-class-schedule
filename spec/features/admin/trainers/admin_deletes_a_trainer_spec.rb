@@ -12,11 +12,9 @@ feature 'Admin deletes a trainer', js: true do
     visit root_path
 
     click_link 'Admin Panel'
-    within '.admin-panel' do
-      click_link 'Trainers'
-    end
+    find('.admin-panel').click_link 'Trainers'
 
-        expect(page).to have_content trainer.first_name
+    expect(page).to have_content trainer.first_name
     expect(page).to have_content trainer.description
 
     expect {

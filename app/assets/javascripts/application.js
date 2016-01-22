@@ -40,5 +40,9 @@ $(document).ready(function() {
   });
 
   $('.gallery:not(.admin-gallery) a').lightbox();
+
+  if ($('.fitness-class-box').length) {
+    FitnessClasses.init();
+  }
 });
 

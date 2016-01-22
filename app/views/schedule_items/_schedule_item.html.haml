@@ -22,23 +22,23 @@
           title: t('shared.delete')
 
   %span.title
-    %span.nowrap
+    %span.no-wrap
       #{ schedule_item.fitness_class.name }
-    %span.nowrap
+    %span.no-wrap
       (#{ schedule_item.trainer })
 
   %span.details
-    %span.nowrap
+    %span.no-wrap
       #{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time)},
-    %span.nowrap
+    %span.no-wrap
       #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') }
-    %span.nowrap
+    %span.no-wrap
       (#{ schedule_item.room.name })
 
   %span.details
-    %span.nowrap
+    %span.no-wrap
       #{ t('reservation.emtpy_spots')}:
-    %span.nowrap
+    %span.no-wrap
       #{ schedule_item.spots_left } / #{ schedule_item.capacity }
 
   - if user_signed_in?

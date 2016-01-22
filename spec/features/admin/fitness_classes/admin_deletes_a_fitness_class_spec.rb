@@ -12,7 +12,7 @@ feature 'Admin deletes a fitness class', js: true do
     visit root_path
 
     click_link 'Admin Panel'
-    click_link 'Classes'
+    find('.admin-panel').click_link 'Classes'
 
     expect(page).to have_content fitness_class
     expect(page).to have_content fitness_class.description

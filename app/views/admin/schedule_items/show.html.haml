@@ -1,12 +1,12 @@
 .row.admin-table-header
   .medium-10.columns
     %h3
-      %span.nowrap
+      %span.no-wrap
         %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
       #{ schedule_item.fitness_class }
-      %span.nowrap
+      %span.no-wrap
         (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },
-      %span.nowrap
+      %span.no-wrap
         #{ t('schedule_item.attributes.capacity') }: #{ schedule_item.capacity })
 
   .medium-2.columns

@@ -7,9 +7,7 @@ feature 'Guest signs up', js: true do
     fill_in 'First name', with: 'John'
     fill_in 'Last name', with: 'Doe'
     fill_in 'Email', with: 'user@example.com'
-    within '.user_password' do
-      fill_in 'Password', with: 'password1234'
-    end
+    find('.user_password').fill_in 'Password', with: 'password1234'
     fill_in 'Password confirmation', with: 'password1234'
     click_button 'Sign Up'
 
@@ -25,9 +23,7 @@ feature 'Guest signs up', js: true do
     fill_in 'First name', with: 'John'
     fill_in 'Last name', with: 'Doe'
     fill_in 'Email', with: 'user@example.com'
-    within '.user_password' do
-      fill_in 'Password', with: 'password1234'
-    end
+    find('.user_password').fill_in 'Password', with: 'password1234'
     fill_in 'Password confirmation', with: 'password1234'
     click_button 'Sign Up'
 

@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   }
 
   resources :trainers, only: [:index]
-  resources :rooms, only: [:index]
-  resources :fitness_classes, only: [:index]
+  resources :rooms, only: [:index], path: 'locations'
+  resources :fitness_classes, only: [:index], path: 'classes'
 
   resources :schedule_items, only: [:index, :show] do
     member do
@@ -22,10 +22,10 @@ Rails.application.routes.draw do
 
   namespace 'admin' do
     resources :schedule_items
-    resources :fitness_classes, except: :show
+    resources :fitness_classes, except: :show, path: 'classes'
     resources :reservations, only: [:new, :create, :update, :destroy]
     resources :trainers, except: :show
-    resources :rooms, except: :show  do
+    resources :rooms, except: :show, path: 'locations'  do
       resources :room_photos, only: [:new, :create, :destroy]
     end
   end
