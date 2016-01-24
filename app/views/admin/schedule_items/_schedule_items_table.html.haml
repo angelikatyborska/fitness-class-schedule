@@ -21,9 +21,8 @@
     - schedule_items.each do |item|
       %tr{ id: item.decorate.css_id }
         %td.fitness-class-name{ data: { label: t('schedule_item.attributes.fitness_class') } }
-          = link_to focus_schedule_item_path(item), title: t('schedule_item.focus') do
-            %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
-            = item.fitness_class.name
+          %span.fitness-class-color{ style: "background-color: #{ item.fitness_class.color }"}
+          = item.fitness_class.name
 
         %td{ data: { label: t('schedule_item.attributes.date') } }
           = l(item.start.in_website_time_zone, format: :simple_date)
@@ -50,6 +49,11 @@
                 admin_schedule_item_path(item),
                 class: 'action checkin',
                 title: t('reservation.checkin')
+            %li
+              = link_to t('schedule_item.focus'),
+                focus_schedule_item_path(item),
+                class: 'action show',
+                title: t('schedule_item.focus')
             %li
               = link_to t('shared.edit'),
                 edit_admin_schedule_item_path(item),

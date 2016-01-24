@@ -2,6 +2,8 @@ puts 'Seeds: start'
 perform_deliveries_from_config = ActionMailer::Base.perform_deliveries
 ActionMailer::Base.perform_deliveries = false
 
+puts 'Cleaning the database...'
+
 Reservation.destroy_all
 ScheduleItem.destroy_all
 Trainer.destroy_all
@@ -9,6 +11,8 @@ Room.destroy_all
 FitnessClass.destroy_all
 User.destroy_all
 Configurable.destroy_all
+
+Rails.cache.clear
 
 puts 'Creating trainers...'
 
@@ -141,7 +145,7 @@ User.create!(users)
 puts 'Creating reservations...'
 
 reservations = ScheduleItem.all.each.with_object([]) do |item, reservations|
-  User.all.sample((rand 5) + 3).each do |user|
+  User.all.sample((rand 5) + 2).each do |user|
     status = if item.start < now
       (rand 5) == 0 ? 'missed' : 'attended'
     else

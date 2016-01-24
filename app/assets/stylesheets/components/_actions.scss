@@ -68,6 +68,12 @@ ul.actions {
   }
 }
 
+.show {
+  &:before {
+    content: $fa-var-search;
+  }
+}
+
 .delete {
   &:before {
     content: $fa-var-trash;
