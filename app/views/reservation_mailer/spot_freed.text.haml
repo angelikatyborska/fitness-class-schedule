@@ -1,0 +1,13 @@
+%h1
+  Good news!
+%p
+  Looks like somebody cancelled their reservation for
+  = "#{ @schedule_item }, #{ l(@schedule_item.start, format: :human_friendly_date_with_weekday) }"
+  and you were the first person on the waiting list.
+%p
+  See you at
+  = "#{ l(@schedule_item.start, format: :simple_time) }"
+  on
+  = "#{ l(@schedule_item.start, format: :human_friendly_date_with_weekday) }"
+  at
+  = "#{ @schedule_item.room.name }."

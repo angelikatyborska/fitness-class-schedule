@@ -1,9 +1,11 @@
 puts 'Seeds: start'
+perform_deliveries_from_config = ActionMailer::Base.perform_deliveries
+ActionMailer::Base.perform_deliveries = false
 
-Trainer.destroy_all
-Room.destroy_all
 Reservation.destroy_all
 ScheduleItem.destroy_all
+Trainer.destroy_all
+Room.destroy_all
 FitnessClass.destroy_all
 User.destroy_all
 Configurable.destroy_all
@@ -156,5 +158,7 @@ admin = User.create!(email: 'admin@example.com', password: 'password', first_nam
 admin.add_role(:admin)
 
 Timecop.return
+
+ActionMailer::Base.perform_deliveries = perform_deliveries_from_config
 
 puts 'Seeds: done'

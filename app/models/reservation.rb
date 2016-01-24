@@ -3,6 +3,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :schedule_item, counter_cache: true
 
   enum status: [:active, :attended, :missed]
+  after_destroy :send_email_for_freed_spot
 
   validates :user, presence: true, uniqueness: { scope: :schedule_item_id }
   validates :schedule_item, presence: true
@@ -36,6 +37,19 @@ class Reservation < ActiveRecord::Base
       end
 
       number_of_reservations_before + 1
+    end
+  end
+
+  def send_email_for_freed_spot
+    if queue_position <= schedule_item.capacity
+      reservation_that_takes_the_empty_spot =
+        schedule_item.reload.reservations.find do |reservation|
+          reservation.queue_position == schedule_item.capacity
+        end
+
+      unless reservation_that_takes_the_empty_spot.nil? || reservation_that_takes_the_empty_spot == self
+        ReservationMailer.spot_freed(reservation_that_takes_the_empty_spot).deliver_now
+      end
     end
   end
 end

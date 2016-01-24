@@ -62,6 +62,41 @@ RSpec.describe Reservation do
     it { is_expected.to have_db_column :status }
   end
 
+  describe 'destroy' do
+    let!(:two_spot_schedule_item) { create(:schedule_item, capacity: 2) }
+
+    subject { reservation.destroy }
+
+    context 'active reservation' do
+      let!(:reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
+
+      context 'other reservations on the waiting list' do
+        let!(:other_reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
+        let!(:waiting_reservations) { create_list(:reservation, 3, schedule_item: two_spot_schedule_item) }
+
+        it 'sends an email to the first reservation on the waiting list' do
+          expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
+          expect(ActionMailer::Base.deliveries.last.to).to eq [waiting_reservations[0].user.email]
+        end
+      end
+
+      context 'no reservations on the waiting list' do
+        it 'does not send en email' do
+          expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+        end
+      end
+    end
+
+    context 'queued reservation' do
+      let!(:active_reservations) { create_list(:reservation, 2, schedule_item: two_spot_schedule_item) }
+      let!(:reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
+
+      it 'does not send en email' do
+        expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+      end
+    end
+  end
+
   describe '#queue_position' do
     context 'with all reservations for the same schedule item created at the same time' do
       let!(:schedule_item) { create(:schedule_item) }

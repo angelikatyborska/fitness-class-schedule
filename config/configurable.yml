@@ -32,6 +32,12 @@
 #   default: secret
 #   type: password
 
+# TODO: add to site settings form
+email:
+  name: Email for mailers
+  default: 'noreply@example.com'
+  type: email
+
 site_title:
   name: Site title
   default: My Fitness Club
