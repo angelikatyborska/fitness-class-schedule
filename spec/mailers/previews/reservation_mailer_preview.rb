@@ -3,4 +3,8 @@ class ReservationMailerPreview < ActionMailer::Preview
   def spot_freed
     ReservationMailer.spot_freed(Reservation.first)
   end
+
+  def cancelled
+    ReservationMailer.cancelled(Reservation.first)
+  end
 end

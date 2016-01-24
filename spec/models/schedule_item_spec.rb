@@ -25,16 +25,16 @@ RSpec.describe ScheduleItem do
     context 'with a room that is already occupied' do
       let!(:room) { create(:room) }
       let!(:schedule_item_occupying_the_room) { create(
-          :schedule_item,
-          room: room,
-          start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60
-        ) }
+        :schedule_item,
+        room: room,
+        start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60
+      ) }
 
       subject { build(
-          :schedule_item,
-          room: room,
-          start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
-        ) }
+        :schedule_item,
+        room: room,
+        start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
+      ) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -77,6 +77,34 @@ RSpec.describe ScheduleItem do
     it { is_expected.to belong_to :room }
     it { is_expected.to belong_to :fitness_class }
     it { is_expected.to have_many :reservations }
+  end
+
+  describe '#destroy' do
+    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
+    let!(:reservations) { create_list(:reservation, 4, schedule_item: schedule_item) }
+
+    subject { schedule_item.destroy }
+
+    context 'destroyed before start' do
+      it 'sends an email to every user that has a reservation' do
+        expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(reservations.count)
+
+        reservations.each_with_index do |reservation, i|
+          expect(ActionMailer::Base.deliveries[ -1 - i].to).to eq [reservation.user.email]
+        end
+      end
+    end
+
+    context 'destroyed after start' do
+      after :all do
+        Timecop.return
+      end
+
+      it 'does not send emails' do
+        Timecop.freeze(schedule_item.start + 5.minutes)
+        expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+      end
+    end
   end
 
   describe 'scopes' do

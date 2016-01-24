@@ -1,4 +1,6 @@
 class ScheduleItem < ActiveRecord::Base
+  before_destroy :send_cancellation_emails
+
   belongs_to :trainer
   belongs_to :room
   belongs_to :fitness_class
@@ -47,6 +49,12 @@ class ScheduleItem < ActiveRecord::Base
   def trainer_cant_be_already_occupied
     unless start.nil? || duration.nil? || trainer.nil?
       errors.add(:trainer, I18n.t('errors.occupied')) if trainer.occupied?(start, stop, except: self)
+    end
+  end
+
+  def send_cancellation_emails
+    if start > Time.zone.now
+      reservations.each { |reservation| ReservationMailer.cancelled(reservation).deliver_now }
     end
   end
 

@@ -160,3 +160,4 @@ en:
       cancellation_deadline: 'Block reservation cancellation'
   reservation_mailer:
     spot_freed: 'There is an empty spot for you at %{schedule_item}'
+    cancelled: '%{schedule_item} has been cancelled.'

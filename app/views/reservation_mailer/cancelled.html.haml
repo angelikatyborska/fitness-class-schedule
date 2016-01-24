@@ -1,0 +1,12 @@
+%h1
+  Bad news!
+%p
+  We are very sorry to inform you that we had to cancel
+  = @schedule_item
+  at
+  = "#{ l(@schedule_item.start.in_website_time_zone, format: :simple_time) }"
+  on
+  = "#{ l(@schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_weekday) }"
+  at
+  = "#{ @schedule_item.room.name }."
+  We hope we can compensate you for your disappointment with lots of fun during one of our other classes.

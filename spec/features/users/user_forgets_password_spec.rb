@@ -8,6 +8,7 @@ feature 'User forgets password', js: true do
       visit root_path
       click_link 'Log In'
       click_link 'Forgot your password?'
+      expect(page).to have_button 'Reset password'
       fill_in 'Email', with: user.email
       click_button 'Reset password'
       expect(page).to have_content 'You will receive an email with instructions on how to reset your password in a few minutes.'
