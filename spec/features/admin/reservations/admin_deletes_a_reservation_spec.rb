@@ -19,7 +19,6 @@ RSpec.feature 'admin deletes a reservation', js: true do
     click_link 'Check in'
     expect(page).to have_content user
     click_link 'Delete'
-    page.driver.browser.switch_to.alert.accept
     expect(page).not_to have_content user
   end
 end

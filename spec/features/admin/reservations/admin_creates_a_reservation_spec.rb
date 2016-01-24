@@ -15,8 +15,14 @@ RSpec.feature 'admin creates a reservation', js: true do
 
   scenario do
     expect(page).to have_content schedule_item
+    expect(page).to have_link 'Check in'
+
     click_link 'Check in'
+    expect(page).to have_content 'Reservations for'
+
     expect(page).not_to have_content user
+    expect(page).to have_link 'Add'
+
     click_link 'Add'
     select user, from: 'reservation[user_id]'
     click_button 'Reserve'

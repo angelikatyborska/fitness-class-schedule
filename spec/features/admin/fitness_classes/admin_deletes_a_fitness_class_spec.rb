@@ -19,7 +19,6 @@ feature 'Admin deletes a fitness class', js: true do
 
     expect {
       click_link 'Delete'
-      page.driver.browser.switch_to.alert.accept
       wait_for_ajax
     }.to change(FitnessClass, :count).by(-1)
 

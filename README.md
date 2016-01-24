@@ -2,4 +2,4 @@
 A Ruby on Rails app for managing fitness class reservations.
 
 ## Required
-ImageMagick, Bower
+ImageMagick, Bower, PhantomJS

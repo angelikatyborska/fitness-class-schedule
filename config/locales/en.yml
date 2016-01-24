@@ -125,6 +125,7 @@ en:
     missed: 'Missed reservations'
     attended: 'Past reservations'
     queue_position: 'Waiting list position'
+    for: 'Reservations for'
   trainer:
     name: 'Trainer'
     attributes:

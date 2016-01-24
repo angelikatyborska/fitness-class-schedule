@@ -30,6 +30,8 @@ ul.actions {
 .action {
   @include hide-text;
 
+  display: inline-block;
+
   &:before {
     @include fa-icon;
 

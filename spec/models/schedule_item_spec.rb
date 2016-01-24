@@ -132,14 +132,14 @@ RSpec.describe ScheduleItem do
       ) }
 
       it 'lists all schedule items that take place between given hours' do
-        expect(described_class.hourly_time_frame(7, 12)).to match_array [schedule_item_at_8am, schedule_item_at_10am]
-        expect(described_class.hourly_time_frame(12, 7)).to match_array [schedule_item_at_3am]
+        expect(described_class.hourly_time_frame(8, 12)).to match_array [schedule_item_at_8am, schedule_item_at_10am]
+        expect(described_class.hourly_time_frame(12, 8)).to match_array [schedule_item_at_3am]
 
-        expect(described_class.hourly_time_frame(7, 9)).to match_array [schedule_item_at_8am]
-        expect(described_class.hourly_time_frame(9, 7)).to match_array [schedule_item_at_3am, schedule_item_at_10am]
+        expect(described_class.hourly_time_frame(8, 9)).to match_array [schedule_item_at_8am]
+        expect(described_class.hourly_time_frame(9, 8)).to match_array [schedule_item_at_3am, schedule_item_at_10am]
 
-        expect(described_class.hourly_time_frame(9, 12)).to match_array [schedule_item_at_10am]
-        expect(described_class.hourly_time_frame(12, 9)).to match_array [schedule_item_at_3am, schedule_item_at_8am]
+        expect(described_class.hourly_time_frame(10, 12)).to match_array [schedule_item_at_10am]
+        expect(described_class.hourly_time_frame(12, 10)).to match_array [schedule_item_at_3am, schedule_item_at_8am]
       end
     end
 

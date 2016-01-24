@@ -19,7 +19,6 @@ feature 'Admin deletes a trainer', js: true do
 
     expect {
       click_link 'Delete'
-      page.driver.browser.switch_to.alert.accept
       wait_for_ajax
     }.to change(Trainer, :count).by(-1)
 

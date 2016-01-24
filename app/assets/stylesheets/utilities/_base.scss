@@ -16,3 +16,7 @@ span.no-wrap {
   display: inline;
   white-space: nowrap;
 }
+
+.top-bar a {
+  @include single-transition(background-color);
+}

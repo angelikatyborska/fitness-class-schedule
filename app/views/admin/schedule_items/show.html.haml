@@ -3,6 +3,8 @@
     %h3
       %span.no-wrap
         %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
+        = t('reservation.for')
+      %span.no-wrap
       #{ schedule_item.fitness_class }
       %span.no-wrap
         (#{ l(schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_time) },

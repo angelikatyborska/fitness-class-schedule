@@ -9,5 +9,5 @@
       = link_to edit_user_registration_path(current_user) do
         = t('user.settings')
     %li
-      = link_to destroy_user_session_path, method: :delete, remote: true do
+      = link_to destroy_user_session_path, method: :delete do
         = t('user.logout')

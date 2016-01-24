@@ -34,14 +34,14 @@ feature 'Admin edits a room', js: true do
     click_link 'Edit'
     expect(page).not_to have_selector('.admin-gallery img')
 
+    expect(page).to have_css('form.edit_room')
     click_link 'Add'
+    expect(page).to have_content('Add a photo to the gallery')
     attach_file 'room_photo[photo]', Rails.root.join('spec', 'support', 'images', 'room.jpg')
-    find( '.new_room_photo').click_button 'Save'
+    find('.new_room_photo').click_button 'Save'
 
-    expect(page).to have_selector('.admin-gallery img')
-
-    find('.admin-gallery').click_link 'Delete'
-    page.driver.browser.switch_to.alert.accept
+    find(:first, '.admin-gallery .th').hover
+    click_link 'Delete'
 
     expect(page).not_to have_selector('.admin-gallery img')
   end

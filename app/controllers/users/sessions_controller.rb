@@ -20,9 +20,4 @@ class Users::SessionsController < Devise::SessionsController
   def is_flashing_format?
     super || request_format == :js
   end
-
-  # overwrite to respond with destroy.js.erb (default rails behavior) instead of 204 no content (default devise behavior)
-
-  def respond_to_on_destroy
-  end
 end

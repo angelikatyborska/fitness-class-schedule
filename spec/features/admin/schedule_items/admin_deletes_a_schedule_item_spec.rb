@@ -28,7 +28,6 @@ feature 'Admin deletes a schedule item', js: true do
 
     expect {
       click_link 'Delete'
-      page.driver.browser.switch_to.alert.accept
       wait_for_ajax
     }.to change(ScheduleItem, :count).by(-1)
 
@@ -45,7 +44,6 @@ feature 'Admin deletes a schedule item', js: true do
 
     expect {
       click_link 'Delete'
-      page.driver.browser.switch_to.alert.accept
       wait_for_ajax
     }.to change(ScheduleItem, :count).by(-1)
 

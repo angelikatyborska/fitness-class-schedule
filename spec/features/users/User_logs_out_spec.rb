@@ -10,13 +10,24 @@ feature 'User logs out', js: true do
 
     scenario 'anywhere on the page' do
       visit trainers_path
-      old_path = current_path
       click_link user.email
       click_link 'Log Out'
       wait_for_ajax
       expect(page).to have_content 'Logged out successfully.'
       click_button 'Close'
-      expect(current_path).to eq old_path
+      expect(current_path).to eq root_path
+    end
+
+    scenario 'browsing their reservations' do
+      click_link user.email
+      click_link 'My Reservations'
+      expect(page).to have_content 'Current reservations'
+      click_link user.email
+      click_link 'Log Out'
+      wait_for_ajax
+      expect(page).to have_content 'Logged out successfully.'
+      click_button 'Close'
+      expect(current_path).to eq root_path
     end
   end
 
@@ -32,7 +43,6 @@ feature 'User logs out', js: true do
       click_link I18n.t('user.admin_panel.schedule_items')
       click_link user.email
       click_link 'Log Out'
-      wait_for_ajax
       expect(page).to have_content 'Logged out successfully.'
       click_button 'Close'
       expect(current_path).to eq root_path

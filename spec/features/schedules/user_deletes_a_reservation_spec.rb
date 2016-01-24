@@ -9,7 +9,10 @@ feature 'User deletes a reservation', js: true do
     Timecop.return
   end
 
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+  let!(:schedule_item) { create(
+    :schedule_item,
+    start: ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone.beginning_of_week + 1.day)
+  ) }
   let!(:user) { create(:user) }
   let!(:reservation) { create(:reservation, user: user, schedule_item: schedule_item) }
 
@@ -59,7 +62,7 @@ feature 'User deletes a reservation', js: true do
       expect(page).to have_content "We're sorry, but cancellations are only allowed up to #{ Configurable.cancellation_deadline } #{ 'hour'.pluralize(Configurable.cancellation_deadline) } before class."
     end
 
-    scenario 'via user panel' do
+    scenario 'via schedule item dialog box' do
       login_as(user, scope: :user)
       visit root_path
       click_link schedule_item
