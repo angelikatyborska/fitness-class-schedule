@@ -137,7 +137,7 @@ $bar-font-color: $light-font-color;
 
 // We use these to control various global styles
 // $body-bg: $white;
-// $body-font-color: $jet;
+ $body-font-color: $jet;
 // $body-font-family: $font-family-sans-serif;
 // $body-font-weight: $font-weight-normal;
 // $body-font-style: normal;
@@ -282,7 +282,7 @@ $bar-font-color: $light-font-color;
 // We use these to style anchors
 // $anchor-text-decoration: none;
 // $anchor-text-decoration-hover: none;
-// $anchor-font-color: $primary-color;
+ $anchor-font-color: $body-font-color;
 // $anchor-font-color-hover: scale-color($anchor-font-color, $lightness: -14%);
 
 // We use these to style the <hr> element
@@ -1388,7 +1388,7 @@ $dropdown-button-pip-color-alt: $dark-font-color;
 // $thumb-border-width: 4px;
 // $thumb-border-color: $white;
 // $thumb-box-shadow: 0 0 0 1px rgba($black,.2);
-// $thumb-box-shadow-hover: 0 0 6px 1px rgba($primary-color,0.5);
+ $thumb-box-shadow-hover: 0 0 6px 1px rgba($body-font-color, 0.3);
 
 // Radius and transition speed for thumbs
 // $thumb-radius: $global-radius;

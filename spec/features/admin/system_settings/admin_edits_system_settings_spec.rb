@@ -16,6 +16,7 @@ feature 'admin edits system setting' do
     expect(page).to have_content 'Site title'
     expect(page).to have_content 'Schedule time zone'
     expect(page).to have_content 'Block reservation cancellation'
+    expect(page).to have_content 'Email'
   end
 
   scenario 'edits site title' do

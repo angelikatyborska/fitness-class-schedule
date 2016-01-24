@@ -9,6 +9,14 @@
           Configurable.site_title
 
     .row
+      .medium-12.columns
+        = label_tag 'email' do
+          = t('user.admin_panel.email')
+
+        = text_field_tag 'email',
+          Configurable.email
+
+    .row
       .small-12.medium-6.columns
         = label_tag 'time_zone' do
           = t('user.admin_panel.time_zone')

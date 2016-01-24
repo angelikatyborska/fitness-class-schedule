@@ -158,6 +158,7 @@ en:
       primary_color: 'Button and links color'
       topbar_bg_color: 'Topbar background color'
       cancellation_deadline: 'Block reservation cancellation'
+      email: 'Email'
   reservation_mailer:
     spot_freed: 'There is an empty spot for you at %{schedule_item}'
     cancelled: '%{schedule_item} has been cancelled.'

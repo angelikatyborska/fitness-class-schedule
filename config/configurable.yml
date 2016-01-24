@@ -32,11 +32,10 @@
 #   default: secret
 #   type: password
 
-# TODO: add to site settings form
 email:
   name: Email for mailers
-  default: 'noreply@example.com'
-  type: email
+  default: noreply@example.com
+  type: string
 
 site_title:
   name: Site title
@@ -55,7 +54,7 @@ day_end:
 
 time_zone:
   name: Time Zone
-  default: 'Hawaii'
+  default: 'Warsaw'
   type: string
 
 primary_color:
