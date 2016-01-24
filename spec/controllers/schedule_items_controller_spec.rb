@@ -131,7 +131,8 @@ RSpec.describe ScheduleItemsController do
       subject { get :focus, id: schedule_item }
 
       it 'redirects to index with an anchor and proper week offset' do
-        is_expected.to redirect_to action: :index, week_offset: 0, anchor: schedule_item.decorate.css_id
+        is_expected.to redirect_to action: :index, week_offset: 0
+        expect(controller).to set_flash[:focus].to schedule_item.decorate.css_id
       end
     end
 
@@ -141,7 +142,8 @@ RSpec.describe ScheduleItemsController do
       subject { get :focus, id: schedule_item }
 
       it 'redirects to index with an anchor and proper week offset' do
-        is_expected.to redirect_to action: :index, week_offset: 1, anchor: schedule_item.decorate.css_id
+        is_expected.to redirect_to action: :index, week_offset: 1
+        expect(controller).to set_flash[:focus].to schedule_item.decorate.css_id
       end
     end
   end

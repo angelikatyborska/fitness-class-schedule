@@ -12,3 +12,12 @@
 
 #schedule
   = render 'schedule_items/schedule_table', schedule_items: schedule_items
+
+:javascript
+  $(document).ready(function() {
+    if (#{ !flash[:focus].nil? }) {
+      window.location
+      $('.page-wrapper').scrollTop($('##{ escape_javascript flash[:focus] }').offset().top - 15);
+      $('##{ escape_javascript flash[:focus] }').addClass('highlight');
+    }
+  });

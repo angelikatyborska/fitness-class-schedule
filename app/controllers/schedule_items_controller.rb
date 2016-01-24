@@ -1,4 +1,6 @@
 class ScheduleItemsController < ApplicationController
+  add_flash_types :focus
+
   expose(:current_user) do
     if devise_current_user.nil?
       nil
@@ -36,8 +38,9 @@ class ScheduleItemsController < ApplicationController
   end
 
   def focus
+    flash[:focus] = schedule_item.decorate.css_id
     week_offset = ((schedule_item.start.in_website_time_zone.beginning_of_week - Time.zone.now.in_website_time_zone.beginning_of_week) / 1.week).round
-    redirect_to action: :index, anchor: schedule_item.decorate.css_id, week_offset: week_offset
+    redirect_to action: :index, week_offset: week_offset
   end
 
   private

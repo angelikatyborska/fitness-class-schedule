@@ -22,6 +22,7 @@ feature 'User forgets password', js: true do
       visit root_path
       click_link 'Log In'
       click_link 'Forgot your password?'
+      expect(page).to have_button 'Reset password'
       fill_in 'Email', with: 'not_a_valid_email@invalid.com'
       click_button 'Reset password'
       expect(page).to have_content 'not found'
