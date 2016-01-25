@@ -10,7 +10,7 @@ RSpec.describe RoomsController do
     end
 
     it 'exposes rooms' do
-      expect(controller.rooms).to eq rooms
+      expect(controller.rooms).to match_array rooms
     end
   end
 end

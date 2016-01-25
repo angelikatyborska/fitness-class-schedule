@@ -92,6 +92,7 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    docile (1.1.5)
     draper (2.1.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -230,6 +231,11 @@ GEM
     simple_form (3.2.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
+    simplecov (0.11.1)
+      docile (~> 1.1.0)
+      json (~> 1.8)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.0)
     sinatra (1.4.6)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -310,6 +316,7 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   shoulda-matchers (~> 3.0.1)
   simple_form (~> 3.2)
+  simplecov (~> 0.11.1)
   spring
   timecop (~> 0.8.0)
   turbolinks

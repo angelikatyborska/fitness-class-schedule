@@ -22,7 +22,7 @@ RSpec.describe Admin::UsersController do
       end
     end
 
-   describe 'DELETE #destroy' do
+    describe 'DELETE #destroy' do
       it 'raises an error' do
         expect { delete :destroy, id: user.id }.to require_admin_privileges
       end
@@ -64,17 +64,31 @@ RSpec.describe Admin::UsersController do
     end
 
     describe 'PUT #update' do
-      before :each do
-        put :update, id: user.id, user: { first_name: 'Robert' }
+      context 'with valid attributes' do
+        before :each do
+          put :update, id: user.id, user: { first_name: 'Robert' }
+        end
+
+        it 'updates user attributes' do
+          expect(user.reload.first_name).to eq 'Robert'
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: user.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'User has been updated!'
+        end
       end
 
-      it 'updates user attributes' do
-        expect(user.reload.first_name).to eq 'Robert'
-      end
+      context 'with invalid attributes' do
+        before :each do
+          put :update, id: user.id, user: { first_name: '' }
+        end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: user.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'User has been updated!'
+        it 'does not update attributes' do
+          expect(user.reload.first_name).to eq 'Bob'
+        end
+
+        it { is_expected.to render_template :edit }
       end
     end
 

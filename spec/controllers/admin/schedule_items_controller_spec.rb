@@ -109,32 +109,58 @@ RSpec.describe Admin::ScheduleItemsController do
     describe 'PUT #update' do
       let!(:schedule_item) { create :schedule_item, duration: 45 }
 
-      before :each do
-        put :update, id: schedule_item.id, schedule_item: { duration: 60 }
+      context 'with valid attributes' do
+        before :each do
+          put :update, id: schedule_item.id, schedule_item: { duration: 60 }
+        end
+
+        it 'updates schedule item attributes' do
+          expect(schedule_item.reload.duration).to eq 60
+        end
+
+        it 'redirects to focus' do
+          is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+        end
       end
 
-      it 'updates schedule item attributes' do
-        expect(schedule_item.reload.duration).to eq 60
-      end
+      context 'with invalid attributes' do
+        before :each do
+          put :update, id: schedule_item.id, schedule_item: { duration: -4 }
+        end
 
-      it 'redirects to focus' do
-        is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+        it 'does not update attributes' do
+          expect(schedule_item.reload.duration).to eq 45
+        end
+
+        it { is_expected.to render_template :edit }
       end
     end
 
     describe 'POST #create' do
-      let!(:fitness_class) { create :fitness_class }
-      let!(:trainer) { create :trainer }
-      let!(:room) { create :room }
+      context 'with valid attributes' do
+        let!(:fitness_class) { create :fitness_class }
+        let!(:trainer) { create :trainer }
+        let!(:room) { create :room }
 
-      subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
+        subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
 
-      it 'creates a schedule item' do
-        expect { subject }.to change(ScheduleItem, :count).by(1)
+        it 'creates a schedule item' do
+          expect { subject }.to change(ScheduleItem, :count).by(1)
+        end
+
+        it 'redirects to focus' do
+          is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+        end
       end
 
-      it 'redirects to focus' do
-        is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+      context 'with invalid attributes' do
+        subject { post :create, schedule_item: { trainer: '' } }
+
+        it 'does not create a schedule item' do
+          expect { subject }.not_to change(ScheduleItem, :count)
+        end
+
+        it { is_expected.to render_template :new }
       end
     end
 

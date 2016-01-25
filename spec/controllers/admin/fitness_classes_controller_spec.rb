@@ -88,30 +88,56 @@ RSpec.describe Admin::FitnessClassesController do
     describe 'PUT #update' do
       let!(:fitness_class) { create :fitness_class, name: 'Zumba' }
 
-      before :each do
-        put :update, id: fitness_class.id, fitness_class: { name: 'Zumba Step' }
+      context 'with valid attributes' do
+        before :each do
+          put :update, id: fitness_class.id, fitness_class: { name: 'Zumba Step' }
+        end
+
+        it 'updates attributes' do
+          expect(fitness_class.reload.name).to eq 'Zumba Step'
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Class has been updated!'
+        end
       end
 
-      it 'updates fitness class attributes' do
-        expect(fitness_class.reload.name).to eq 'Zumba Step'
-      end
+      context 'with invalid attributes' do
+        before :each do
+          put :update, id: fitness_class.id, fitness_class: { name: '' }
+        end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Class has been updated!'
+        it 'does not update attributes' do
+          expect(fitness_class.reload.name).to eq 'Zumba'
+        end
+
+        it { is_expected.to render_template :edit }
       end
     end
 
     describe 'POST #create' do
-      subject { post :create, fitness_class: attributes_for(:fitness_class) }
+      context 'with valid attributes' do
+        subject { post :create, fitness_class: attributes_for(:fitness_class) }
 
-      it 'creates a fitness class' do
-        expect { subject }.to change(FitnessClass, :count).by(1)
+        it 'creates a fitness class' do
+          expect { subject }.to change(FitnessClass, :count).by(1)
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Class has been created!'
+        end
       end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Class has been created!'
+      context 'with invalid attributes' do
+        subject { post :create, fitness_class: { name: '', description: ''} }
+
+        it 'does not create a fitness class' do
+          expect { subject }.not_to change(FitnessClass, :count)
+        end
+
+        it { is_expected.to render_template :new }
       end
     end
 

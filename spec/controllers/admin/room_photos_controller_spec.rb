@@ -16,7 +16,7 @@ RSpec.describe Admin::RoomPhotosController do
       end
     end
 
-   describe 'DELETE #destroy' do
+    describe 'DELETE #destroy' do
       it 'raises an error' do
         expect { delete :destroy, room_id: room.id, id: create(:room_photo) }.to require_admin_privileges
       end
@@ -49,10 +49,14 @@ RSpec.describe Admin::RoomPhotosController do
     end
 
     describe 'POST #create' do
-      subject { post :create, room_id: room.id, room_photo: attributes_for(:room_photo) }
+      context 'with valid attributes' do
+        subject { post :create, room_id: room.id, room_photo: attributes_for(:room_photo) }
 
-      it 'creates a room photo' do
-        expect { subject }.to change(RoomPhoto, :count).by(1)
+        it 'creates a room photo' do
+          expect { subject }.to change(RoomPhoto, :count).by(1)
+        end
+
+        it { is_expected.to redirect_to edit_admin_room_path(room) }
       end
     end
 

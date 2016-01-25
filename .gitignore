@@ -3,6 +3,7 @@
 /config/database.yml
 /spec/tmp/*
 /public/uploads/
+coverage
 
 # See https://help.github.com/articles/ignoring-files for more about ignoring files.
 #

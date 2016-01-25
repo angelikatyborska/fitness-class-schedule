@@ -63,23 +63,40 @@ RSpec.describe Admin::ReservationsController do
       let!(:schedule_item) { create :schedule_item }
       let!(:reservation) { create :reservation, schedule_item_id: schedule_item.id, user_id: user.id, status: 'missed' }
 
-      before :each do
-        xhr :put, :update, id: reservation.id, reservation: { schedule_item_id: schedule_item.id, user_id: user.id, status: 'active' }
+      context 'with valid attributes' do
+        before :each do
+          xhr :put, :update, id: reservation.id, reservation: {
+            schedule_item_id: schedule_item.id,
+            user_id: user.id,
+            status: 'active'
+          }
+        end
+
+        it 'updates attributes' do
+          expect(reservation.reload.status).to eq 'active'
+        end
       end
 
-      it 'updates fitness class attributes' do
-        subject
-        expect(reservation.reload.status).to eq 'active'
+      context 'with invalid attributes' do
+        before :each do
+          xhr :put, :update, id: reservation.id, reservation: { schedule_item_id: '' }
+        end
+
+        it 'does not update attributes' do
+          expect(reservation.reload.schedule_item).to eq schedule_item
+        end
       end
     end
 
     describe 'POST #create' do
-      let!(:user) { create :user }
-      let!(:schedule_item) { create :schedule_item }
-      subject { xhr :post, :create, reservation: { schedule_item_id: schedule_item.id, user_id: user.id } }
+      context 'with valid attributes' do
+        let!(:user) { create :user }
+        let!(:schedule_item) { create :schedule_item }
+        subject { xhr :post, :create, reservation: { schedule_item_id: schedule_item.id, user_id: user.id } }
 
-      it 'creates a reservation' do
-        expect { subject }.to change(Reservation, :count).by(1)
+        it 'creates a reservation' do
+          expect { subject }.to change(Reservation, :count).by(1)
+        end
       end
     end
 

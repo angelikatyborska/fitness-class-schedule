@@ -39,4 +39,5 @@ group :test do
   gem 'launchy', '~> 2.4.3'
   gem 'shoulda-matchers', '~> 3.0.1'
   gem 'poltergeist', '~> 1.8.1'
+  gem 'simplecov', '~> 0.11.1', require: false
 end

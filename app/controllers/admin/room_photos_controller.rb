@@ -10,11 +10,11 @@ class Admin::RoomPhotosController < Admin::AdminApplicationController
   end
 
   def create
-    if room_photo.save
-      redirect_to edit_admin_room_path(room_photo.room)
-    else
-      render :new
+    unless room_photo.save
+      flash[:alert] = t('room_photo.invalid')
     end
+
+    redirect_to edit_admin_room_path(room_photo.room)
   end
 
   def destroy

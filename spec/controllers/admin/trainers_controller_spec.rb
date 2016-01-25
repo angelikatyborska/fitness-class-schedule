@@ -94,30 +94,57 @@ RSpec.describe Admin::TrainersController do
     describe 'PUT #update' do
       let!(:trainer) { create :trainer, first_name: 'Ann' }
 
-      before :each do
-        put :update, id: trainer.id, trainer: { first_name: 'Mary' }
+      context 'with valid attributes' do
+
+        before :each do
+          put :update, id: trainer.id, trainer: { first_name: 'Mary' }
+        end
+
+        it 'updates trainer\s attributes' do
+          expect(trainer.reload.first_name).to eq 'Mary'
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Trainer has been updated!'
+        end
       end
 
-      it 'updates trainer\s attributes' do
-        expect(trainer.reload.first_name).to eq 'Mary'
-      end
+      context 'with invalid attributes' do
+        before :each do
+          put :update, id: trainer.id, trainer: { first_name: '' }
+        end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Trainer has been updated!'
+        it 'does not update attributes' do
+          expect(trainer.reload.first_name).to eq 'Ann'
+        end
+
+        it { is_expected.to render_template :edit }
       end
     end
 
     describe 'POST #create' do
-      subject { post :create, trainer: attributes_for(:trainer) }
+      context 'with valid attributes' do
+        subject { post :create, trainer: attributes_for(:trainer) }
 
-      it 'creates a trainer' do
-        expect { subject }.to change(Trainer, :count).by(1)
+        it 'creates a trainer' do
+          expect { subject }.to change(Trainer, :count).by(1)
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Trainer has been created!'
+        end
       end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Trainer has been created!'
+      context 'with invalid attributes' do
+        subject { post :create, trainer: { first_name: '', description: ''} }
+
+        it 'does not create a trainer' do
+          expect { subject }.not_to change(Trainer, :count)
+        end
+
+        it { is_expected.to render_template :new }
       end
     end
 

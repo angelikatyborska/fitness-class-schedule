@@ -88,30 +88,56 @@ RSpec.describe Admin::RoomsController do
     describe 'PUT #update' do
       let!(:room) { create :room, name: 'Small room' }
 
-      before :each do
-        put :update, id: room.id, room: { name: 'Big room' }
+      context 'with valid attributes' do
+        before :each do
+          put :update, id: room.id, room: { name: 'Big room' }
+        end
+
+        it 'updates room attributes' do
+          expect(room.reload.name).to eq 'Big room'
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Location has been updated!'
+        end
       end
 
-      it 'updates room attributes' do
-        expect(room.reload.name).to eq 'Big room'
-      end
+      context 'with invalid attributes' do
+        before :each do
+          put :update, id: room.id, room: { name: '' }
+        end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Location has been updated!'
+        it 'does not update attributes' do
+          expect(room.reload.name).to eq 'Small room'
+        end
+
+        it { is_expected.to render_template :edit }
       end
     end
 
     describe 'POST #create' do
-      subject { post :create, room: attributes_for(:room) }
+      context 'with valid attributes' do
+        subject { post :create, room: attributes_for(:room) }
 
-      it 'creates a room' do
-        expect { subject }.to change(Room, :count).by(1)
+        it 'creates a room' do
+          expect { subject }.to change(Room, :count).by(1)
+        end
+
+        it 'redirects to index with a notice' do
+          is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
+          expect(controller).to set_flash[:notice].to 'Location has been created!'
+        end
       end
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
-        expect(controller).to set_flash[:notice].to 'Location has been created!'
+      context 'with invalid attributes' do
+        subject { post :create, room: { name: '', description: ''} }
+
+        it 'does not create a room' do
+          expect { subject }.not_to change(Room, :count)
+        end
+
+        it { is_expected.to render_template :new }
       end
     end
 

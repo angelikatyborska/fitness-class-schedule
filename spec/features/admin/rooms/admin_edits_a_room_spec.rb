@@ -6,15 +6,22 @@ feature 'Admin edits a room', js: true do
 
   background do
     login_as admin, scope: :user
-  end
 
-  scenario 'with valid input' do
     visit root_path
 
     click_link 'Admin Panel'
     find('.admin-panel').click_link 'Locations'
 
     expect(page).to have_content 'Spinning room'
+    visit root_path
+
+    click_link 'Admin Panel'
+    find('.admin-panel').click_link 'Locations'
+
+    expect(page).to have_content 'Spinning room'
+  end
+
+  scenario 'with valid input' do
     expect(page).not_to have_content 'Spinning hall'
 
     click_link 'Edit'
@@ -27,11 +34,6 @@ feature 'Admin edits a room', js: true do
   end
 
   scenario 'by adding and deleting a photo' do
-    visit root_path
-
-    click_link 'Admin Panel'
-    find('.admin-panel').click_link 'Locations'
-
     click_link 'Edit'
     expect(page).not_to have_selector('.admin-gallery img')
 

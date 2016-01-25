@@ -105,6 +105,7 @@ en:
   room_photo:
     name: 'Room photo'
     add: 'Add a photo to the gallery'
+    invalid: 'Not a valid image file.'
   reservation:
     name: 'Reservation'
     attributes:
