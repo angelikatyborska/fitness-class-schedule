@@ -7,7 +7,10 @@ class Admin::RoomsController < Admin::AdminApplicationController
 
   def create
     if room.save
-      redirect_to action: :index, anchor: room.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: room.decorate.css_id },
+        notice: I18n.t('shared.created', resource: I18n.t('room.name'))
+      )
     else
       render :new
     end
@@ -15,7 +18,10 @@ class Admin::RoomsController < Admin::AdminApplicationController
 
   def update
     if room.save
-      redirect_to action: :index, anchor: room.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: room.decorate.css_id },
+        notice: I18n.t('shared.updated', resource: I18n.t('room.name'))
+      )
     else
       render :edit
     end

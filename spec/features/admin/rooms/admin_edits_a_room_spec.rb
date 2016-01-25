@@ -21,6 +21,7 @@ feature 'Admin edits a room', js: true do
     fill_in 'Name', with: 'Spinning hall'
     click_button 'Save'
 
+    expect(page).to have_content 'Location has been updated!'
     expect(page).not_to have_content 'Spinning room'
     expect(page).to have_content 'Spinning hall'
   end

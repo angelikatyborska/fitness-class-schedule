@@ -12,16 +12,18 @@ feature 'User makes a reservation', js: true do
   let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone, capacity: 1 }
   let!(:user) { create :user }
 
-  scenario 'without logging in' do
-    visit root_path
-    click_link schedule_item
-    expect(page).not_to have_content 'Reserve'
+  context 'without logging in' do
+    scenario 'there is no \'Reserve\' button' do
+      visit root_path
+      click_link schedule_item
+      expect(page).not_to have_content 'Reserve'
+    end
   end
 
   context 'with logging in' do
     context 'when there are empty spots' do
       scenario 'adds reservation' do
-        login_as(user, scope: :user)
+        login_as user, scope: :user
         visit root_path
         click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Reserve']")
@@ -37,7 +39,7 @@ feature 'User makes a reservation', js: true do
       let!(:other_reservation) { create :reservation, schedule_item: schedule_item }
 
       scenario 'adds to waiting list' do
-        login_as(user, scope: :user)
+        login_as user, scope: :user
         visit root_path
         click_link schedule_item
         expect(page).to have_selector("input[type=submit][value='Add to waiting list']")

@@ -95,21 +95,38 @@ RSpec.describe Admin::RoomsController do
       it 'updates room attributes' do
         expect(room.reload.name).to eq 'Big room'
       end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Location has been updated!'
+      end
     end
 
     describe 'POST #create' do
       subject { post :create, room: attributes_for(:room) }
 
-      it {
+      it 'creates a room' do
         expect { subject }.to change(Room, :count).by(1)
-      }
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Location has been created!'
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:room) { create :room }
       subject { delete :destroy, id: room.id }
 
-      it { expect { subject }.to change(Room, :count).by(-1) }
+      it 'deletes the room' do
+        expect { subject }.to change(Room, :count).by(-1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index
+        expect(controller).to set_flash[:notice].to 'Location has been deleted!'
+      end
     end
   end
 end

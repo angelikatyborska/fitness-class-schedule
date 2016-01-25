@@ -9,7 +9,10 @@ RSpec.feature 'admin creates a reservation', js: true do
     login_as admin, scope: :user
 
     visit root_path
+    page.save_screenshot 'tmp/1.png'
+
     click_link 'Admin Panel'
+    page.save_screenshot 'tmp/2.png'
     click_link 'Schedule'
   end
 

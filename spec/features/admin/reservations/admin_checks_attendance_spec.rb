@@ -15,7 +15,7 @@ RSpec.feature 'admin checks attendance', js: true do
   let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'
@@ -23,6 +23,7 @@ RSpec.feature 'admin checks attendance', js: true do
   end
 
   scenario do
+    expect(page).to have_content 'Upcoming'
     expect(page).to have_content schedule_item
     click_link 'Check attendance'
 

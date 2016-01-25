@@ -116,24 +116,40 @@ RSpec.describe Admin::ScheduleItemsController do
       it 'updates schedule item attributes' do
         expect(schedule_item.reload.duration).to eq 60
       end
+
+      it 'redirects to focus' do
+        is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+      end
     end
 
     describe 'POST #create' do
       let!(:fitness_class) { create :fitness_class }
       let!(:trainer) { create :trainer }
       let!(:room) { create :room }
+
       subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
 
-      it {
+      it 'creates a schedule item' do
         expect { subject }.to change(ScheduleItem, :count).by(1)
-      }
+      end
+
+      it 'redirects to focus' do
+        is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:schedule_item) { create :schedule_item }
       subject { delete :destroy, id: schedule_item.id }
 
-      it { expect { subject }.to change(ScheduleItem, :count).by(-1) }
+      it 'deletes the schedule item' do
+        expect { subject }.to change(ScheduleItem, :count).by(-1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index
+        expect(controller).to set_flash[:notice].to 'Schedule item has been deleted!'
+      end
     end
   end
 end

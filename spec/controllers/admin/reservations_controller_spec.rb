@@ -78,14 +78,18 @@ RSpec.describe Admin::ReservationsController do
       let!(:schedule_item) { create :schedule_item }
       subject { xhr :post, :create, reservation: { schedule_item_id: schedule_item.id, user_id: user.id } }
 
-      it { expect { subject }.to change(Reservation, :count).by(1) }
+      it 'creates a reservation' do
+        expect { subject }.to change(Reservation, :count).by(1)
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:reservation) { create :reservation }
       subject { xhr :delete, :destroy, id: reservation.id }
 
-      it { expect { subject }.to change(Reservation, :count).by(-1) }
+      it 'deletes the reservation' do
+        expect { subject }.to change(Reservation, :count).by(-1)
+      end
     end
   end
 end

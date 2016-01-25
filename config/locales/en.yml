@@ -126,6 +126,7 @@ en:
     attended: 'Past reservations'
     queue_position: 'Waiting list position'
     for: 'Reservations for'
+    email_warning: 'An email will be send to every user that has a reservation for this class.'
   trainer:
     name: 'Trainer'
     attributes:
@@ -139,7 +140,10 @@ en:
     attributes:
       first_name: 'First name'
       last_name: 'Last name'
+      attended: 'Attended classes'
+      missed: 'Missed classes'
       reliability: 'Reliability'
+      email: 'Email'
     login: 'Log In'
     logout: 'Log Out'
     signup: 'Sign Up'

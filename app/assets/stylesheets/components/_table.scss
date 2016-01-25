@@ -54,7 +54,8 @@ table.mobile {
 
           @media #{$medium-up} {
             width: (100% * ($medium-header-width / (100% - $medium-header-width)));
-            margin-left: ((-1 * (100% * ($medium-header-width / (100% - $medium-header-width)))) + 1%);
+            margin-left: (-1 * (100% * ($medium-header-width / (100% - $medium-header-width))));
+            padding-left: $spacing-tiny;
           }
 
           @media #{$large-up} {

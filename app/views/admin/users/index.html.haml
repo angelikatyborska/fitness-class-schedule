@@ -1,0 +1,67 @@
+.users.admin-users
+  .row.admin-table-header
+    .medium-12.columns
+      %h3
+        = t('user.name').pluralize
+
+  .row
+    .medium-12.columns
+      %table.mobile
+        %thead
+          %tr
+            %th
+              = t('user.attributes.last_name')
+            %th
+              = t('user.attributes.first_name')
+            %th
+              = t('user.attributes.email')
+            %th
+              = t('user.attributes.attended')
+            %th
+              = t('user.attributes.missed')
+            %th
+              = t('user.attributes.reliability')
+            %th
+              = t('shared.actions')
+        %tbody
+          - users.each do |user|
+            %tr{ id: user.decorate.css_id }
+              %td{ data: { label: t('user.attributes.last_name') } }
+                = user.last_name
+
+              %td{ data: { label: t('user.attributes.first_name') } }
+                = user.first_name
+
+              %td{ data: { label: t('user.attributes.email') } }
+                = user.email
+
+              %td{ data: { label: t('user.attributes.attended') } }
+                = user.reservations.attended.count
+
+              %td{ data: { label: t('user.attributes.missed') } }
+                = user.reservations.missed.count
+
+              %td{ data: { label: t('user.attributes.reliability') } }
+                = number_to_percentage(user.reliability * 100, precision: 0)
+
+              %td{ data: { label: t('shared.actions') } }
+                %ul.actions
+                  %li
+                    = link_to t('shared.show'),
+                      admin_user_path(user),
+                      class: 'action show',
+                      title: t('shared.show')
+
+                  %li
+                    = link_to t('shared.edit'),
+                      edit_admin_user_path(user),
+                      class: 'action edit',
+                      title: t('shared.edit')
+
+                  %li
+                    = link_to t('shared.delete'),
+                      admin_user_path(user),
+                      method: :delete,
+                      data: { confirm: t('shared.confirm') },
+                      class: 'action delete',
+                      title: t('shared.delete')

@@ -67,7 +67,7 @@ RSpec.describe ReservationsController do
           it 'deletes the reservation' do
             Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours - 1.hour)
 
-            expect{ subject }.to change(other_user.reservations, :count).by(-1)
+            expect { subject }.to change(other_user.reservations, :count).by(-1)
 
             Timecop.return
           end
@@ -77,7 +77,7 @@ RSpec.describe ReservationsController do
           it 'does not delete the reservation' do
             Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours + 15.minutes)
 
-            expect{ subject }.not_to change(other_user.reservations, :count)
+            expect { subject }.not_to change(other_user.reservations, :count)
 
             Timecop.return
           end

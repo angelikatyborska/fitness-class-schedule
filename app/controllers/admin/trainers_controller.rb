@@ -7,7 +7,10 @@ class Admin::TrainersController < Admin::AdminApplicationController
 
   def create
     if trainer.save
-      redirect_to action: :index, anchor: trainer.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: trainer.decorate.css_id },
+        notice: I18n.t('shared.created', resource: I18n.t('trainer.name'))
+      )
     else
       render :new
     end
@@ -15,7 +18,10 @@ class Admin::TrainersController < Admin::AdminApplicationController
 
   def update
     if trainer.save
-      redirect_to action: :index, anchor: trainer.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: trainer.decorate.css_id },
+        notice: I18n.t('shared.updated', resource: I18n.t('trainer.name'))
+      )
     else
       render :edit
     end
@@ -23,7 +29,10 @@ class Admin::TrainersController < Admin::AdminApplicationController
 
   def destroy
     trainer.destroy
-    redirect_to action: :index, notice: I18n.t('shared.deleted', resource: I18n.t('trainer.name'))
+    redirect_to(
+      { action: :index },
+      notice: I18n.t('shared.deleted', resource: I18n.t('trainer.name'))
+    )
   end
 
   private

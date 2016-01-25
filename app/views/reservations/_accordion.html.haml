@@ -1,0 +1,36 @@
+%ul.accordion.schedule-items.user-reservations{ data: { accordion: '' } }
+  %li.accordion-navigation
+    %a{ href: '#table-active' }
+      = t('reservation.active')
+
+    #table-active.content.active
+      = render 'reservations/reservations_table',
+        reservations: not_queued_reservations.sort_by { |reservation| reservation.schedule_item.start },
+        reservations_controller: reservations_controller
+
+  %li.accordion-navigation
+    %a{ href: '#table-queued' }
+      = t('reservation.queued')
+
+    #table-queued.content
+      = render 'reservations/reservations_table',
+        reservations: queued_reservations.sort_by { |reservation| reservation.schedule_item.start },
+        reservations_controller: reservations_controller
+
+  %li.accordion-navigation
+    %a{ href: '#table-attended' }
+      = t('reservation.attended')
+
+    #table-attended.content
+      = render 'reservations/reservations_table',
+        reservations: attended_reservations.sort_by { |reservation| reservation.schedule_item.start }.reverse,
+        reservations_controller: reservations_controller
+
+  %li.accordion-navigation
+    %a{ href: '#table-missed' }
+      = t('reservation.missed')
+
+    #table-missed.content
+      = render 'reservations/reservations_table',
+        reservations: missed_reservations.sort_by { |reservation| reservation.schedule_item.start }.reverse,
+        reservations_controller: reservations_controller

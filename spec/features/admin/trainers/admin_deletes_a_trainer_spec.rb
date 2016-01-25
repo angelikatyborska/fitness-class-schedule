@@ -20,6 +20,7 @@ feature 'Admin deletes a trainer', js: true do
     expect {
       click_link 'Delete'
       wait_for_ajax
+      expect(page).to have_content 'Trainer has been deleted!'
     }.to change(Trainer, :count).by(-1)
 
     expect(current_path).to eq admin_trainers_path

@@ -7,7 +7,10 @@ class Admin::FitnessClassesController < Admin::AdminApplicationController
 
   def create
     if fitness_class.save
-      redirect_to action: :index, anchor: fitness_class.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: fitness_class.decorate.css_id },
+        notice: I18n.t('shared.created', resource: I18n.t('fitness_class.name'))
+      )
     else
       render :new
     end
@@ -15,7 +18,10 @@ class Admin::FitnessClassesController < Admin::AdminApplicationController
 
   def update
     if fitness_class.save
-      redirect_to action: :index, anchor: fitness_class.decorate.css_id
+      redirect_to(
+        { action: :index, anchor: fitness_class.decorate.css_id },
+        notice: I18n.t('shared.updated', resource: I18n.t('fitness_class.name'))
+      )
     else
       render :edit
     end

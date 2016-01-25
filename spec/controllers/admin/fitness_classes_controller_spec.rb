@@ -95,19 +95,38 @@ RSpec.describe Admin::FitnessClassesController do
       it 'updates fitness class attributes' do
         expect(fitness_class.reload.name).to eq 'Zumba Step'
       end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Class has been updated!'
+      end
     end
 
     describe 'POST #create' do
       subject { post :create, fitness_class: attributes_for(:fitness_class) }
 
-      it { expect { subject }.to change(FitnessClass, :count).by(1) }
+      it 'creates a fitness class' do
+        expect { subject }.to change(FitnessClass, :count).by(1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: FitnessClass.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Class has been created!'
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:fitness_class) { create :fitness_class }
       subject { delete :destroy, id: fitness_class.id }
 
-      it { expect { subject }.to change(FitnessClass, :count).by(-1) }
+      it 'deletes the fitness class' do
+        expect { subject }.to change(FitnessClass, :count).by(-1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index
+        expect(controller).to set_flash[:notice].to 'Class has been deleted!'
+      end
     end
   end
 end

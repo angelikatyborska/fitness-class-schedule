@@ -41,8 +41,9 @@
             %ul.actions
               %li
                 = link_to t('reservation.delete'),
-                  user_reservation_path(current_user.id, reservation),
+                  { action: :destroy, controller: reservations_controller, id: reservation.id },
                   method: :delete,
                   remote: true,
+                  data: { confirm: t('shared.confirm') },
                   title: t('reservation.delete'),
                   class: 'action delete'

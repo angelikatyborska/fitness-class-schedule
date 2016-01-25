@@ -4,28 +4,5 @@
       = t('user.reservations')
 .row
   .medium-12.columns
-    %ul.accordion.schedule-items.user-reservations{ data: { accordion: '' } }
-      %li.accordion-navigation
-        %a{ href: '#table-active' }
-          = t('reservation.active')
-        #table-active.content.active
-          = render 'reservations_table', reservations: not_queued_reservations
-
-      %li.accordion-navigation
-        %a{ href: '#table-queued' }
-          = t('reservation.queued')
-        #table-queued.content
-          = render 'reservations_table', reservations: queued_reservations
-
-      %li.accordion-navigation
-        %a{ href: '#table-attended' }
-          = t('reservation.attended')
-        #table-attended.content
-          = render 'reservations_table', reservations: attended_reservations
-
-      %li.accordion-navigation
-        %a{ href: '#table-missed' }
-          = t('reservation.missed')
-        #table-missed.content
-          = render 'reservations_table', reservations: missed_reservations
+    = render 'reservations/accordion', reservations_controller: params[:controller]
 

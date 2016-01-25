@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
+    resources :users
     resources :schedule_items
     resources :fitness_classes, except: :show, path: 'classes'
     resources :reservations, only: [:new, :create, :update, :destroy]

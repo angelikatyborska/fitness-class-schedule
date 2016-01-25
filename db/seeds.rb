@@ -16,13 +16,15 @@ Rails.cache.clear
 
 puts 'Creating trainers...'
 
-6.times do
-  Trainer.create!(
+trainers = 6.times.with_object([]) do |n, trainers|
+  trainers << {
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
     description: Faker::Lorem.paragraph(6)
-  )
+  }
 end
+
+trainers = Trainer.create!(trainers)
 
 fitness_hall = Room.create!(
   name: 'Fitness Hall',
@@ -94,7 +96,7 @@ fitness_schedule_items = 21.times.with_object([]) do |days, items|
     available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
       start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
       duration = 45
-      trainer = Trainer.all.sample while trainer.nil? || trainer.occupied?(start, start + duration)
+      trainer = trainers[0, (trainers.length / 2)].sample
 
       items << {
         start: start,
@@ -113,7 +115,7 @@ spinning_items = 21.times.with_object([]) do |days, items|
   available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
     start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
     duration = 75
-    trainer = Trainer.all.sample while trainer.nil? || trainer.occupied?(start, start + duration)
+    trainer = trainers[(trainers.length / 2), (trainers.length / 2)].sample
 
     items << {
       start: start,

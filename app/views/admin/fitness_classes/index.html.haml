@@ -42,6 +42,6 @@
                     = link_to t('shared.delete'),
                       admin_fitness_class_path(fitness_class),
                       method: :delete,
-                      data: { confirm: t('shared.confirm') },
+                      data: { confirm: "#{ t('shared.confirm') } #{ t('reservation.email_warning') }" },
                       class: 'action delete',
                       title: t('shared.delete')

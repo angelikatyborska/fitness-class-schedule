@@ -101,19 +101,38 @@ RSpec.describe Admin::TrainersController do
       it 'updates trainer\s attributes' do
         expect(trainer.reload.first_name).to eq 'Mary'
       end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Trainer has been updated!'
+      end
     end
 
     describe 'POST #create' do
       subject { post :create, trainer: attributes_for(:trainer) }
 
-      it { expect { subject }.to change(Trainer, :count).by(1) }
+      it 'creates a trainer' do
+        expect { subject }.to change(Trainer, :count).by(1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
+        expect(controller).to set_flash[:notice].to 'Trainer has been created!'
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:trainer) { create :trainer }
       subject { delete :destroy, id: trainer.id }
 
-      it { expect { subject }.to change(Trainer, :count).by(-1) }
+      it 'deletes the trainer' do
+        expect { subject }.to change(Trainer, :count).by(-1)
+      end
+
+      it 'redirects to index with a notice' do
+        is_expected.to redirect_to action: :index
+        expect(controller).to set_flash[:notice].to 'Trainer has been deleted!'
+      end
     end
   end
 end

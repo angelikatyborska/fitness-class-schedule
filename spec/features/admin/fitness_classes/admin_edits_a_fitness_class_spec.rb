@@ -5,7 +5,7 @@ feature 'Admin creates a fitness class' do
   let!(:step) { create :fitness_class, name: 'Step' }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'

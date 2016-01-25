@@ -51,14 +51,18 @@ RSpec.describe Admin::RoomPhotosController do
     describe 'POST #create' do
       subject { post :create, room_id: room.id, room_photo: attributes_for(:room_photo) }
 
-      it { expect { subject }.to change(RoomPhoto, :count).by(1) }
+      it 'creates a room photo' do
+        expect { subject }.to change(RoomPhoto, :count).by(1)
+      end
     end
 
     describe 'DELETE #destroy' do
       let!(:room_photo) { create :room_photo }
       subject { delete :destroy, room_id: room_photo.room.id, id: room_photo.id }
 
-      it { expect { subject }.to change(RoomPhoto, :count).by(-1) }
+      it 'deletes the room photo' do
+        expect { subject }.to change(RoomPhoto, :count).by(-1)
+      end
     end
   end
 end

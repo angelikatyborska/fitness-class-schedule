@@ -30,8 +30,9 @@ ActiveRecord::Migration.maintain_test_schema!
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, inspector: true)
 end
+
 Capybara.javascript_driver = :poltergeist
-Capybara.default_max_wait_time = 5
+Capybara.default_max_wait_time = 10
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -43,10 +44,12 @@ end
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::TestHelpers, type: :controller
+
+  # speed-up some feature specs skipping logging through the js gui and log in with warden instead
   include Warden::Test::Helpers
   Warden.test_mode!
 
-  # speed-up some feature specs skipping logging through the js gui and log in with warden instead
+  config.use_transactional_fixtures = false
 
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
@@ -56,7 +59,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, type: :feature) do
+  config.before(:each, js: :true) do
     # :rack_test driver's Rack app under test shares database connection
     # with the specs, so continue to use transaction strategy for speed.
     driver_shares_db_connection_with_specs = Capybara.current_driver == :rack_test
