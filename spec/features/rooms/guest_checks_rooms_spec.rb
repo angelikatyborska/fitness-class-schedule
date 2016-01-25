@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'guest checks rooms' do
-  let!(:big_room) { create(:room, name: 'Big room') }
-  let!(:small_room) { create(:room, name: 'Small room') }
+  let!(:big_room) { create :room, name: 'Big room' }
+  let!(:small_room) { create :room, name: 'Small room' }
 
-  let!(:big_room_photos) { create_list(:room_photo, 2, room: big_room) }
-  let!(:small_room_photos) { create_list(:room_photo, 2, room: small_room) }
+  let!(:big_room_photos) { create_list :room_photo, 2, room: big_room }
+  let!(:small_room_photos) { create_list :room_photo, 2, room: small_room }
 
   scenario do
     visit root_path

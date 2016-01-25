@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.feature 'admin checks attendance', js: true do
-  let!(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
-  let!(:loyal_client) { create(:user) }
-  let!(:slacker) { create(:user) }
-  let!(:new_client) { create(:user) }
+  let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone }
+  let!(:loyal_client) { create :user }
+  let!(:slacker) { create :user }
+  let!(:new_client) { create :user }
 
   let!(:reservations) do
     User.all.each.with_object([]) do |user, reservations|
@@ -12,7 +12,7 @@ RSpec.feature 'admin checks attendance', js: true do
     end
   end
 
-  let!(:admin) { create(:admin_user) }
+  let!(:admin) { create :admin_user }
 
   background do
     login_as(admin, scope: :user)
@@ -24,7 +24,7 @@ RSpec.feature 'admin checks attendance', js: true do
 
   scenario do
     expect(page).to have_content schedule_item
-    click_link 'Check in'
+    click_link 'Check attendance'
 
     expect(page).to have_content loyal_client
     expect(page).to have_content slacker

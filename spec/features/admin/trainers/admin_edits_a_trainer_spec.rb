@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin edits a trainer' do
-  let!(:admin) { create(:admin_user) }
-  let!(:ann) { create(:trainer, first_name: 'Ann') }
+  let!(:admin) { create :admin_user }
+  let!(:ann) { create :trainer, first_name: 'Ann' }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'

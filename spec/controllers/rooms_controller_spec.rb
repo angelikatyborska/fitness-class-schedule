@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe RoomsController do
   describe 'GET #index' do
-    let!(:rooms) { create_list(:room, 3) }
+    let!(:rooms) { create_list :room, 3 }
     subject { get :index }
 
     it 'renders template index' do

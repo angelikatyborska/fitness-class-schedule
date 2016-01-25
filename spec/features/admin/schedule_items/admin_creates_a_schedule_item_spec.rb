@@ -4,14 +4,14 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 feature 'Admin creates a schedule item', js: true do
-  let!(:room) { create(:room) }
-  let!(:trainer) { create(:trainer) }
+  let!(:room) { create :room }
+  let!(:trainer) { create :trainer }
   let!(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone + 1.day) }
-  let!(:fitness_class) { create(:fitness_class) }
-  let!(:admin) { create(:admin_user) }
+  let!(:fitness_class) { create :fitness_class }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'

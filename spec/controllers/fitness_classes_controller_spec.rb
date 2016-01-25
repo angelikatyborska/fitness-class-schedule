@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe FitnessClassesController do
   describe 'GET #index' do
-    let!(:fitness_classes) { create_list(:fitness_class, 3) }
+    let!(:fitness_classes) { create_list :fitness_class, 3 }
     subject { get :index }
 
     it 'renders template index' do

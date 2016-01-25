@@ -9,8 +9,8 @@ feature 'Guest check schedules for a trainer' do
     Timecop.return
   end
 
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
-  let!(:other_schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+  let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone }
+  let!(:other_schedule_item) { create :schedule_item_this_week_in_website_time_zone }
 
   scenario do
     visit root_path

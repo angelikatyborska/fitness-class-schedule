@@ -14,7 +14,7 @@ RSpec.describe ScheduleItem do
     it { is_expected.to validate_numericality_of(:capacity).is_greater_than(0) }
 
     context 'with start date in the past' do
-      subject { build(:schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now - 1.day)) }
+      subject { build :schedule_item, start: ScheduleItem.beginning_of_day(Time.zone.now - 1.day) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -23,18 +23,16 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with a room that is already occupied' do
-      let!(:room) { create(:room) }
-      let!(:schedule_item_occupying_the_room) { create(
-        :schedule_item,
+      let!(:room) { create :room }
+      let!(:schedule_item_occupying_the_room) { create :schedule_item,
         room: room,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60
-      ) }
+      }
 
-      subject { build(
-        :schedule_item,
+      subject { build :schedule_item,
         room: room,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
-      ) }
+      }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -43,19 +41,17 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with a trainer that is already occupied' do
-      let!(:trainer) { create(:trainer) }
-      let!(:schedule_item_occupying_the_room) { create(
-        :schedule_item,
+      let!(:trainer) { create :trainer }
+      let!(:schedule_item_occupying_the_room) { create :schedule_item,
         trainer: trainer,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day),
         duration: 60
-      ) }
+      }
 
-      subject { build(
-        :schedule_item,
+      subject { build :schedule_item,
         trainer: trainer,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
-      ) }
+      }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -80,8 +76,8 @@ RSpec.describe ScheduleItem do
   end
 
   describe '#destroy' do
-    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
-    let!(:reservations) { create_list(:reservation, 4, schedule_item: schedule_item) }
+    let!(:schedule_item) { create :schedule_item, capacity: 2 }
+    let!(:reservations) { create_list :reservation, 4, schedule_item: schedule_item }
 
     subject { schedule_item.destroy }
 
@@ -110,8 +106,8 @@ RSpec.describe ScheduleItem do
   describe 'scopes' do
     describe '#week' do
       let!(:today) { Time.zone.now }
-      let!(:this_week_items) { create_list(:schedule_item_this_week, 2) }
-      let!(:next_week_items) { create_list(:schedule_item_next_week, 2) }
+      let!(:this_week_items) { create_list :schedule_item_this_week, 2 }
+      let!(:next_week_items) { create_list :schedule_item_next_week, 2 }
 
       before :all do
         Timecop.freeze(Time.zone.now.beginning_of_week)
@@ -141,23 +137,20 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#hourly_time_frame' do
-      let!(:schedule_item_at_3am) { create(
-        :schedule_item,
+      let!(:schedule_item_at_3am) { create :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 3.hours,
         duration: 45
-      ) }
+      }
 
-      let!(:schedule_item_at_8am) { create(
-        :schedule_item,
+      let!(:schedule_item_at_8am) { create :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 8.hours,
         duration: 45
-      ) }
+      }
 
-      let!(:schedule_item_at_10am) { create(
-        :schedule_item,
+      let!(:schedule_item_at_10am) { create :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 10.hours,
         duration: 45
-      ) }
+      }
 
       it 'lists all schedule items that take place between given hours' do
         expect(described_class.hourly_time_frame(8, 12)).to match_array [schedule_item_at_8am, schedule_item_at_10am]
@@ -172,8 +165,8 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#trainer' do
-      let!(:schedule_item) { create(:schedule_item) }
-      let!(:other_schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
+      let!(:other_schedule_item) { create :schedule_item }
 
       subject { described_class.trainer(schedule_item.trainer.id) }
 
@@ -184,8 +177,8 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#room' do
-      let!(:schedule_item) { create(:schedule_item) }
-      let!(:other_schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
+      let!(:other_schedule_item) { create :schedule_item }
 
       subject { described_class.room(schedule_item.room.id) }
 
@@ -196,8 +189,8 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#active' do
-      let!(:schedule_item_this_week) { create(:schedule_item_this_week) }
-      let!(:schedule_item_next_week) { create(:schedule_item_next_week) }
+      let!(:schedule_item_this_week) { create :schedule_item_this_week }
+      let!(:schedule_item_next_week) { create :schedule_item_next_week }
 
       subject { described_class.active(Time.zone.now.end_of_week) }
 
@@ -216,8 +209,8 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#stale' do
-      let!(:schedule_item_this_week) { create(:schedule_item_this_week) }
-      let!(:schedule_item_next_week) { create(:schedule_item_next_week) }
+      let!(:schedule_item_this_week) { create :schedule_item_this_week }
+      let!(:schedule_item_next_week) { create :schedule_item_next_week }
 
       subject { described_class.stale(Time.zone.now.end_of_week) }
 
@@ -240,7 +233,7 @@ RSpec.describe ScheduleItem do
     let(:now) { Time.zone.now }
 
     context 'with a schedule item that starts just now' do
-      subject { build(:schedule_item, start: now, duration: 60) }
+      subject { build :schedule_item, start: now, duration: 60 }
 
       it 'returns true' do
         subject.save(validate: false)
@@ -249,7 +242,7 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with a schedule item that started 5 minutes before' do
-      subject { build(:schedule_item, start: now - 5.minutes, duration: 60) }
+      subject { build :schedule_item, start: now - 5.minutes, duration: 60 }
 
       it 'returns true' do
         subject.save(validate: false)
@@ -258,7 +251,7 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with a schedule item that started 3 hours before' do
-      subject { build(:schedule_item, start: now - 3.hours, duration: 60) }
+      subject { build :schedule_item, start: now - 3.hours, duration: 60 }
 
       it 'returns false' do
         subject.save(validate: false)
@@ -267,7 +260,7 @@ RSpec.describe ScheduleItem do
     end
 
     context 'with a schedule item that starts tomorrow' do
-      subject { create(:schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60) }
+      subject { create :schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60 }
 
       it 'returns false' do
         expect(subject.going_on_at?(now)).to eq false
@@ -277,7 +270,7 @@ RSpec.describe ScheduleItem do
 
   describe '#going_on_between?' do
     let(:tomorrow) { ScheduleItem.beginning_of_day(Time.zone.now + 1.day) }
-    let(:schedule_item) { build(:schedule_item, start: tomorrow, duration: 60) }
+    let(:schedule_item) { build :schedule_item, start: tomorrow, duration: 60 }
 
     context 'a time period ending before item start' do
       subject { schedule_item.going_on_between?(tomorrow - 2.hours, tomorrow - 1.hour) }
@@ -305,7 +298,7 @@ RSpec.describe ScheduleItem do
   end
 
   describe '#stop' do
-    let!(:schedule_item) { create(:schedule_item, duration: 45) }
+    let!(:schedule_item) { create :schedule_item, duration: 45 }
 
     subject { schedule_item.stop }
 
@@ -313,7 +306,7 @@ RSpec.describe ScheduleItem do
   end
 
   describe '#full?' do
-    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
+    let!(:schedule_item) { create :schedule_item, capacity: 2 }
 
     subject { schedule_item.full? }
 
@@ -322,26 +315,26 @@ RSpec.describe ScheduleItem do
     end
 
     context 'when schedule item has no spots' do
-      let!(:reservations) { create_list(:reservation, 2, schedule_item: schedule_item) }
+      let!(:reservations) { create_list :reservation, 2, schedule_item: schedule_item }
 
       it { is_expected.to eq true }
     end
   end
 
   describe '#spots_left' do
-    let!(:schedule_item) { create(:schedule_item, capacity: 2) }
+    let!(:schedule_item) { create :schedule_item, capacity: 2 }
 
     it 'decreases with every reservation made down to zero' do
-      expect(schedule_item.spots_left).to eq 2
+      expect(schedule_item.free_spots).to eq 2
 
-      create(:reservation, schedule_item: schedule_item)
-      expect(schedule_item.spots_left).to eq 1
+      create :reservation, schedule_item: schedule_item
+      expect(schedule_item.free_spots).to eq 1
 
-      create(:reservation, schedule_item: schedule_item)
-      expect(schedule_item.spots_left).to eq 0
+      create :reservation, schedule_item: schedule_item
+      expect(schedule_item.free_spots).to eq 0
 
-      create(:reservation, schedule_item: schedule_item)
-      expect(schedule_item.spots_left).to eq 0
+      create :reservation, schedule_item: schedule_item
+      expect(schedule_item.free_spots).to eq 0
     end
   end
 

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Admin creates a fitness class' do
-  let!(:admin) { create(:admin_user) }
-  let!(:step) { create(:fitness_class, name: 'Step') }
+  let!(:admin) { create :admin_user }
+  let!(:step) { create :fitness_class, name: 'Step' }
 
   background do
     login_as(admin, scope: :user)

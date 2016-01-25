@@ -9,41 +9,34 @@ feature 'Guest check schedules for rooms', js: true do
     Timecop.return
   end
 
-  let!(:small_room) { create(:room, name: 'Small room') }
-  let!(:big_room) { create(:room, name: 'Big room') }
+  let!(:small_room) { create :room, name: 'Small room' }
+  let!(:big_room) { create :room, name: 'Big room' }
   let!(:small_schedule_item_this_monday) do
-    create(
-      :schedule_item,
+    create :schedule_item,
       room: small_room,
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 8.hours + 5.minutes,
       capacity: 6
-    )
   end
 
   let!(:small_schedule_item_next_monday) do
-    create(
-      :schedule_item,
+    create :schedule_item,
       room: small_room,
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 8.hours + 15.minutes,
-      capacity: 6 )
+      capacity: 6
   end
 
-  let!(:big_schedule_item_this_sunday) {
-    create(
-      :schedule_item,
+  let!(:big_schedule_item_this_sunday) do
+    create :schedule_item,
       room: big_room,
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 6.days + 9.hours + 5.minutes,
       capacity: 20
-    )
-  }
+  end
 
   let!(:big_schedule_item_next_sunday) do
-    create(
-      :schedule_item,
+    create :schedule_item,
       room: big_room,
       start: Time.zone.now.in_website_time_zone.beginning_of_week + 1.week + 6.days + 9.hours + 15.minutes,
       capacity: 20
-    )
   end
 
   context 'at the beginning of the week' do

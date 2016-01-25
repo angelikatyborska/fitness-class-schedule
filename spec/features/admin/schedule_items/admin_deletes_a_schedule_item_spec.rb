@@ -9,11 +9,11 @@ feature 'Admin deletes a schedule item', js: true do
     Timecop.return
   end
 
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
-  let!(:admin) { create(:admin_user) }
+  let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario 'from schedule items admin panel' do

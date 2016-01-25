@@ -26,12 +26,12 @@ FactoryGirl.define do
     factory :full_schedule_item do
       capacity { 1 }
 
-      after(:create) do |schedule_item, evaluator|
-        create(:reservation, schedule_item: schedule_item)
+      after :create do |schedule_item, evaluator|
+        create :reservation, schedule_item: schedule_item
       end
     end
 
-    after(:create) do |schedule_item, evaluator|
+    after :create do |schedule_item, evaluator|
       evaluator.room.reload
       evaluator.trainer.reload
     end

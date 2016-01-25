@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 feature 'Admin creates a trainer' do
-  let!(:admin) { create(:admin_user) }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'

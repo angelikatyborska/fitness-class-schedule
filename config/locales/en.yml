@@ -117,7 +117,7 @@ en:
     delete: 'Cancel'
     queue: 'Add to waiting list'
     emtpy_spots: 'Empty spots'
-    checkin: 'Check in'
+    checkin: 'Check attendance'
     attend: 'Confirm attendance'
     miss: 'Confirm absence'
     active: 'Current reservations'

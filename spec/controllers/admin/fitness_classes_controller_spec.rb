@@ -51,7 +51,7 @@ RSpec.describe Admin::FitnessClassesController do
     before { sign_in admin }
 
     describe 'GET #index' do
-      let!(:fitness_classes) { create_list(:fitness_class, 3) }
+      let!(:fitness_classes) { create_list :fitness_class, 3 }
       subject { get :index }
 
       it 'renders template index' do
@@ -72,7 +72,7 @@ RSpec.describe Admin::FitnessClassesController do
     end
 
     describe 'GET #edit' do
-      let!(:fitness_class) { create(:fitness_class) }
+      let!(:fitness_class) { create :fitness_class }
       subject { get :edit, id: fitness_class.id }
 
       it 'renders template edit' do
@@ -86,7 +86,7 @@ RSpec.describe Admin::FitnessClassesController do
     end
 
     describe 'PUT #update' do
-      let!(:fitness_class) { create(:fitness_class, name: 'Zumba') }
+      let!(:fitness_class) { create :fitness_class, name: 'Zumba' }
 
       before :each do
         put :update, id: fitness_class.id, fitness_class: { name: 'Zumba Step' }
@@ -104,7 +104,7 @@ RSpec.describe Admin::FitnessClassesController do
     end
 
     describe 'DELETE #destroy' do
-      let!(:fitness_class) { create(:fitness_class) }
+      let!(:fitness_class) { create :fitness_class }
       subject { delete :destroy, id: fitness_class.id }
 
       it { expect { subject }.to change(FitnessClass, :count).by(-1) }

@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 feature 'Admin edits a schedule item' do
-  let!(:abt) { create(:fitness_class, name: 'ABT') }
-  let!(:tbc) { create(:fitness_class, name: 'TBC') }
-  let!(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone, fitness_class: abt) }
-  let!(:admin) { create(:admin_user) }
+  let!(:abt) { create :fitness_class, name: 'ABT' }
+  let!(:tbc) { create :fitness_class, name: 'TBC' }
+  let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone, fitness_class: abt }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario 'with valid input' do

@@ -6,7 +6,7 @@ RSpec.describe Reservation do
     it { is_expected.to validate_presence_of :schedule_item }
 
     context 'with schedule item starting in the past' do
-      subject { build(:reservation, schedule_item: build(:schedule_item, start: Time.zone.now - 1.day ))}
+      subject { build :reservation, schedule_item: build(:schedule_item, start: Time.zone.now - 1.day) }
 
       it 'is invalid' do
         is_expected.to be_invalid
@@ -16,11 +16,11 @@ RSpec.describe Reservation do
 
     # this could be tested using shoulda-matcher validate_uniqueness_of().scoped_to(), but it doesn't work for some reason
     context 'with user having already made a reservation for this schedule item' do
-      let!(:schedule_item) { create(:schedule_item) }
-      let!(:user) { create(:user) }
-      let!(:other_reservation) { create(:reservation, schedule_item: schedule_item, user: user) }
+      let!(:schedule_item) { create :schedule_item }
+      let!(:user) { create :user }
+      let!(:other_reservation) { create :reservation, schedule_item: schedule_item, user: user }
 
-      subject { build(:reservation, schedule_item: schedule_item, user: user) }
+      subject { build :reservation, schedule_item: schedule_item, user: user }
 
       it 'is invalid' do
         is_expected.to be_invalid
@@ -29,13 +29,13 @@ RSpec.describe Reservation do
     end
 
     context 'when trying to change something after create' do
-      let!(:reservation) { create(:reservation) }
+      let!(:reservation) { create :reservation }
 
       subject { reservation }
 
       context 'changing user' do
         it 'is invalid' do
-          reservation.user = create(:user)
+          reservation.user = create :user
           is_expected.to be_invalid
           expect(subject.errors[:user_id]).to include('only reservation\'s status can be changed')
         end
@@ -43,7 +43,7 @@ RSpec.describe Reservation do
 
       context 'changing schedule item' do
         it 'is invalid' do
-          reservation.schedule_item = create(:schedule_item)
+          reservation.schedule_item = create :schedule_item
           is_expected.to be_invalid
           expect(subject.errors[:schedule_item_id]).to include('only reservation\'s status can be changed')
         end
@@ -63,16 +63,16 @@ RSpec.describe Reservation do
   end
 
   describe 'destroy' do
-    let!(:two_spot_schedule_item) { create(:schedule_item, capacity: 2) }
+    let!(:two_spot_schedule_item) { create :schedule_item, capacity: 2 }
 
     subject { reservation.destroy }
 
     context 'active reservation' do
-      let!(:reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
+      let!(:reservation) { create :reservation, schedule_item: two_spot_schedule_item }
 
       context 'other reservations on the waiting list' do
-        let!(:other_reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
-        let!(:waiting_reservations) { create_list(:reservation, 3, schedule_item: two_spot_schedule_item) }
+        let!(:other_reservation) { create :reservation, schedule_item: two_spot_schedule_item }
+        let!(:waiting_reservations) { create_list :reservation, 3, schedule_item: two_spot_schedule_item }
 
         it 'sends an email to the first reservation on the waiting list' do
           expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(1)
@@ -88,8 +88,8 @@ RSpec.describe Reservation do
     end
 
     context 'queued reservation' do
-      let!(:active_reservations) { create_list(:reservation, 2, schedule_item: two_spot_schedule_item) }
-      let!(:reservation) { create(:reservation, schedule_item: two_spot_schedule_item) }
+      let!(:active_reservations) { create_list :reservation, 2, schedule_item: two_spot_schedule_item }
+      let!(:reservation) { create :reservation, schedule_item: two_spot_schedule_item }
 
       it 'does not send en email' do
         expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
@@ -99,7 +99,7 @@ RSpec.describe Reservation do
 
   describe '#queue_position' do
     context 'with all reservations for the same schedule item created at the same time' do
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item  }
 
       let!(:reservations) do
         reservations = 4.times.with_object([]) do |n, reservations|
@@ -151,10 +151,10 @@ RSpec.describe Reservation do
   end
 
   describe '#queued?' do
-    let!(:schedule_item_with_one_spot) { create(:schedule_item, capacity: 1) }
+    let!(:schedule_item_with_one_spot) { create :schedule_item, capacity: 1 }
 
     context 'created for a schedule item with empty spots' do
-      let!(:reservation) { create(:reservation, schedule_item: schedule_item_with_one_spot) }
+      let!(:reservation) { create :reservation, schedule_item: schedule_item_with_one_spot }
 
       subject { reservation.queued? }
       it { is_expected.to eq false }

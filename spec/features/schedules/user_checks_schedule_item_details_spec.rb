@@ -9,7 +9,7 @@ feature 'User check schedule item details', js: true do
     Timecop.return
   end
 
-   let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+   let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone }
 
    context 'without logging in' do
     scenario do
@@ -21,7 +21,7 @@ feature 'User check schedule item details', js: true do
       expect(page).to have_content schedule_item.duration
       expect(page).to have_content schedule_item.trainer.first_name
       expect(page).to have_content schedule_item.capacity
-      expect(page).to have_content schedule_item.spots_left
+      expect(page).to have_content schedule_item.free_spots
 
       expect(page).not_to have_selector(:link_or_button, 'Edit')
       expect(page).not_to have_selector(:link_or_button, 'Delete')
@@ -30,7 +30,7 @@ feature 'User check schedule item details', js: true do
   end
 
   context 'with logging in' do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     background do
       login_as(user, scope: :user)
@@ -45,7 +45,7 @@ feature 'User check schedule item details', js: true do
       expect(page).to have_content schedule_item.duration
       expect(page).to have_content schedule_item.trainer.first_name
       expect(page).to have_content schedule_item.capacity
-      expect(page).to have_content schedule_item.spots_left
+      expect(page).to have_content schedule_item.free_spots
 
       expect(page).not_to have_selector(:link_or_button, 'Edit')
       expect(page).not_to have_selector(:link_or_button, 'Delete')

@@ -9,8 +9,8 @@ feature 'User makes a reservation', js: true do
     Timecop.return
   end
 
-  let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone, capacity: 1) }
-  let!(:user) { create(:user) }
+  let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone, capacity: 1 }
+  let!(:user) { create :user }
 
   scenario 'without logging in' do
     visit root_path
@@ -34,7 +34,7 @@ feature 'User makes a reservation', js: true do
     end
 
     context 'when there are no empty spots' do
-      let!(:other_reservation) { create(:reservation, schedule_item: schedule_item) }
+      let!(:other_reservation) { create :reservation, schedule_item: schedule_item }
 
       scenario 'adds to waiting list' do
         login_as(user, scope: :user)

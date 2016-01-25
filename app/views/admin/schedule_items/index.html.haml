@@ -22,4 +22,4 @@
           %a{ href: '#table-stale' }
             = t('schedule_item.stale')
           #table-stale.content
-            = render 'schedule_items_table', schedule_items: schedule_items.stale
+            = render 'schedule_items_table', schedule_items: schedule_items.stale.reverse

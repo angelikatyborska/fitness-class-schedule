@@ -3,7 +3,7 @@ require 'carrierwave/test/matchers'
 RSpec.describe TrainerPhotoUploader do
   include CarrierWave::Test::Matchers
 
-  let!(:trainer) { create(:trainer, first_name: 'Ann', last_name: 'Smith') }
+  let!(:trainer) { create :trainer, first_name: 'Ann', last_name: 'Smith' }
 
   before do
     described_class.enable_processing = true

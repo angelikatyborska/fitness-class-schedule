@@ -2,7 +2,7 @@ require'rails_helper'
 
 feature 'User logs out', js: true do
   context 'regular user' do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     background do
       log_in user
@@ -32,7 +32,7 @@ feature 'User logs out', js: true do
   end
 
   context 'admin user' do
-    let!(:user) { create(:admin_user) }
+    let!(:user) { create :admin_user }
 
     background do
       log_in user

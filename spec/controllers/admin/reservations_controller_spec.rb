@@ -45,7 +45,7 @@ RSpec.describe Admin::ReservationsController do
     before { sign_in admin }
 
     describe 'GET #new' do
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
       subject { xhr :get, :new, schedule_item: schedule_item }
 
       it 'renders template new' do
@@ -59,9 +59,9 @@ RSpec.describe Admin::ReservationsController do
     end
 
     describe 'PUT #update' do
-      let!(:user) { create(:user) }
-      let!(:schedule_item) { create(:schedule_item) }
-      let!(:reservation) { create(:reservation, schedule_item_id: schedule_item.id, user_id: user.id, status: 'missed') }
+      let!(:user) { create :user }
+      let!(:schedule_item) { create :schedule_item }
+      let!(:reservation) { create :reservation, schedule_item_id: schedule_item.id, user_id: user.id, status: 'missed' }
 
       before :each do
         xhr :put, :update, id: reservation.id, reservation: { schedule_item_id: schedule_item.id, user_id: user.id, status: 'active' }
@@ -74,15 +74,15 @@ RSpec.describe Admin::ReservationsController do
     end
 
     describe 'POST #create' do
-      let!(:user) { create(:user) }
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:user) { create :user }
+      let!(:schedule_item) { create :schedule_item }
       subject { xhr :post, :create, reservation: { schedule_item_id: schedule_item.id, user_id: user.id } }
 
       it { expect { subject }.to change(Reservation, :count).by(1) }
     end
 
     describe 'DELETE #destroy' do
-      let!(:reservation) { create(:reservation) }
+      let!(:reservation) { create :reservation }
       subject { xhr :delete, :destroy, id: reservation.id }
 
       it { expect { subject }.to change(Reservation, :count).by(-1) }

@@ -1,7 +1,7 @@
 require'rails_helper'
 
 feature 'User edits account', js: true do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     background do
       log_in user

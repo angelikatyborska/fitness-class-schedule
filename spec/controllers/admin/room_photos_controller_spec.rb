@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::RoomPhotosController do
-  let!(:room) { create(:room) }
+  let!(:room) { create :room }
 
   shared_examples 'access denied' do
     describe 'GET #new' do
@@ -55,7 +55,7 @@ RSpec.describe Admin::RoomPhotosController do
     end
 
     describe 'DELETE #destroy' do
-      let!(:room_photo) { create(:room_photo) }
+      let!(:room_photo) { create :room_photo }
       subject { delete :destroy, room_id: room_photo.room.id, id: room_photo.id }
 
       it { expect { subject }.to change(RoomPhoto, :count).by(-1) }

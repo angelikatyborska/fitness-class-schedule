@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.feature 'user checks their reservations', js: true do
-  let!(:user) { create(:user) }
-  let!(:active_reservation) { create(:reservation, user: user) }
-  let!(:queued_reservation) { create(:queued_reservation, user: user) }
-  let!(:attended_reservation) { create(:reservation, user: user, status: 'attended') }
-  let!(:missed_reservation) { create(:reservation, user: user, status: 'missed') }
+  let!(:user) { create :user }
+  let!(:active_reservation) { create :reservation, user: user }
+  let!(:queued_reservation) { create :queued_reservation, user: user }
+  let!(:attended_reservation) { create :reservation, user: user, status: 'attended' }
+  let!(:missed_reservation) { create :reservation, user: user, status: 'missed' }
 
   background do
-    login_as(user, scope: :user)
+    login_as user, scope: :user
     visit root_path
     click_link user.email
     click_link 'My Reservations'

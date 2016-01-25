@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ReservationMailer, type: :mailer do
   describe '#spot_freed' do
-    let(:reservation) { create(:reservation) }
+    let(:reservation) { create :reservation }
     let(:mail) { described_class.spot_freed(reservation)}
 
     it 'renders the subject' do
@@ -26,7 +26,7 @@ RSpec.describe ReservationMailer, type: :mailer do
   end
 
   describe '#cancelled' do
-    let(:reservation) { create(:reservation) }
+    let(:reservation) { create :reservation }
     let(:mail) { described_class.cancelled(reservation)}
 
     it 'renders the subject' do

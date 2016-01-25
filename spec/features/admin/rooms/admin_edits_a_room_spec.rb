@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin edits a room', js: true do
-  let!(:admin) { create(:admin_user) }
-  let!(:spinning_room) { create(:room, name: 'Spinning room') }
+  let!(:admin) { create :admin_user }
+  let!(:spinning_room) { create :room, name: 'Spinning room' }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario 'with valid input' do

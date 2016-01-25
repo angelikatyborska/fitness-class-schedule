@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin deletes a room', js: true do
-  let!(:room) { create(:room) }
-  let!(:admin) { create(:admin_user) }
+  let!(:room) { create :room }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario do

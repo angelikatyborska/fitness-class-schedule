@@ -57,7 +57,7 @@ RSpec.describe Admin::TrainersController do
     before { sign_in admin }
 
     describe 'GET #index' do
-      let!(:trainers) { create_list(:trainer, 3) }
+      let!(:trainers) { create_list :trainer, 3 }
       subject { get :index }
 
       it 'renders template index' do
@@ -78,7 +78,7 @@ RSpec.describe Admin::TrainersController do
     end
 
     describe 'GET #edit' do
-      let!(:trainer) { create(:trainer) }
+      let!(:trainer) { create :trainer }
       subject { get :edit, id: trainer.id }
 
       it 'renders template edit' do
@@ -92,7 +92,7 @@ RSpec.describe Admin::TrainersController do
     end
 
     describe 'PUT #update' do
-      let!(:trainer) { create(:trainer, first_name: 'Ann') }
+      let!(:trainer) { create :trainer, first_name: 'Ann' }
 
       before :each do
         put :update, id: trainer.id, trainer: { first_name: 'Mary' }
@@ -110,7 +110,7 @@ RSpec.describe Admin::TrainersController do
     end
 
     describe 'DELETE #destroy' do
-      let!(:trainer) { create(:trainer) }
+      let!(:trainer) { create :trainer }
       subject { delete :destroy, id: trainer.id }
 
       it { expect { subject }.to change(Trainer, :count).by(-1) }

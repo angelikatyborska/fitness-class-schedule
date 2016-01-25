@@ -7,8 +7,8 @@ FactoryGirl.define do
     confirmed_at { Time.zone.now }
 
     factory :admin_user do
-      after(:create) do |user, evaluator|
-        user.add_role(:admin)
+      after :create do |user, evaluator|
+        user.add_role :admin
       end
     end
   end

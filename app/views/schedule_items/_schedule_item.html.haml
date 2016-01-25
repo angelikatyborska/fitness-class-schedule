@@ -39,7 +39,7 @@
     %span.no-wrap
       #{ t('reservation.emtpy_spots')}:
     %span.no-wrap
-      #{ schedule_item.spots_left } / #{ schedule_item.capacity }
+      #{ schedule_item.free_spots } / #{ schedule_item.capacity }
 
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)

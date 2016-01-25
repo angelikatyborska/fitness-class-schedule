@@ -51,7 +51,7 @@ RSpec.describe Admin::RoomsController do
     before { sign_in admin }
 
     describe 'GET #index' do
-      let!(:rooms) { create_list(:room, 3) }
+      let!(:rooms) { create_list :room, 3 }
       subject { get :index }
 
       it 'renders template index' do
@@ -72,7 +72,7 @@ RSpec.describe Admin::RoomsController do
     end
 
     describe 'GET #edit' do
-      let!(:room) { create(:room) }
+      let!(:room) { create :room }
       subject { get :edit, id: room.id }
 
       it 'renders template edit' do
@@ -86,7 +86,7 @@ RSpec.describe Admin::RoomsController do
     end
 
     describe 'PUT #update' do
-      let!(:room) { create(:room, name: 'Small room') }
+      let!(:room) { create :room, name: 'Small room' }
 
       before :each do
         put :update, id: room.id, room: { name: 'Big room' }
@@ -106,7 +106,7 @@ RSpec.describe Admin::RoomsController do
     end
 
     describe 'DELETE #destroy' do
-      let!(:room) { create(:room) }
+      let!(:room) { create :room }
       subject { delete :destroy, id: room.id }
 
       it { expect { subject }.to change(Room, :count).by(-1) }

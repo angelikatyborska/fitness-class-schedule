@@ -58,7 +58,7 @@ RSpec.describe Admin::ScheduleItemsController do
     before { sign_in admin }
 
     describe 'GET #index' do
-      let!(:schedule_items) { create_list(:schedule_item, 3) }
+      let!(:schedule_items) { create_list :schedule_item, 3 }
       subject { get :index }
 
       it 'renders template index' do
@@ -71,7 +71,7 @@ RSpec.describe Admin::ScheduleItemsController do
     end
 
     describe 'GET #show' do
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
       subject { get :show, id: schedule_item.id }
 
       it 'renders template show' do
@@ -93,7 +93,7 @@ RSpec.describe Admin::ScheduleItemsController do
     end
 
     describe 'GET #edit' do
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
       subject { get :edit, id: schedule_item.id }
 
       it 'renders template edit' do
@@ -107,7 +107,7 @@ RSpec.describe Admin::ScheduleItemsController do
     end
 
     describe 'PUT #update' do
-      let!(:schedule_item) { create(:schedule_item, duration: 45) }
+      let!(:schedule_item) { create :schedule_item, duration: 45 }
 
       before :each do
         put :update, id: schedule_item.id, schedule_item: { duration: 60 }
@@ -119,9 +119,9 @@ RSpec.describe Admin::ScheduleItemsController do
     end
 
     describe 'POST #create' do
-      let!(:fitness_class) { create(:fitness_class) }
-      let!(:trainer) { create(:trainer) }
-      let!(:room) { create(:room) }
+      let!(:fitness_class) { create :fitness_class }
+      let!(:trainer) { create :trainer }
+      let!(:room) { create :room }
       subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
 
       it {
@@ -130,7 +130,7 @@ RSpec.describe Admin::ScheduleItemsController do
     end
 
     describe 'DELETE #destroy' do
-      let!(:schedule_item) { create(:schedule_item) }
+      let!(:schedule_item) { create :schedule_item }
       subject { delete :destroy, id: schedule_item.id }
 
       it { expect { subject }.to change(ScheduleItem, :count).by(-1) }

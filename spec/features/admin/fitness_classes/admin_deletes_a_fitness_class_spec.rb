@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 feature 'Admin deletes a fitness class', js: true do
-  let!(:fitness_class) { create(:fitness_class) }
-  let!(:admin) { create(:admin_user) }
+  let!(:fitness_class) { create :fitness_class }
+  let!(:admin) { create :admin_user }
 
   background do
     login_as(admin, scope: :user)

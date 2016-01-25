@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ReservationsController do
-  let!(:schedule_item) { create(:schedule_item) }
-  let!(:user) { create(:user) }
+  let!(:schedule_item) { create :schedule_item }
+  let!(:user) { create :user }
 
   shared_examples 'access denied' do
     describe 'GET #index' do
@@ -35,12 +35,12 @@ RSpec.describe ReservationsController do
 
     context 'for the same user' do
       describe 'GET #index' do
-        let!(:schedule_item) { create(:schedule_item, capacity: 1) }
-        let!(:someone_elses_reservation) { create(:reservation, schedule_item: schedule_item) }
-        let!(:queued_reservation) { create(:reservation, user: other_user, schedule_item: schedule_item) }
-        let!(:active_reservation) { create(:reservation, user: other_user, status: 'active') }
-        let!(:attended_reservation) { create(:reservation, user: other_user, status: 'attended') }
-        let!(:missed_reservation) { create(:reservation, user: other_user, status: 'missed') }
+        let!(:schedule_item) { create :schedule_item, capacity: 1 }
+        let!(:someone_elses_reservation) { create :reservation, schedule_item: schedule_item }
+        let!(:queued_reservation) { create :reservation, user: other_user, schedule_item: schedule_item }
+        let!(:active_reservation) { create :reservation, user: other_user, status: 'active' }
+        let!(:attended_reservation) { create :reservation, user: other_user, status: 'attended' }
+        let!(:missed_reservation) { create :reservation, user: other_user, status: 'missed' }
 
         subject { get :index, user_id: other_user.id }
 
@@ -60,7 +60,7 @@ RSpec.describe ReservationsController do
       end
 
       describe 'DELETE #destroy' do
-        let!(:reservation) { create(:reservation, user: other_user) }
+        let!(:reservation) { create :reservation, user: other_user }
         subject { xhr :delete, :destroy, user_id: other_user.id, id: reservation.id }
 
         context 'within time allowed for cancellations' do
@@ -94,7 +94,7 @@ RSpec.describe ReservationsController do
         end
 
         context 'with invalid attributes' do
-          let!(:other_reservation) { create(:reservation, user: other_user) }
+          let!(:other_reservation) { create :reservation, user: other_user }
 
           it 'doesn\'t create a reservation' do
             expect {

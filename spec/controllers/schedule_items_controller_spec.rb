@@ -10,35 +10,31 @@ RSpec.describe ScheduleItemsController do
   end
 
   describe 'GET #index' do
-    let!(:zumba_instructor) { create(:trainer) }
-    let!(:spinning_instructor) { create(:trainer) }
+    let!(:zumba_instructor) { create :trainer }
+    let!(:spinning_instructor) { create :trainer }
 
-    let!(:zumba_room) { create(:room) }
-    let!(:spinning_room) { create(:room) }
+    let!(:zumba_room) { create :room }
+    let!(:spinning_room) { create :room }
 
-    let!(:zumba_this_week) { create(
-      :schedule_item_this_week_in_website_time_zone,
+    let!(:zumba_this_week) { create :schedule_item_this_week_in_website_time_zone,
       trainer: zumba_instructor,
       room: zumba_room
-    ) }
+    }
 
-    let!(:zumba_next_week) { create(
-      :schedule_item_next_week_in_website_time_zone,
+    let!(:zumba_next_week) { create :schedule_item_next_week_in_website_time_zone,
       trainer: zumba_instructor,
       room: zumba_room
-    ) }
+    }
 
-    let!(:spinning_this_week) { create(
-      :schedule_item_this_week_in_website_time_zone,
+    let!(:spinning_this_week) { create :schedule_item_this_week_in_website_time_zone,
       trainer: spinning_instructor,
       room: spinning_room
-    ) }
+    }
 
-    let!(:spinning_next_week) { create(
-      :schedule_item_next_week_in_website_time_zone,
+    let!(:spinning_next_week) { create :schedule_item_next_week_in_website_time_zone,
       trainer: spinning_instructor,
       room: spinning_room
-    ) }
+    }
 
     context 'without params' do
       subject { get :index }
@@ -102,7 +98,7 @@ RSpec.describe ScheduleItemsController do
   end
 
   describe 'GET #show' do
-    let!(:schedule_item) { create(:schedule_item) }
+    let!(:schedule_item) { create :schedule_item }
 
     subject { get :show, id: schedule_item }
 
@@ -126,7 +122,7 @@ RSpec.describe ScheduleItemsController do
     end
 
     context 'with a schedule item this week' do
-      let!(:schedule_item) { create(:schedule_item_this_week_in_website_time_zone) }
+      let!(:schedule_item) { create :schedule_item_this_week_in_website_time_zone }
 
       subject { get :focus, id: schedule_item }
 
@@ -137,7 +133,7 @@ RSpec.describe ScheduleItemsController do
     end
 
     context 'with a schedule item next week' do
-      let!(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
+      let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone }
 
       subject { get :focus, id: schedule_item }
 

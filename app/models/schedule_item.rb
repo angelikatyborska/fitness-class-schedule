@@ -78,12 +78,12 @@ class ScheduleItem < ActiveRecord::Base
     start + duration.minutes
   end
 
-  def spots_left
+  def free_spots
     (capacity - reservations.count) < 0 ? 0 : (capacity - reservations.count)
   end
 
   def full?
-    spots_left < 1
+    free_spots < 1
   end
 
   def self.beginning_of_day(time)

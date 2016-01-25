@@ -20,8 +20,8 @@ RSpec.describe User do
 
   describe 'scopes' do
     describe '#without_reservation' do
-      let!(:users) { create_list(:user, 3) }
-      let!(:reservation) { create(:reservation, user: users[0]) }
+      let!(:users) { create_list :user, 3 }
+      let!(:reservation) { create :reservation, user: users[0] }
 
       subject { described_class.without_reservation(reservation.schedule_item) }
 
@@ -32,7 +32,7 @@ RSpec.describe User do
   end
 
   describe '#reliability' do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     subject { user.reliability }
 
@@ -43,8 +43,8 @@ RSpec.describe User do
     end
 
     context 'without any attended reservations' do
-      let!(:missed_reservation) { create(:reservation, user: user, status: 'missed') }
-      let!(:active_reservation) { create(:reservation, user: user, status: 'active') }
+      let!(:missed_reservation) { create :reservation, user: user, status: 'missed' }
+      let!(:active_reservation) { create :reservation, user: user, status: 'active' }
 
       it 'returns 0' do
         is_expected.to eq 0
@@ -52,9 +52,9 @@ RSpec.describe User do
     end
 
     context 'with attended, missed and active reservations' do
-      let!(:attended_reservation) { create(:reservation, user: user, status: 'attended') }
-      let!(:missed_reservation) { create(:reservation, user: user, status: 'missed') }
-      let!(:active_reservation) { create(:reservation, user: user, status: 'active') }
+      let!(:attended_reservation) { create :reservation, user: user, status: 'attended' }
+      let!(:missed_reservation) { create :reservation, user: user, status: 'missed' }
+      let!(:active_reservation) { create :reservation, user: user, status: 'active' }
 
       it 'calculates the fraction of all past (attended or missed) reservations that were attended' do
         is_expected.to eq 0.5

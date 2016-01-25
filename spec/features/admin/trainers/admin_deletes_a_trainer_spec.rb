@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 feature 'Admin deletes a trainer', js: true do
-  let!(:trainer) { create(:trainer) }
-  let!(:admin) { create(:admin_user) }
+  let!(:trainer) { create :trainer }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario do

@@ -2,7 +2,7 @@ require'rails_helper'
 
 feature 'User forgets password', js: true do
   context 'with valid email' do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     scenario '' do
       visit root_path
@@ -16,7 +16,7 @@ feature 'User forgets password', js: true do
   end
 
   context 'with invalid email' do
-    let!(:user) { create(:user) }
+    let!(:user) { create :user }
 
     scenario '' do
       visit root_path

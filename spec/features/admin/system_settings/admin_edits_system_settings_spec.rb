@@ -1,10 +1,10 @@
 require'rails_helper'
 
 feature 'admin edits system setting' do
-  let!(:admin) { create(:admin_user) }
+  let!(:admin) { create :admin_user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
   end
 
   scenario 'checks settings' do
@@ -41,7 +41,7 @@ feature 'admin edits system setting' do
       Timecop.return
     end
 
-    let!(:schedule_item) { create(:schedule_item, start: Time.now.utc.beginning_of_day +  12.hours ) }
+    let!(:schedule_item) { create :schedule_item, start: Time.now.utc.beginning_of_day +  12.hours }
 
     scenario 'edits schedule time zone' do
       visit root_path

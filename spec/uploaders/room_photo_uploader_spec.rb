@@ -3,7 +3,7 @@ require 'carrierwave/test/matchers'
 RSpec.describe RoomPhotoUploader do
   include CarrierWave::Test::Matchers
 
-  let!(:room) { create(:room, name: 'Spinning room') }
+  let!(:room) { create :room, name: 'Spinning room' }
 
   before do
     described_class.enable_processing = true

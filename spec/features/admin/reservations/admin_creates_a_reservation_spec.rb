@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'admin creates a reservation', js: true do
-  let!(:admin) { create(:admin_user) }
-  let!(:schedule_item) { create(:schedule_item_next_week_in_website_time_zone) }
-  let!(:user) { create(:user) }
+  let!(:admin) { create :admin_user }
+  let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone }
+  let!(:user) { create :user }
 
   background do
-    login_as(admin, scope: :user)
+    login_as admin, scope: :user
 
     visit root_path
     click_link 'Admin Panel'
@@ -15,9 +15,9 @@ RSpec.feature 'admin creates a reservation', js: true do
 
   scenario do
     expect(page).to have_content schedule_item
-    expect(page).to have_link 'Check in'
+    expect(page).to have_link 'Check attendance'
 
-    click_link 'Check in'
+    click_link 'Check attendance'
     expect(page).to have_content 'Reservations for'
 
     expect(page).not_to have_content user

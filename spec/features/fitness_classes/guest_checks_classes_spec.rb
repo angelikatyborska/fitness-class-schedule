@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'guest checks classes' do
-  let!(:fitness_classes) { create_list(:fitness_class, 3) }
+  let!(:fitness_classes) { create_list :fitness_class, 3 }
 
   scenario do
     visit root_path
