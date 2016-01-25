@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'guest checks classes' do
+feature 'Guest checks classes' do
   let!(:fitness_classes) { create_list :fitness_class, 3 }
 
   scenario do

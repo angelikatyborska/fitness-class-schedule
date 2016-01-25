@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'admin checks attendance', js: true do
+RSpec.feature 'Admin checks attendance', js: true do
   let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone }
   let!(:loyal_client) { create :user }
   let!(:slacker) { create :user }

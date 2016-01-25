@@ -1,6 +1,6 @@
 require'rails_helper'
 
-feature 'admin edits system setting' do
+feature 'Admin edits system setting' do
   let!(:admin) { create :admin_user }
 
   background do

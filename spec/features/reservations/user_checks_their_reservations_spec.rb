@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'user checks their reservations', js: true do
+RSpec.feature 'User checks their reservations', js: true do
   let!(:user) { create :user }
   let!(:active_reservation) { create :reservation, user: user }
   let!(:queued_reservation) { create :queued_reservation, user: user }
@@ -21,33 +21,41 @@ RSpec.feature 'user checks their reservations', js: true do
     expect(page).to have_content 'Missed reservations'
 
     expect(page).to have_content active_reservation.schedule_item
+
     expect(page).not_to have_content queued_reservation.schedule_item
     expect(page).not_to have_content attended_reservation.schedule_item
     expect(page).not_to have_content missed_reservation.schedule_item
+
     expect(page).to have_link 'Cancel'
 
     click_link 'Waiting list'
 
-    expect(page).not_to have_content active_reservation.schedule_item
     expect(page).to have_content queued_reservation.schedule_item
+
+    expect(page).not_to have_content active_reservation.schedule_item
     expect(page).not_to have_content attended_reservation.schedule_item
     expect(page).not_to have_content missed_reservation.schedule_item
+
     expect(page).to have_link 'Cancel'
 
     click_link 'Past reservations'
 
+    expect(page).to have_content attended_reservation.schedule_item
+
     expect(page).not_to have_content active_reservation.schedule_item
     expect(page).not_to have_content queued_reservation.schedule_item
-    expect(page).to have_content attended_reservation.schedule_item
     expect(page).not_to have_content missed_reservation.schedule_item
+
     expect(page).not_to have_link 'Cancel'
 
     click_link 'Missed reservations'
 
+    expect(page).to have_content missed_reservation.schedule_item
+
     expect(page).not_to have_content active_reservation.schedule_item
     expect(page).not_to have_content queued_reservation.schedule_item
     expect(page).not_to have_content attended_reservation.schedule_item
-    expect(page).to have_content missed_reservation.schedule_item
+
     expect(page).not_to have_link 'Cancel'
 
   end

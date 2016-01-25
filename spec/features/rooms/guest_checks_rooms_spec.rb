@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'guest checks rooms' do
+feature 'Guest checks rooms' do
   let!(:big_room) { create :room, name: 'Big room' }
   let!(:small_room) { create :room, name: 'Small room' }
 

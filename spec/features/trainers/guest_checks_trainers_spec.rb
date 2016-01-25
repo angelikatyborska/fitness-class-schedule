@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'guest checks trainers' do
+feature 'Guest checks trainers' do
   let!(:ann) { create :trainer, first_name: 'Ann' }
   let!(:paul) { create :trainer, first_name: 'Paul' }
 

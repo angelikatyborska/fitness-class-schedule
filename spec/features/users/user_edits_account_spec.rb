@@ -5,12 +5,13 @@ feature 'User edits account', js: true do
 
     background do
       log_in user
-    end
 
-    scenario 'changes password' do
       visit root_path
       click_link user.email
       click_link 'Settings'
+    end
+
+    scenario 'changes password' do
       find('.user_password').fill_in 'Password', with: 'password1234'
       fill_in 'Password confirmation', with: 'password1234'
       fill_in 'Current password', with: user.password

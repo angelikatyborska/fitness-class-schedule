@@ -7,20 +7,21 @@ RSpec.describe ApplicationHelper do
     subject { order_by_weekdays(ScheduleItem.all, 1)}
 
     it 'returns a hash with days as keys and arrays of schedule items as values' do
-      is_expected.to eq monday => [schedule_item_next_monday],
-                        (monday + 1.day) => [schedule_item_next_tuesday],
-                        (monday + 2.days) => [],
-                        (monday + 3.days) => [],
-                        (monday + 4.days) => [],
-                        (monday + 5.days) => [],
-                        (monday + 6.days) => []
+      is_expected.to eq({
+                          monday => [schedule_item_next_monday],
+                          (monday + 1.day) => [schedule_item_next_tuesday],
+                          (monday + 2.days) => [],
+                          (monday + 3.days) => [],
+                          (monday + 4.days) => [],
+                          (monday + 5.days) => [],
+                          (monday + 6.days) => []
+                        })
     end
   end
 
   describe '#schedule_items_styles' do
     describe '#for' do
       let(:schedule_item) { build :schedule_item }
-
       let(:styles) { schedule_items_styles([schedule_item]) }
 
       subject { styles.for(schedule_item) }
@@ -181,17 +182,20 @@ RSpec.describe ApplicationHelper do
     describe '#top' do
       let!(:today) { Time.zone.now.in_website_time_zone }
 
-      let(:schedule_item_beginning) { build :schedule_item,
+      let(:schedule_item_beginning) { build(
+        :schedule_item,
         start: ScheduleItem.beginning_of_day(today)
-      }
+      )}
 
-      let(:schedule_item_middle) { build :schedule_item,
+      let(:schedule_item_middle) { build(
+        :schedule_item,
         start: ScheduleItem.beginning_of_day(today) + (ScheduleItem.day_duration_in_quarters * 15 / 2).minutes
-      }
+      )}
 
-      let(:schedule_item_end) { build :schedule_item,
+      let(:schedule_item_end) { build(
+        :schedule_item,
         start: ScheduleItem.end_of_day(today) - 1.hour
-      }
+      )}
 
       let(:styles) { schedule_items_styles([schedule_item_beginning, schedule_item_middle, schedule_item_end]) }
 
@@ -214,15 +218,17 @@ RSpec.describe ApplicationHelper do
     describe '#height' do
       let!(:today) { Time.zone.now.in_website_time_zone }
 
-      let(:one_hour_schedule_item) { build :schedule_item,
+      let(:one_hour_schedule_item) { build(
+        :schedule_item,
         start: ScheduleItem.beginning_of_day(today),
         duration: 60
-      }
+      )}
 
-      let(:twenty_three_hour_schedule_item) { build :schedule_item,
+      let(:twenty_three_hour_schedule_item) { build(
+        :schedule_item,
         start: ScheduleItem.beginning_of_day(today),
         duration: ScheduleItem.day_duration_in_quarters * 15
-      }
+      )}
 
       let(:styles) { schedule_items_styles([one_hour_schedule_item, twenty_three_hour_schedule_item]) }
 
@@ -237,6 +243,4 @@ RSpec.describe ApplicationHelper do
       end
     end
   end
-
-  describe '#in_website_time_zone'
 end

@@ -14,7 +14,6 @@ RSpec.describe Reservation do
       end
     end
 
-    # this could be tested using shoulda-matcher validate_uniqueness_of().scoped_to(), but it doesn't work for some reason
     context 'with user having already made a reservation for this schedule item' do
       let!(:schedule_item) { create :schedule_item }
       let!(:user) { create :user }

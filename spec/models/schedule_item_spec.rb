@@ -202,7 +202,7 @@ RSpec.describe ScheduleItem do
         Timecop.return
       end
 
-      it 'lists all schedule items that start no soonar than the given dave' do
+      it 'lists all schedule items that start no sooner than the given datetime' do
         is_expected.not_to include schedule_item_this_week
         is_expected.to include schedule_item_next_week
       end
@@ -222,7 +222,7 @@ RSpec.describe ScheduleItem do
         Timecop.return
       end
 
-      it 'lists all schedule items that start no soonar than the given dave' do
+      it 'lists all schedule items that start no later than the given datetime' do
         is_expected.to include schedule_item_this_week
         is_expected.not_to include schedule_item_next_week
       end
@@ -230,41 +230,39 @@ RSpec.describe ScheduleItem do
   end
 
   describe '#going_on_at?' do
-    let(:now) { Time.zone.now }
+    before :all do
+      @now = Time.zone.now
+      Timecop.freeze(Time.zone.now - 1.day)
+    end
+
+    after :all do
+      Timecop.return
+    end
+
+    subject { schedule_item.going_on_at?(@now) }
 
     context 'with a schedule item that starts just now' do
-      subject { build :schedule_item, start: now, duration: 60 }
+      let!(:schedule_item) { create :schedule_item, start: @now, duration: 60 }
 
-      it 'returns true' do
-        subject.save(validate: false)
-        expect(subject.going_on_at?(now)).to eq true
-      end
+      it { is_expected.to eq true }
     end
 
     context 'with a schedule item that started 5 minutes before' do
-      subject { build :schedule_item, start: now - 5.minutes, duration: 60 }
+      let!(:schedule_item) { create :schedule_item, start: @now - 5.minutes, duration: 60 }
 
-      it 'returns true' do
-        subject.save(validate: false)
-        expect(subject.going_on_at?(now)).to eq true
-      end
+      it { is_expected.to eq true }
     end
 
     context 'with a schedule item that started 3 hours before' do
-      subject { build :schedule_item, start: now - 3.hours, duration: 60 }
+      let!(:schedule_item) { create :schedule_item, start: @now - 3.hours, duration: 60 }
 
-      it 'returns false' do
-        subject.save(validate: false)
-        expect(subject.going_on_at?(now)).to eq false
-      end
+      it { is_expected.to eq false }
     end
 
     context 'with a schedule item that starts tomorrow' do
-      subject { create :schedule_item, start: ScheduleItem.beginning_of_day(now + 1.day), duration: 60 }
+      let!(:schedule_item) { create :schedule_item, start: ScheduleItem.beginning_of_day(@now + 1.day), duration: 60 }
 
-      it 'returns false' do
-        expect(subject.going_on_at?(now)).to eq false
-      end
+      it { is_expected.to eq false }
     end
   end
 
@@ -324,7 +322,7 @@ RSpec.describe ScheduleItem do
   describe '#spots_left' do
     let!(:schedule_item) { create :schedule_item, capacity: 2 }
 
-    it 'decreases with every reservation made down to zero' do
+    it 'with every reservation made decreases down to zero' do
       expect(schedule_item.free_spots).to eq 2
 
       create :reservation, schedule_item: schedule_item
@@ -339,7 +337,7 @@ RSpec.describe ScheduleItem do
   end
 
   describe 'class methods' do
-    describe '#beginning_of_day' do
+    describe '.beginning_of_day' do
       let(:today) { Time.zone.now }
       subject { described_class.beginning_of_day(today) }
 
@@ -349,7 +347,7 @@ RSpec.describe ScheduleItem do
       end
     end
 
-    describe '#end_of_day' do
+    describe '.end_of_day' do
       let(:today) { Time.zone.now }
       subject { described_class.end_of_day(today) }
 

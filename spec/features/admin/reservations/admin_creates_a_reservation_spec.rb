@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'admin creates a reservation', js: true do
+RSpec.feature 'Admin creates a reservation', js: true do
   let!(:admin) { create :admin_user }
   let!(:schedule_item) { create :schedule_item_next_week_in_website_time_zone }
   let!(:user) { create :user }

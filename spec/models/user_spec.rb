@@ -26,7 +26,7 @@ RSpec.describe User do
       subject { described_class.without_reservation(reservation.schedule_item) }
 
       it 'lists users that do not have reservations for a given schedule item' do
-        is_expected.to match_array users[1,2]
+        is_expected.to match_array users[1, 2]
       end
     end
   end
@@ -37,18 +37,14 @@ RSpec.describe User do
     subject { user.reliability }
 
     context 'without any reservations' do
-      it 'returns 1' do
-        is_expected.to eq 1
-      end
+      it { is_expected.to eq 1 }
     end
 
     context 'without any attended reservations' do
       let!(:missed_reservation) { create :reservation, user: user, status: 'missed' }
       let!(:active_reservation) { create :reservation, user: user, status: 'active' }
 
-      it 'returns 0' do
-        is_expected.to eq 0
-      end
+      it { is_expected.to eq 0 }
     end
 
     context 'with attended, missed and active reservations' do
