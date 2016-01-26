@@ -10,11 +10,16 @@
         = f.input :start,
           start_year: Time.zone.now.in_website_time_zone.year,
           end_year: Time.zone.now.in_website_time_zone.year + 1,
-          selected: selected
+          selected: selected,
+          label: t('schedule_item.attributes.start')
 
     .row
       .medium-6.columns
-        = f.input :duration, as: :select, collection: 30.step(360, 5)
+        = f.input :duration,
+          as: :select,
+          collection: 30.step(360, 5),
+          include_blank: false,
+          label: t('schedule_item.attributes.duration')
 
       .medium-6.columns
         = f.input :capacity
@@ -24,20 +29,23 @@
         = f.association :fitness_class,
           collection: FitnessClass.all.order(:name),
           value_method: :id,
-          include_blank: false
+          include_blank: false,
+          label: t('schedule_item.attributes.fitness_class')
 
     .row
       .medium-6.columns
         = f.association :trainer,
           collection: trainers.order(:first_name),
           value_method: :id,
-          include_blank: false
+          include_blank: false,
+          label: t('schedule_item.attributes.trainer')
 
       .medium-6.columns
         = f.association :room,
           collection: rooms.order(:name),
           value_method: :id,
-          include_blank: false
+          include_blank: false,
+          label: t('schedule_item.attributes.room')
 
   .form-actions
     .row

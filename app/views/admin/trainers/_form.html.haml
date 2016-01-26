@@ -2,21 +2,26 @@
   .form-inputs
     .row
       .medium-6.columns
-        = f.input :first_name
+        = f.input :first_name,
+          label: t('trainer.attributes.first_name')
 
       .medium-6.columns
-        = f.input :last_name
+        = f.input :last_name,
+          label: t('trainer.attributes.last_name')
 
     .row
       .medium-12.columns
-        = f.input :description, input_html: { rows: 5 }
+        = f.input :description,
+          input_html: { rows: 5 },
+          label: t('trainer.attributes.description')
 
     .row
       .medium-6.columns
         = image_tag trainer.photo.url, class: 'trainer-photo'
 
       .medium-6.columns
-        = f.input :photo
+        = f.input :photo,
+          label: t('trainer.attributes.photo')
 
   .form-actions
     .row

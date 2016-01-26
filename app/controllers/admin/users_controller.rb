@@ -9,6 +9,10 @@ class Admin::UsersController < Admin::AdminApplicationController
     self.user = User.includes(reservations: [schedule_item: [:fitness_class, :room, :reservations]]).find(params[:id])
   end
 
+  def edit
+    self.user = User.find(params[:id])
+  end
+
   def update
     if user.save
       redirect_to(

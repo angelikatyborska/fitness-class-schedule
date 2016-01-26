@@ -5,18 +5,18 @@
         = f.input :first_name,
           required: true,
           autofocus: true,
-          placeholder: t('user.attributes.first_name')
+          label: t('user.attributes.first_name')
 
       .medium-6.columns
         = f.input :last_name,
           required: true,
-          placeholder: t('user.attributes.last_name')
+          label: t('user.attributes.last_name')
 
     .row
       .medium-12.columns
         = f.input :email,
           required: true,
-          placeholder: t('devise.email')
+          label: t('devise.email')
 
   .form-actions
     .row

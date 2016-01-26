@@ -84,7 +84,7 @@ en:
       duration: 'Duration'
       duration_unit: 'minutes'
       trainer: 'Trainer'
-      room: 'Room'
+      room: 'Location'
       capacity: 'Capacity'
       spots_left: 'Spots left'
       fitness_class: 'Class'

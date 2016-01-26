@@ -21,7 +21,7 @@ feature 'Admin edits a schedule item' do
     click_link 'Edit'
 
     expect {
-      select 'TBC', from: 'Fitness class'
+      select 'TBC', from: 'Class'
       click_button 'Save'
     }.to change(ScheduleItem, :count).by(0)
 

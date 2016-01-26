@@ -2,10 +2,13 @@
   .form-inputs
     .row
       .medium-12.columns
-        = f.input :name
+        = f.input :name,
+          label: t('room.attributes.name')
 
       .medium-12.columns
-        = f.input :description, input_html: { rows: 5 }
+        = f.input :description,
+          input_html: { rows: 5 },
+          label: t('room.attributes.description')
 
   .form-actions
     .row

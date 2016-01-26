@@ -25,7 +25,7 @@ feature 'Admin creates a schedule item', js: true do
 
       select 45, from: 'Duration'
       fill_in 'Capacity', with: 10
-      select fitness_class, from: 'Fitness class'
+      select fitness_class, from: 'Class'
 
       click_button 'Save'
     }.to change(ScheduleItem, :count).by(1)
@@ -41,7 +41,7 @@ feature 'Admin creates a schedule item', js: true do
 
       select 45, from: 'Duration'
       fill_in 'Capacity', with: 10
-      select fitness_class, from: 'Fitness class'
+      select fitness_class, from: 'Class'
 
       click_button 'Save'
     }.not_to change(ScheduleItem, :count)

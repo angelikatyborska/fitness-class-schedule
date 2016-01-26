@@ -12,13 +12,7 @@ feature 'Admin edits a room', js: true do
     click_link 'Admin Panel'
     find('.admin-panel').click_link 'Locations'
 
-    expect(page).to have_content 'Spinning room'
-    visit root_path
-
-    click_link 'Admin Panel'
-    find('.admin-panel').click_link 'Locations'
-
-    expect(page).to have_content 'Spinning room'
+    expect(page).to have_css '#' + spinning_room.decorate.css_id
   end
 
   scenario 'with valid input' do
