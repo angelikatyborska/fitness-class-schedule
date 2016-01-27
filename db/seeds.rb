@@ -39,17 +39,25 @@ spinning_room = Room.create!(
 puts 'Creating rooms...'
 
 3.times do |n|
+  photo = File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+
   RoomPhoto.create!(
     room: fitness_hall,
-    photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+    photo: photo
   )
+
+  photo.close
 end
 
 3.times do |n|
+  photo = File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+
   RoomPhoto.create!(
     room: spinning_room,
-    photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+    photo: photo
   )
+
+  photo.close
 end
 
 fitness_classes_names_and_colors = [
