@@ -30,7 +30,11 @@ body {
     pointer-events: auto;
 
     .overlay-box {
-      transform: translateY(-50%) translateX(-50%) scale(1);
+      transform: scale(1);
+
+      @media #{$large-up} {
+        transform: translateY(-50%) translateX(-50%) scale(1);
+      }
     }
   }
 }
@@ -45,6 +49,7 @@ body {
   overflow-y: auto;
   text-align: center;
   background-color: $white;
+  transform: scale(0);
 
   @media #{$large-up} {
     position: absolute;

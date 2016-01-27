@@ -49,6 +49,8 @@
     .medium-12.columns
       %p
         Unhappy?
-        = link_to t('user.destroy'), registration_path(resource_name), data: { confirm: t('shared.confirm') }, method: :delete
-
-
+        = link_to t('user.destroy'),
+          registration_path(resource_name),
+          data: { confirm: t('shared.confirm') },
+          method: :delete,
+          class: 'text-anchor'

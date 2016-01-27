@@ -1,8 +1,5 @@
 require 'rails_helper'
 
-include Warden::Test::Helpers
-Warden.test_mode!
-
 feature 'Admin creates a schedule item', js: true do
   let!(:room) { create :room }
   let!(:trainer) { create :trainer }

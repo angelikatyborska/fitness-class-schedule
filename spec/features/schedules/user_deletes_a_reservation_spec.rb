@@ -9,9 +9,10 @@ feature 'User deletes a reservation', js: true do
     Timecop.return
   end
 
-  let!(:schedule_item) { create :schedule_item,
+  let!(:schedule_item) { create(
+    :schedule_item,
     start: ScheduleItem.beginning_of_day(Time.zone.now.in_website_time_zone.beginning_of_week + 1.day)
-  }
+  ) }
 
   let!(:user) { create :user }
   let!(:reservation) { create :reservation, user: user, schedule_item: schedule_item }

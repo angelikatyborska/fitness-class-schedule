@@ -35,8 +35,6 @@
     %span.no-wrap
       (#{ schedule_item.room.name })
 
-      -# TODO: add info about waiting line position
-
   %span.details
     %span.no-wrap
       #{ t('reservation.emtpy_spots')}:
@@ -45,6 +43,13 @@
 
   - if user_signed_in?
     - if current_user.reservation_for?(schedule_item)
+      - reservation = current_user.reservation_for(schedule_item)
+      - if reservation.queued?
+        %span.details
+          %span.no-wrap
+            = "#{ t('reservation.queue_position') }:"
+            #{ reservation.queue_position - reservation.schedule_item.capacity }
+
       = link_to t('reservation.delete'),
         user_reservation_path(current_user.id, current_user.reservation_for(schedule_item)),
         method: :delete,

@@ -21,4 +21,7 @@ span.no-wrap {
   @include single-transition(background-color);
 }
 
-// TODO: style anchors so that they stand out
+a.text-anchor {
+  border-bottom: 2px solid $primary-color;
+  padding: 0 1px 1px;
+}

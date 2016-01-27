@@ -1,5 +1,9 @@
 $('#<%= reservation.schedule_item.decorate.css_id %> .item-box').addClass('reserved');
 
+if ($('#content > .schedule-item').length) {
+  $('#content').html("<%= escape_javascript render 'schedule_items/schedule_item', schedule_item: reservation.schedule_item %>");
+}
+
 Overlay.show(
     "<%= escape_javascript flash[:notice] %>",
     ""
