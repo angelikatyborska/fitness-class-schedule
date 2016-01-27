@@ -94,6 +94,18 @@ RSpec.describe Reservation do
         expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
       end
     end
+
+    context 'after schedule item start' do
+      let!(:reservation) { create :reservation, schedule_item: two_spot_schedule_item }
+      let!(:other_reservation) { create :reservation, schedule_item: two_spot_schedule_item }
+      let!(:waiting_reservations) { create_list :reservation, 3, schedule_item: two_spot_schedule_item }
+
+      it 'does not send en email' do
+        Timecop.travel(two_spot_schedule_item.start + 1.day)
+        expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+        Timecop.return
+      end
+    end
   end
 
   describe '#queue_position' do

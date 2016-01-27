@@ -89,9 +89,12 @@ RSpec.describe ScheduleItem do
       it 'sends an email to every user that has a reservation' do
         expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(reservations.count)
 
-        reservations.each_with_index do |reservation, i|
-          expect(ActionMailer::Base.deliveries[ -1 - i].to).to eq [reservation.user.email]
-        end
+        expected_emails = reservations.map { |reservation| [reservation.user.email] }
+
+        n = reservations.count
+        actual_emails = ActionMailer::Base.deliveries[ (-1 * n), n].map(&:to)
+
+        expect(actual_emails).to match_array expected_emails
       end
     end
 
@@ -102,7 +105,9 @@ RSpec.describe ScheduleItem do
 
       it 'does not send emails' do
         Timecop.freeze(schedule_item.start + 5.minutes)
-        expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+        expect { subject }.not_to change {
+          ActionMailer::Base.deliveries.count
+        }
       end
     end
   end
@@ -122,9 +127,12 @@ RSpec.describe ScheduleItem do
       it 'sends an email to every user that has a reservation' do
         expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(reservations.count)
 
-        reservations.each_with_index do |reservation, i|
-          expect(ActionMailer::Base.deliveries[ -1 - i].to).to eq [reservation.user.email]
-        end
+        expected_emails = reservations.map { |reservation| [reservation.user.email] }
+
+        n = reservations.count
+        actual_emails = ActionMailer::Base.deliveries[ (-1 * n), n].map(&:to)
+
+        expect(actual_emails).to match_array expected_emails
       end
     end
 

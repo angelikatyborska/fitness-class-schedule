@@ -19,6 +19,8 @@ class ScheduleItem < ActiveRecord::Base
   validate :room_cant_be_already_occupied
   validate :trainer_cant_be_already_occupied
 
+  attr_reader :will_send_cancellation_emails
+
   scope :week, -> (time = Time.zone.now) do
     where(
       'start >= ? AND start < ?',
@@ -55,6 +57,7 @@ class ScheduleItem < ActiveRecord::Base
 
   def send_cancellation_emails
     if start > Time.zone.now
+      @will_send_cancellation_emails = true
       reservations.each { |reservation| ReservationMailer.cancelled(reservation).deliver_now }
     end
   end

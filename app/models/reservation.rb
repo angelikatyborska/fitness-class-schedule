@@ -41,14 +41,16 @@ class Reservation < ActiveRecord::Base
   end
 
   def send_email_for_freed_spot
-    if queue_position <= schedule_item.capacity
-      reservation_that_takes_the_empty_spot =
-        schedule_item.reload.reservations.find do |reservation|
-          reservation.queue_position == schedule_item.capacity
-        end
+    unless schedule_item.will_send_cancellation_emails || schedule_item.start < Time.zone.now
+      if queue_position <= schedule_item.capacity
+        reservation_next_in_line =
+          schedule_item.reload.reservations.find do |reservation|
+            reservation.queue_position == schedule_item.capacity
+          end
 
-      unless reservation_that_takes_the_empty_spot.nil? || reservation_that_takes_the_empty_spot == self
-        ReservationMailer.spot_freed(reservation_that_takes_the_empty_spot).deliver_now
+        unless reservation_next_in_line.nil? || reservation_next_in_line == self
+          ReservationMailer.spot_freed(reservation_next_in_line).deliver_now
+        end
       end
     end
   end

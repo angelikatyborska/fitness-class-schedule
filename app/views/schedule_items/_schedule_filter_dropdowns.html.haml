@@ -1,6 +1,4 @@
-%button{ href: '#',
-  class: 'button tiny secondary dropdown',
-  data: { 'dropdown': 'rooms-dropdown' } }
+%button{ class: 'button tiny secondary dropdown', data: { 'dropdown': 'rooms-dropdown' } }
   = filter_params[:room] ? rooms.find(filter_params[:room]) : t('room.name')
 
 %ul{ id: 'rooms-dropdown',
@@ -13,9 +11,7 @@
   = list_of rooms.order(:name) do |room|
     = link_to room, schedule_items_path(filter_params.merge({ room: room.id, week_offset: week_offset }))
 
-%button{ href: '#',
-  class: 'button tiny secondary dropdown',
-  data: { 'dropdown': 'trainers-dropdown' } }
+%button{ class: 'button tiny secondary dropdown', data: { 'dropdown': 'trainers-dropdown' } }
   = filter_params[:trainer] ? trainers.find(filter_params[:trainer]) : t('trainer.name')
 
 %ul{ id: 'trainers-dropdown', class: 'f-dropdown', data: { 'dropdown-content': '' }}
