@@ -13,7 +13,6 @@ class Admin::ConfigurablesController < Admin::AdminApplicationController
     # when configurables are edited. Simply 'touching' the application.scss file
     # does not work, because the assets cache is based on the file's content
     # and not the modification date.
-    # TODO: probably think this through one more time
     Rails.cache.clear if should_refresh_stylesheets
   end
 end
