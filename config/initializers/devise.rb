@@ -5,7 +5,7 @@ Devise.setup do |config|
     manager.failure_app = CustomFailure
   end
 
-  config.secret_key = ENV['DEVISE_SECRET_KEY'] if Rails.env.production?
+  config.secret_key = Rails.application.secrets.secret_key_base
 
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
