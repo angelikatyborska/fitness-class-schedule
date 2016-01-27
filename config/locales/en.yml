@@ -102,6 +102,7 @@ en:
       name: 'Name'
       description: 'Description'
       room_photos: 'Gallery'
+    delete_warning: 'Every class in the schedule associated with this location will be deleted. An email will be send to every user that had an active reservation for a class in this location.'
   room_photo:
     name: 'Room photo'
     add: 'Add a photo to the gallery'
@@ -127,7 +128,7 @@ en:
     attended: 'Past reservations'
     queue_position: 'Waiting list position'
     for: 'Reservations for'
-    email_warning: 'An email will be send to every user that has a reservation for this class.'
+    email_warning: 'An email will be send to every user that has an active reservation for this class.'
   trainer:
     name: 'Trainer'
     attributes:
@@ -136,6 +137,7 @@ en:
       description: 'Description'
       photo: 'Photo'
     check_out_schedule: 'Check out my schedule'
+    delete_warning: 'Every class in the schedule associated with this trainer will be deleted. An email will be send to every user that had an active reservation for a class with this trainer.'
   user:
     name: 'User'
     attributes:

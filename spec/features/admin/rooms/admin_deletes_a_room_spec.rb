@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin deletes a room' do
+feature 'Admin deletes a room', js: true do
   let!(:room) { create :room }
   let!(:admin) { create :admin_user }
 
@@ -19,6 +19,7 @@ feature 'Admin deletes a room' do
 
     expect {
       click_link 'Delete'
+      expect(page).to have_content 'Location has been deleted!'
     }.to change(Room, :count).by(-1)
 
     expect(current_path).to eq admin_rooms_path

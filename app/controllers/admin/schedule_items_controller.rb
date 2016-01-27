@@ -32,11 +32,7 @@ class Admin::ScheduleItemsController < Admin::AdminApplicationController
 
   def destroy
     schedule_item.destroy
-    flash[:notice] = I18n.t('shared.deleted', resource: I18n.t('schedule_item.name'))
-    respond_to do |format|
-      format.html { redirect_to admin_schedule_items_path }
-      format.js
-    end
+    flash.now[:notice] = I18n.t('shared.deleted', resource: I18n.t('schedule_item.name'))
   end
 
   private

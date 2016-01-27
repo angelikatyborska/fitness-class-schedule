@@ -29,10 +29,7 @@ class Admin::TrainersController < Admin::AdminApplicationController
 
   def destroy
     trainer.destroy
-    redirect_to(
-      { action: :index },
-      notice: I18n.t('shared.deleted', resource: I18n.t('trainer.name'))
-    )
+    flash.now[:notice] = I18n.t('shared.deleted', resource: I18n.t('trainer.name'))
   end
 
   private

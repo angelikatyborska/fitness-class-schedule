@@ -19,6 +19,7 @@ class Admin::ReservationsController < Admin::AdminApplicationController
 
   def destroy
     reservation.destroy
+    flash.now[:notice] = t('shared.deleted', resource: t('reservation.name'))
   end
 
   private

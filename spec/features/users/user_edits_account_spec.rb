@@ -26,9 +26,9 @@ feature 'User edits account', js: true do
       click_link 'Log Out'
       expect(page).to have_content 'Logged out successfully'
       click_button 'Close'
-      expect(page).not_to have_content user.email
 
       click_link 'Log In'
+      expect(page).to have_button 'Log In'
 
       fill_in 'Email', with: user.email
       find('.user_password').fill_in 'Password', with: 'password1234'

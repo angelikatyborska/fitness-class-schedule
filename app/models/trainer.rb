@@ -1,5 +1,5 @@
 class Trainer < ActiveRecord::Base
-  has_many :schedule_items, dependent: :nullify
+  has_many :schedule_items, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

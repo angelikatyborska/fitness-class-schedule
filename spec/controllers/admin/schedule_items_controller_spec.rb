@@ -3,40 +3,39 @@ require 'rails_helper'
 RSpec.describe Admin::ScheduleItemsController do
   shared_examples 'access denied' do
     describe 'GET #index' do
-      it 'raises an error' do
-        expect { get :index }.to require_admin_privileges
-      end
-    end
+      subject(:request) { get :index }
 
-
-    describe 'GET #show' do
-      it 'raises an error' do
-        expect { get :show, id: create(:schedule_item) }.to require_admin_privileges
-      end
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'GET #new' do
-      it 'raises an error' do
-        expect { get :new }.to require_admin_privileges
-      end
+      subject(:request) { get :new }
+
+      it { expect { request }.to require_admin_privileges }
+    end
+
+    describe 'GET #show' do
+      subject(:request) { get :show, id: create(:schedule_item) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'POST #create' do
-      it 'raises an error' do
-        expect { post :create, schedule_item: build(:schedule_item) }.to require_admin_privileges
-      end
+      subject(:request) { post :create, schedule_item: build(:schedule_item) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'PUT #update' do
-      it 'raises an error' do
-        expect { put :update, id: create(:schedule_item), schedule_item: attributes_for(:schedule_item) }.to require_admin_privileges
-      end
+      subject(:request) { put :update, id: create(:schedule_item), schedule_item: attributes_for(:schedule_item) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'DELETE #destroy' do
-      it 'raises an error' do
-        expect { delete :destroy, id: create(:schedule_item) }.to require_admin_privileges
-      end
+      subject(:request) { delete :destroy, id: create(:schedule_item) }
+
+      it { expect { request }.to require_admin_privileges }
     end
   end
 
@@ -61,49 +60,30 @@ RSpec.describe Admin::ScheduleItemsController do
       let!(:schedule_items) { create_list :schedule_item, 3 }
       subject { get :index }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items).to match_array schedule_items
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, schedule_items }
     end
 
     describe 'GET #show' do
       let!(:schedule_item) { create :schedule_item }
       subject { get :show, id: schedule_item.id }
 
-      it 'renders template show' do
-        is_expected.to render_template :show
-      end
-
-      it 'exposes schedule item' do
-        subject
-        expect(controller.schedule_item).to eq schedule_item
-      end
+      it { is_expected.to render_template :show }
+      it { is_expected.to expose :schedule_item, schedule_item }
     end
 
     describe 'GET #new' do
       subject { get :new }
 
-      it 'renders template new' do
-        is_expected.to render_template :new
-      end
+      it { is_expected.to render_template :new }
     end
 
     describe 'GET #edit' do
       let!(:schedule_item) { create :schedule_item }
       subject { get :edit, id: schedule_item.id }
 
-      it 'renders template edit' do
-        is_expected.to render_template :edit
-      end
-
-      it 'exposes schedule item' do
-        subject
-        expect(controller.schedule_item).to eq schedule_item
-      end
+      it { is_expected.to render_template :edit }
+      it { is_expected.to expose :schedule_item, schedule_item }
     end
 
     describe 'PUT #update' do
@@ -114,13 +94,8 @@ RSpec.describe Admin::ScheduleItemsController do
           put :update, id: schedule_item.id, schedule_item: { duration: 60 }
         end
 
-        it 'updates schedule item attributes' do
-          expect(schedule_item.reload.duration).to eq 60
-        end
-
-        it 'redirects to focus' do
-          is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
-        end
+        it { expect(schedule_item.reload.duration).to eq 60 }
+        it { is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last) }
       end
 
       context 'with invalid attributes' do
@@ -128,10 +103,7 @@ RSpec.describe Admin::ScheduleItemsController do
           put :update, id: schedule_item.id, schedule_item: { duration: -4 }
         end
 
-        it 'does not update attributes' do
-          expect(schedule_item.reload.duration).to eq 45
-        end
-
+        it { expect(schedule_item.reload.duration).to eq 45 }
         it { is_expected.to render_template :edit }
       end
     end
@@ -142,39 +114,35 @@ RSpec.describe Admin::ScheduleItemsController do
         let!(:trainer) { create :trainer }
         let!(:room) { create :room }
 
-        subject { post :create, schedule_item: attributes_for(:schedule_item, fitness_class_id: fitness_class.id, room_id: room.id, trainer_id: trainer.id) }
+        subject { post :create, schedule_item: attributes_for(
+          :schedule_item,
+          fitness_class_id: fitness_class.id,
+          room_id: room.id,
+          trainer_id: trainer.id
+        ) }
 
-        it 'creates a schedule item' do
-          expect { subject }.to change(ScheduleItem, :count).by(1)
-        end
-
-        it 'redirects to focus' do
-          is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last)
-        end
+        it { expect { subject }.to change(ScheduleItem, :count).by(1) }
+        it { is_expected.to redirect_to focus_schedule_item_path(ScheduleItem.last) }
       end
 
       context 'with invalid attributes' do
         subject { post :create, schedule_item: { trainer: '' } }
 
-        it 'does not create a schedule item' do
-          expect { subject }.not_to change(ScheduleItem, :count)
-        end
-
+        it { expect { subject }.not_to change(ScheduleItem, :count) }
         it { is_expected.to render_template :new }
       end
     end
 
     describe 'DELETE #destroy' do
       let!(:schedule_item) { create :schedule_item }
-      subject { delete :destroy, id: schedule_item.id }
+      subject { xhr :delete, :destroy, id: schedule_item.id }
 
-      it 'deletes the schedule item' do
-        expect { subject }.to change(ScheduleItem, :count).by(-1)
-      end
+      it { expect { subject }.to change(ScheduleItem, :count).by(-1) }
+      it { is_expected.to render_template :destroy }
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index
-        expect(controller).to set_flash[:notice].to 'Schedule item has been deleted!'
+      it 'sets notice' do
+        subject
+        expect(controller).to set_flash.now[:notice].to 'Schedule item has been deleted!'
       end
     end
   end

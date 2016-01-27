@@ -3,39 +3,39 @@ require 'rails_helper'
 RSpec.describe Admin::TrainersController do
   shared_examples 'access denied' do
     describe 'GET #index' do
-      it 'raises an error' do
-        expect { get :index }.to require_admin_privileges
-      end
+      subject(:request) { get :index }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'GET #new' do
-      it 'raises an error' do
-        expect { get :new }.to require_admin_privileges
-      end
+      subject(:request) { get :new }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'GET #edit' do
-      it 'raises an error' do
-        expect { get :edit, id: create(:trainer) }.to require_admin_privileges
-      end
+      subject(:request) { get :edit, id: create(:trainer) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'POST #create' do
-      it 'raises an error' do
-        expect { post :create, trainer: build(:trainer) }.to require_admin_privileges
-      end
+      subject(:request) { post :create, trainer: build(:trainer) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'PUT #update' do
-      it 'raises an error' do
-        expect { put :update, id: create(:trainer), trainer: attributes_for(:trainer) }.to require_admin_privileges
-      end
+      subject(:request) { put :update, id: create(:trainer), trainer: attributes_for(:trainer) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'DELETE #destroy' do
-      it 'raises an error' do
-        expect { delete :destroy, id: create(:trainer) }.to require_admin_privileges
-      end
+      subject(:request) { delete :destroy, id: create(:trainer) }
+
+      it { expect { request }.to require_admin_privileges }
     end
   end
 
@@ -60,35 +60,22 @@ RSpec.describe Admin::TrainersController do
       let!(:trainers) { create_list :trainer, 3 }
       subject { get :index }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.trainers).to match_array trainers
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :trainers, trainers }
     end
 
     describe 'GET #new' do
       subject { get :new }
 
-      it 'renders template new' do
-        is_expected.to render_template :new
-      end
+      it { is_expected.to render_template :new }
     end
 
     describe 'GET #edit' do
       let!(:trainer) { create :trainer }
       subject { get :edit, id: trainer.id }
 
-      it 'renders template edit' do
-        is_expected.to render_template :edit
-      end
-
-      it 'exposes trainer' do
-        subject
-        expect(controller.trainer).to eq trainer
-      end
+      it { is_expected.to render_template :edit }
+      it { is_expected.to expose :trainer, trainer }
     end
 
     describe 'PUT #update' do
@@ -100,9 +87,7 @@ RSpec.describe Admin::TrainersController do
           put :update, id: trainer.id, trainer: { first_name: 'Mary' }
         end
 
-        it 'updates trainer\s attributes' do
-          expect(trainer.reload.first_name).to eq 'Mary'
-        end
+        it { expect(trainer.reload.first_name).to eq 'Mary' }
 
         it 'redirects to index with a notice' do
           is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
@@ -115,10 +100,7 @@ RSpec.describe Admin::TrainersController do
           put :update, id: trainer.id, trainer: { first_name: '' }
         end
 
-        it 'does not update attributes' do
-          expect(trainer.reload.first_name).to eq 'Ann'
-        end
-
+        it { expect(trainer.reload.first_name).to eq 'Ann' }
         it { is_expected.to render_template :edit }
       end
     end
@@ -127,9 +109,7 @@ RSpec.describe Admin::TrainersController do
       context 'with valid attributes' do
         subject { post :create, trainer: attributes_for(:trainer) }
 
-        it 'creates a trainer' do
-          expect { subject }.to change(Trainer, :count).by(1)
-        end
+        it { expect { subject }.to change(Trainer, :count).by(1) }
 
         it 'redirects to index with a notice' do
           is_expected.to redirect_to action: :index, anchor: Trainer.last.decorate.css_id
@@ -140,26 +120,22 @@ RSpec.describe Admin::TrainersController do
       context 'with invalid attributes' do
         subject { post :create, trainer: { first_name: '', description: ''} }
 
-        it 'does not create a trainer' do
-          expect { subject }.not_to change(Trainer, :count)
-        end
-
+        it { expect { subject }.not_to change(Trainer, :count) }
         it { is_expected.to render_template :new }
       end
     end
 
     describe 'DELETE #destroy' do
       let!(:trainer) { create :trainer }
-      subject { delete :destroy, id: trainer.id }
+      subject { xhr :delete, :destroy, id: trainer.id }
 
-      it 'deletes the trainer' do
-        expect { subject }.to change(Trainer, :count).by(-1)
-      end
+      it { expect { subject }.to change(Trainer, :count).by(-1) }
+      it { is_expected.to render_template :destroy }
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index
-        expect(controller).to set_flash[:notice].to 'Trainer has been deleted!'
-      end
+      it 'sets notice' do
+        subject
+        expect(controller).to set_flash.now[:notice].to 'Trainer has been deleted!'
+        end
     end
   end
 end

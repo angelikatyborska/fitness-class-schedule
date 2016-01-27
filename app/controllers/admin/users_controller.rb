@@ -26,7 +26,7 @@ class Admin::UsersController < Admin::AdminApplicationController
 
   def destroy
     user.destroy
-    redirect_to admin_users_path, notice: I18n.t('shared.deleted', resource: I18n.t('user.name'))
+    flash.now[:notice] = I18n.t('shared.deleted', resource: I18n.t('user.name'))
   end
 
   private

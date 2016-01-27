@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin deletes a trainer' do
+feature 'Admin deletes a trainer', js: true do
   let!(:trainer) { create :trainer }
   let!(:admin) { create :admin_user }
 
@@ -19,6 +19,7 @@ feature 'Admin deletes a trainer' do
 
     expect {
       click_link 'Delete'
+      expect(page).to have_content 'Trainer has been deleted!'
     }.to change(Trainer, :count).by(-1)
 
     expect(current_path).to eq admin_trainers_path

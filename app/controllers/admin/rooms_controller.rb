@@ -29,7 +29,7 @@ class Admin::RoomsController < Admin::AdminApplicationController
 
   def destroy
     room.destroy
-    redirect_to admin_rooms_path, notice: I18n.t('shared.deleted', resource: I18n.t('room.name'))
+    flash.now[:notice] = I18n.t('shared.deleted', resource: I18n.t('room.name'))
   end
 
   private

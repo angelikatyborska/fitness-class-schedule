@@ -48,6 +48,7 @@
                   %li
                     = link_to t('shared.delete'), admin_trainer_path(trainer),
                       method: :delete,
-                      data: { confirm: t('shared.confirm') },
+                      data: { confirm: t('shared.confirm') + ' ' + t('trainer.delete_warning') },
+                      remote: true,
                       class: 'action delete',
                       title: t('shared.delete')

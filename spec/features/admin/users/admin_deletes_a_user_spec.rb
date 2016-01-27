@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin deletes a user' do
+feature 'Admin deletes a user', js: true do
   let!(:user) { create :user }
   let!(:admin) { create :admin_user }
 
@@ -19,6 +19,7 @@ feature 'Admin deletes a user' do
 
     expect {
       find("##{ user.decorate.css_id }").click_link 'Delete'
+      expect(page).to have_content 'User has been deleted!'
     }.to change(User, :count).by(-1)
 
     expect(current_path).to eq admin_users_path

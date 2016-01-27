@@ -64,5 +64,6 @@
                 admin_schedule_item_path(item),
                 method: :delete,
                 data: { confirm: "#{ t('shared.confirm') } #{ t('reservation.email_warning') }" },
+                remote: true,
                 class: 'action delete',
                 title: t('shared.delete')

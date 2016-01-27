@@ -1,5 +1,5 @@
 class Room < ActiveRecord::Base
-  has_many :schedule_items, dependent: :nullify
+  has_many :schedule_items, dependent: :destroy
   has_many :room_photos, dependent: :destroy
 
   validates :name, presence: true

@@ -21,14 +21,12 @@ feature 'Admin deletes a schedule item', js: true do
 
     click_link 'Admin Panel'
     find('.admin-panel').click_link 'Schedule'
-    page.save_screenshot 'tmp/1.png'
 
     expect(page).to have_content 'Upcoming'
     expect(page).to have_content schedule_item
     expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_date)
     expect(page).to have_content I18n.l(schedule_item.start.in_website_time_zone, format: :simple_time)
 
-    page.save_screenshot 'tmp/2.png'
     expect {
       click_link 'Delete'
       wait_for_ajax

@@ -3,33 +3,33 @@ require 'rails_helper'
 RSpec.describe Admin::RoomsController do
   shared_examples 'access denied' do
     describe 'GET #index' do
-      it 'raises an error' do
-        expect { get :index }.to require_admin_privileges
-      end
+      subject(:request) { get :index }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'GET #new' do
-      it 'raises an error' do
-        expect { get :new }.to require_admin_privileges
-      end
+      subject(:request) { get :new }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'POST #create' do
-      it 'raises an error' do
-        expect { post :create, room: build(:room) }.to require_admin_privileges
-      end
+      subject(:request) { post :create, room: build(:room) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'PUT #update' do
-      it 'raises an error' do
-        expect { put :update, id: create(:room), room: attributes_for(:room) }.to require_admin_privileges
-      end
+      subject(:request) { put :update, id: create(:room), room: attributes_for(:room) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'DELETE #destroy' do
-      it 'raises an error' do
-        expect { delete :destroy, id: create(:room) }.to require_admin_privileges
-      end
+      subject(:request) { delete :destroy, id: create(:room) }
+
+      it { expect { request }.to require_admin_privileges }
     end
   end
 
@@ -54,35 +54,22 @@ RSpec.describe Admin::RoomsController do
       let!(:rooms) { create_list :room, 3 }
       subject { get :index }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.rooms).to match_array rooms
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :rooms, rooms }
     end
 
     describe 'GET #new' do
       subject { get :new }
 
-      it 'renders template new' do
-        is_expected.to render_template :new
-      end
+      it { is_expected.to render_template :new }
     end
 
     describe 'GET #edit' do
       let!(:room) { create :room }
       subject { get :edit, id: room.id }
 
-      it 'renders template edit' do
-        is_expected.to render_template :edit
-      end
-
-      it 'exposes room' do
-        subject
-        expect(controller.room).to eq room
-      end
+      it { is_expected.to render_template :edit }
+      it { is_expected.to expose :room, room }
     end
 
     describe 'PUT #update' do
@@ -93,9 +80,7 @@ RSpec.describe Admin::RoomsController do
           put :update, id: room.id, room: { name: 'Big room' }
         end
 
-        it 'updates room attributes' do
-          expect(room.reload.name).to eq 'Big room'
-        end
+        it { expect(room.reload.name).to eq 'Big room' }
 
         it 'redirects to index with a notice' do
           is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
@@ -108,10 +93,7 @@ RSpec.describe Admin::RoomsController do
           put :update, id: room.id, room: { name: '' }
         end
 
-        it 'does not update attributes' do
-          expect(room.reload.name).to eq 'Small room'
-        end
-
+        it { expect(room.reload.name).to eq 'Small room' }
         it { is_expected.to render_template :edit }
       end
     end
@@ -120,9 +102,7 @@ RSpec.describe Admin::RoomsController do
       context 'with valid attributes' do
         subject { post :create, room: attributes_for(:room) }
 
-        it 'creates a room' do
-          expect { subject }.to change(Room, :count).by(1)
-        end
+        it { expect { subject }.to change(Room, :count).by(1) }
 
         it 'redirects to index with a notice' do
           is_expected.to redirect_to action: :index, anchor: Room.last.decorate.css_id
@@ -133,25 +113,21 @@ RSpec.describe Admin::RoomsController do
       context 'with invalid attributes' do
         subject { post :create, room: { name: '', description: ''} }
 
-        it 'does not create a room' do
-          expect { subject }.not_to change(Room, :count)
-        end
-
+        it { expect { subject }.not_to change(Room, :count) }
         it { is_expected.to render_template :new }
       end
     end
 
     describe 'DELETE #destroy' do
       let!(:room) { create :room }
-      subject { delete :destroy, id: room.id }
+      subject { xhr :delete, :destroy, id: room.id }
 
-      it 'deletes the room' do
-        expect { subject }.to change(Room, :count).by(-1)
-      end
+      it { expect { subject }.to change(Room, :count).by(-1) }
+      it { is_expected.to render_template :destroy }
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index
-        expect(controller).to set_flash[:notice].to 'Location has been deleted!'
+      it 'sets notice' do
+        subject
+        expect(controller).to set_flash.now[:notice].to 'Location has been deleted!'
       end
     end
   end

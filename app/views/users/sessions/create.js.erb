@@ -1,5 +1,7 @@
 <% if resource.active_for_authentication? %>
+Overlay.hide( function() {
   location.reload();
+});
 <% else %>
 Overlay.show(
     "<%= escape_javascript render 'form', remote: true %>",

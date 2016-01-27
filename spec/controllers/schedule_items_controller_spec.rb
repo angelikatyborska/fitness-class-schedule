@@ -16,84 +16,63 @@ RSpec.describe ScheduleItemsController do
     let!(:zumba_room) { create :room }
     let!(:spinning_room) { create :room }
 
-    let!(:zumba_this_week) { create :schedule_item_this_week_in_website_time_zone,
+    let!(:zumba_this_week) { create(
+      :schedule_item_this_week_in_website_time_zone,
       trainer: zumba_instructor,
       room: zumba_room
-    }
+    ) }
 
-    let!(:zumba_next_week) { create :schedule_item_next_week_in_website_time_zone,
+    let!(:zumba_next_week) { create(
+      :schedule_item_next_week_in_website_time_zone,
       trainer: zumba_instructor,
       room: zumba_room
-    }
+    ) }
 
-    let!(:spinning_this_week) { create :schedule_item_this_week_in_website_time_zone,
+    let!(:spinning_this_week) { create(
+      :schedule_item_this_week_in_website_time_zone,
       trainer: spinning_instructor,
       room: spinning_room
-    }
+    ) }
 
-    let!(:spinning_next_week) { create :schedule_item_next_week_in_website_time_zone,
+    let!(:spinning_next_week) { create(
+      :schedule_item_next_week_in_website_time_zone,
       trainer: spinning_instructor,
       room: spinning_room
-    }
+    ) }
 
     context 'without params' do
       subject { get :index }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items) =~ [zumba_this_week, spinning_this_week]
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, [zumba_this_week, spinning_this_week] }
     end
 
     context 'with week offset' do
       subject { get :index, week_offset: 1 }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items) =~ [zumba_next_week, spinning_next_week]
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, [zumba_next_week, spinning_next_week] }
     end
 
     context 'with trainer' do
-      subject { get :index, trainer_id: zumba_instructor.id }
+      subject { get :index, trainer: zumba_instructor.id }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items) =~ [zumba_this_week, zumba_next_week]
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, [zumba_this_week] }
     end
 
     context 'with room' do
-      subject { get :index, room_id: zumba_room.id }
+      subject { get :index, room: zumba_room.id }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items) =~ [zumba_this_week, zumba_next_week]
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, [zumba_this_week] }
     end
 
     context 'with room and week offset' do
-      subject { get :index, room_id: zumba_room.id, week_offset: 1 }
+      subject { get :index, room: zumba_room.id, week_offset: 1 }
 
-      it 'renders template index' do
-        is_expected.to render_template :index
-      end
-
-      it 'exposes schedule items' do
-        expect(controller.schedule_items) =~ [zumba_next_week]
-      end
+      it { is_expected.to render_template :index }
+      it { is_expected.to expose :schedule_items, [zumba_next_week] }
     end
   end
 
@@ -102,14 +81,8 @@ RSpec.describe ScheduleItemsController do
 
     subject { get :show, id: schedule_item }
 
-    it 'renders template show' do
-      is_expected.to render_template :show
-    end
-
-    it 'exposes the requested schedule item' do
-      subject
-      expect(controller.schedule_item).to eq schedule_item
-    end
+    it { is_expected.to render_template :show }
+    it { is_expected.to expose :schedule_item, schedule_item }
   end
 
   describe 'GET #focus' do

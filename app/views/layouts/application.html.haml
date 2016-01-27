@@ -10,7 +10,8 @@
     = csrf_meta_tags
   %body
     .page-wrapper
-      = render 'layouts/top_bar'
+      %nav.top-bar{ role: 'navigation', data: {'topbar' => ''} }
+        = render 'layouts/top_bar'
       - if flash[:alert]
         :javascript
           Overlay.show('#{escape_javascript flash[:alert]}', '');

@@ -3,27 +3,27 @@ require 'rails_helper'
 RSpec.describe Admin::ReservationsController do
   shared_examples 'access denied' do
     describe 'GET #new' do
-      it 'raises an error' do
-        expect { get :new }.to require_admin_privileges
-      end
+      subject(:request) { get :new }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'POST #create' do
-      it 'raises an error' do
-        expect { xhr :post, :create, reservation: build(:reservation) }.to require_admin_privileges
-      end
+      subject(:request) { xhr :post, :create, reservation: build(:reservation) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'PUT #update' do
-      it 'raises an error' do
-        expect { xhr :put, :update, id: create(:reservation), reservation: attributes_for(:reservation) }.to require_admin_privileges
-      end
+      subject(:request) { xhr :put, :update, id: create(:reservation), reservation: attributes_for(:reservation) }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'DELETE #destroy' do
-      it 'raises an error' do
-        expect { xhr :delete, :destroy, id: create(:reservation) }.to require_admin_privileges
-      end
+      subject(:request) { xhr :delete, :destroy, id: create(:reservation) }
+
+      it { expect { request }.to require_admin_privileges }
     end
   end
 
@@ -48,14 +48,7 @@ RSpec.describe Admin::ReservationsController do
       let!(:schedule_item) { create :schedule_item }
       subject { xhr :get, :new, schedule_item: schedule_item }
 
-      it 'renders template new' do
-        is_expected.to render_template :new
-      end
-
-      it 'exposes a reservation for the given schedule item' do
-        subject
-        expect(controller.reservation.schedule_item).to eq schedule_item
-      end
+      it { is_expected.to render_template :new }
     end
 
     describe 'PUT #update' do
@@ -72,9 +65,7 @@ RSpec.describe Admin::ReservationsController do
           }
         end
 
-        it 'updates attributes' do
-          expect(reservation.reload.status).to eq 'active'
-        end
+        it { expect(reservation.reload.status).to eq 'active' }
       end
 
       context 'with invalid attributes' do
@@ -82,9 +73,7 @@ RSpec.describe Admin::ReservationsController do
           xhr :put, :update, id: reservation.id, reservation: { schedule_item_id: '' }
         end
 
-        it 'does not update attributes' do
-          expect(reservation.reload.schedule_item).to eq schedule_item
-        end
+        it { expect(reservation.reload.schedule_item).to eq schedule_item }
       end
     end
 
@@ -94,9 +83,7 @@ RSpec.describe Admin::ReservationsController do
         let!(:schedule_item) { create :schedule_item }
         subject { xhr :post, :create, reservation: { schedule_item_id: schedule_item.id, user_id: user.id } }
 
-        it 'creates a reservation' do
-          expect { subject }.to change(Reservation, :count).by(1)
-        end
+        it { expect { subject }.to change(Reservation, :count).by(1) }
       end
     end
 
@@ -104,8 +91,12 @@ RSpec.describe Admin::ReservationsController do
       let!(:reservation) { create :reservation }
       subject { xhr :delete, :destroy, id: reservation.id }
 
-      it 'deletes the reservation' do
-        expect { subject }.to change(Reservation, :count).by(-1)
+      it { expect { subject }.to change(Reservation, :count).by(-1) }
+      it { is_expected.to render_template :destroy }
+
+      it 'sets notice' do
+        subject
+        expect(controller).to set_flash.now[:notice].to 'Reservation has been deleted!'
       end
     end
   end

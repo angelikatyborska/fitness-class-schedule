@@ -15,11 +15,11 @@ class ReservationsController < ApplicationController
   def create
     respond_to do |format|
       if reservation.save
-        flash[:notice] = I18n.t('reservation.created')
+        flash.now[:notice] = I18n.t('reservation.created')
         format.js
       else
-        flash[:alert] = I18n.t('reservation.not_created')
-        format.js
+        flash.now[:alert] = I18n.t('reservation.not_created')
+        format.js { render 'alert.js' }
       end
     end
   end
@@ -27,13 +27,18 @@ class ReservationsController < ApplicationController
   def destroy
     if reservation.schedule_item.start > (Time.zone.now + Configurable.cancellation_deadline.hours)
       reservation.destroy
-      flash[:notice] = I18n.t('reservation.deleted')
-    else
-      flash[:alert] = I18n.t('errors.reservation.cancellation_deadline', quantity: Configurable.cancellation_deadline, unit: 'hour'.pluralize(Configurable.cancellation_deadline))
-    end
+      flash.now[:notice] = I18n.t('reservation.deleted')
 
-    respond_to do |format|
-      format.js
+      respond_to do |format|
+        format.js
+        format.html { redirect_to user_reservations_path(reservation.user) }
+      end
+    else
+      flash.now[:alert] = I18n.t('errors.reservation.cancellation_deadline', quantity: Configurable.cancellation_deadline, unit: 'hour'.pluralize(Configurable.cancellation_deadline))
+      respond_to do |format|
+        format.js { render 'alert.js' }
+        format.html { redirect_to user_reservations_path(reservation.user) }
+      end
     end
   end
 

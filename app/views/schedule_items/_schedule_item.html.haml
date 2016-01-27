@@ -16,7 +16,7 @@
       %li
         = link_to t('shared.delete'), admin_schedule_item_path(schedule_item),
           method: :delete,
-          data: { confirm: t('shared.confirm') },
+          data: { confirm: "#{ t('shared.confirm') } #{ t('reservation.email_warning') }" },
           remote: true,
           class: 'action delete',
           title: t('shared.delete')
@@ -34,6 +34,8 @@
       #{ schedule_item.duration } #{ t('schedule_item.attributes.duration_unit') }
     %span.no-wrap
       (#{ schedule_item.room.name })
+
+      -# TODO: add info about waiting line position
 
   %span.details
     %span.no-wrap

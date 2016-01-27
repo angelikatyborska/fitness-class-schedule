@@ -8,9 +8,7 @@ RSpec.describe ReservationsController do
     describe 'GET #index' do
       subject { get :index, user_id: user.id }
 
-      it 'requires login' do
-        expect(subject).to require_login
-      end
+      it { is_expected.to require_login }
     end
 
     describe 'POST #create' do
@@ -44,18 +42,14 @@ RSpec.describe ReservationsController do
 
         subject { get :index, user_id: other_user.id }
 
-        it 'renders template index' do
-          is_expected.to render_template :index
-        end
+        it { is_expected.to render_template :index }
 
-        it 'exposes current user\'s reservations' do
-          subject
-          expect(controller.reservations).to match_array [queued_reservation, active_reservation, attended_reservation, missed_reservation]
-          expect(controller.not_queued_reservations).to eq [active_reservation]
-
-          expect(controller.queued_reservations).to match_array [queued_reservation]
-          expect(controller.attended_reservations).to match_array [attended_reservation]
-          expect(controller.missed_reservations).to match_array [missed_reservation]
+        it 'exposes current user\'s reservations by status' do
+         is_expected.to expose :reservations, [queued_reservation, active_reservation, attended_reservation, missed_reservation]
+         is_expected.to expose :not_queued_reservations, [active_reservation]
+         is_expected.to expose :queued_reservations, [queued_reservation]
+         is_expected.to expose :attended_reservations, [attended_reservation]
+         is_expected.to expose :missed_reservations, [missed_reservation]
         end
       end
 
@@ -64,43 +58,60 @@ RSpec.describe ReservationsController do
         subject { xhr :delete, :destroy, user_id: other_user.id, id: reservation.id }
 
         context 'within time allowed for cancellations' do
-          it 'deletes the reservation' do
+          before :each do
             Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours - 1.hour)
+          end
 
-            expect { subject }.to change(other_user.reservations, :count).by(-1)
-
+          after :each do
             Timecop.return
+          end
+
+          it { expect { subject }.to change(other_user.reservations, :count).by(-1) }
+          it { is_expected.to render_template :destroy }
+
+          it 'sets a notice' do
+            subject
+            expect(controller).to set_flash.now[:notice].to 'Your reservation has been deleted.'
           end
         end
 
         context 'after time allowed for cancellations has passed' do
-          it 'does not delete the reservation' do
+          before :each do
             Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours + 15.minutes)
+          end
 
-            expect { subject }.not_to change(other_user.reservations, :count)
-
+          after :each do
             Timecop.return
           end
+
+          it { expect { subject }.not_to change(other_user.reservations, :count) }
+          it { is_expected.to render_template 'reservations/alert.js' }
         end
       end
 
       describe 'POST #create' do
         context 'with valid attributes' do
-          it 'creates a reservation' do
-            expect {
-              xhr :post, :create, user_id: other_user.id, reservation: { schedule_item_id: schedule_item.id }
-            }.to change(Reservation, :count).by(1)
-          end
+          subject { xhr(
+            :post,
+            :create,
+            user_id: other_user.id,
+            reservation: { schedule_item_id: schedule_item.id }
+          )}
+
+          it { expect { subject }.to change(Reservation, :count).by(1) }
         end
 
         context 'with invalid attributes' do
           let!(:other_reservation) { create :reservation, user: other_user }
 
-          it 'doesn\'t create a reservation' do
-            expect {
-              xhr :post, :create, user_id: other_user.id, reservation: { schedule_item_id: other_reservation.schedule_item.id }
-            }.not_to change(Reservation, :count)
-          end
+          subject { xhr(
+            :post,
+            :create,
+            user_id: other_user.id,
+            reservation: { schedule_item_id: other_reservation.schedule_item.id }
+          )}
+
+          it { expect { subject }.not_to change(Reservation, :count) }
         end
       end
     end

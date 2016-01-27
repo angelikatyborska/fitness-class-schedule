@@ -45,6 +45,7 @@
                     = link_to t('shared.delete'),
                       admin_room_path(room),
                       method: :delete,
-                      data: { confirm: t('shared.confirm') },
+                      data: { confirm: t('shared.confirm') + ' ' + t('room.delete_warning') },
+                      remote: true,
                       class: 'action delete',
                       title: t('shared.delete')

@@ -9,11 +9,9 @@ RSpec.feature 'Admin creates a reservation', js: true do
     login_as admin, scope: :user
 
     visit root_path
-    page.save_screenshot 'tmp/1.png'
 
     click_link 'Admin Panel'
-    page.save_screenshot 'tmp/2.png'
-    click_link 'Schedule'
+    find('.admin-panel').click_link 'Schedule'
   end
 
   scenario do
@@ -21,7 +19,7 @@ RSpec.feature 'Admin creates a reservation', js: true do
     expect(page).to have_link 'Check attendance'
 
     click_link 'Check attendance'
-    expect(page).to have_content 'Reservations for'
+    expect(page).to have_content "Check attendance: #{ schedule_item}"
 
     expect(page).not_to have_content user
     expect(page).to have_link 'Add'

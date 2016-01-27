@@ -43,5 +43,6 @@
                       admin_fitness_class_path(fitness_class),
                       method: :delete,
                       data: { confirm: "#{ t('shared.confirm') } #{ t('reservation.email_warning') }" },
+                      remote: true,
                       class: 'action delete',
                       title: t('shared.delete')

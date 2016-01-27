@@ -5,27 +5,27 @@ RSpec.describe Admin::UsersController do
     let!(:user) { create :user }
 
     describe 'GET #show' do
-      it 'raises an error' do
-        expect { get :show, id: user.id }.to require_admin_privileges
-      end
+      subject(:request) { get :show, id: user.id }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'GET #edit' do
-      it 'raises an error' do
-        expect { get :edit, id: user.id }.to require_admin_privileges
-      end
+      subject(:request) { get :edit, id: user.id }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'PUT #update' do
-      it 'raises an error' do
-        expect { put :update, id: user.id }.to require_admin_privileges
-      end
+      subject(:request) { put :update, id: user.id }
+
+      it { expect { request }.to require_admin_privileges }
     end
 
     describe 'DELETE #destroy' do
-      it 'raises an error' do
-        expect { delete :destroy, id: user.id }.to require_admin_privileges
-      end
+      subject(:request) { delete :destroy, id: user.id }
+
+      it { expect { request }.to require_admin_privileges }
     end
   end
 
@@ -50,17 +50,13 @@ RSpec.describe Admin::UsersController do
     describe 'GET #show' do
       subject { get :show, id: user.id }
 
-      it 'renders template show' do
-        is_expected.to render_template :show
-      end
+      it { is_expected.to render_template :show }
     end
 
     describe 'GET #edit' do
       subject { get :edit, id: user.id }
 
-      it 'renders template edit' do
-        is_expected.to render_template :edit
-      end
+      it { is_expected.to render_template :edit }
     end
 
     describe 'PUT #update' do
@@ -69,9 +65,7 @@ RSpec.describe Admin::UsersController do
           put :update, id: user.id, user: { first_name: 'Robert' }
         end
 
-        it 'updates user attributes' do
-          expect(user.reload.first_name).to eq 'Robert'
-        end
+        it { expect(user.reload.first_name).to eq 'Robert' }
 
         it 'redirects to index with a notice' do
           is_expected.to redirect_to action: :index, anchor: user.decorate.css_id
@@ -84,24 +78,20 @@ RSpec.describe Admin::UsersController do
           put :update, id: user.id, user: { first_name: '' }
         end
 
-        it 'does not update attributes' do
-          expect(user.reload.first_name).to eq 'Bob'
-        end
-
+        it { expect(user.reload.first_name).to eq 'Bob' }
         it { is_expected.to render_template :edit }
       end
     end
 
     describe 'DELETE #destroy' do
-      subject { delete :destroy, id: user.id }
+      subject { xhr :delete, :destroy, id: user.id }
 
-      it 'deletes the user' do
-        expect { subject }.to change(User, :count).by(-1)
-      end
+      it { expect { subject }.to change(User, :count).by(-1) }
+      it { is_expected.to render_template :destroy }
 
-      it 'redirects to index with a notice' do
-        is_expected.to redirect_to action: :index
-        expect(controller).to set_flash[:notice].to 'User has been deleted!'
+      it 'sets notice' do
+        subject
+        expect(controller).to set_flash.now[:notice].to 'User has been deleted!'
       end
     end
   end

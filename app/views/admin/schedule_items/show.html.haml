@@ -3,7 +3,7 @@
     %h3
       %span.no-wrap
         %span.fitness-class-color{ style: "background-color: #{ schedule_item.fitness_class.color }"}
-        = t('reservation.for')
+        #{ t('reservation.checkin') }:
       %span.no-wrap
       #{ schedule_item.fitness_class }
       %span.no-wrap
@@ -38,7 +38,8 @@
           - queue_class = reservation.queued? ? 'queued' : 'active'
           %tr{ id: reservation.decorate.css_id, class: queue_class }
             %td{ data: { label: t('user.name') } }
-              = reservation.user
+              = link_to reservation.user,
+                admin_user_path(reservation.user)
 
             %td{ data: { label: t('reservation.attributes.queue') } }
               = reservation.queue_position
@@ -71,12 +72,3 @@
                   remote: true,
                   class: 'action missed',
                   title: t('reservation.miss')
-
-                = link_to t('shared.delete'),
-                  admin_reservation_path(reservation),
-                  method: :delete,
-                  data: { confirm: t('shared.confirm') },
-                  remote: true,
-                  class: 'action delete',
-                  title: t('shared.delete')
-

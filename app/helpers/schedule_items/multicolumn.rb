@@ -8,7 +8,7 @@ class ScheduleItems::Multicolumn
   end
 
   def split_into_independent_chunks(schedule_items)
-    items_to_split = schedule_items.sort_by { |item| item.start }
+    items_to_split = schedule_items.sort_by { |item| [item.start, item.room.name] }
 
     temp_chunk = []
 

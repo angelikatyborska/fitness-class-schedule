@@ -1,27 +1,26 @@
-%nav.top-bar{ role: 'navigation', data: {'topbar' => ''} }
-  %ul.title-area
-    %li.name
-      %h1
-        = link_to root_path do
-          = Configurable.site_title
+%ul.title-area
+  %li.name
+    %h1
+      = link_to root_path do
+        = Configurable.site_title
 
-    %li.toggle-topbar.menu-icon
-      = link_to '#' do
-        %span
-          Menu
+  %li.toggle-topbar.menu-icon
+    = link_to '#' do
+      %span
+        Menu
 
-  %section.top-bar-section
-    %ul.left
-      %li
-        = link_to t('room.name').pluralize, rooms_path
-      %li
-        = link_to t('trainer.name').pluralize, trainers_path
-      %li
-        = link_to t('fitness_class.name').pluralize, fitness_classes_path
+%section.top-bar-section
+  %ul.left
+    %li
+      = link_to t('room.name').pluralize, rooms_path
+    %li
+      = link_to t('trainer.name').pluralize, trainers_path
+    %li
+      = link_to t('fitness_class.name').pluralize, fitness_classes_path
 
-    %ul.right
-      - if user_signed_in?
-        = render 'layouts/top_bar_admin'
-        = render 'layouts/top_bar_user'
-      - else
-        = render 'layouts/top_bar_guest'
+  %ul.right
+    - if user_signed_in?
+      = render 'layouts/top_bar_admin'
+      = render 'layouts/top_bar_user'
+    - else
+      = render 'layouts/top_bar_guest'

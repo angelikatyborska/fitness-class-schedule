@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Admin deletes a fitness class' do
+feature 'Admin deletes a fitness class', js: true do
   let!(:fitness_class) { create :fitness_class }
   let!(:admin) { create :admin_user }
 
@@ -19,6 +19,7 @@ feature 'Admin deletes a fitness class' do
 
     expect {
       click_link 'Delete'
+      expect(page).to have_content 'Class has been deleted!'
     }.to change(FitnessClass, :count).by(-1)
 
     expect(current_path).to eq admin_fitness_classes_path

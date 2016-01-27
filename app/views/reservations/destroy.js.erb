@@ -1,1 +1,6 @@
-location.reload();
+$('#<%= reservation.schedule_item.decorate.css_id %> .item-box').removeClass('reserved');
+
+Overlay.show(
+    "<%= escape_javascript flash[:notice] %>",
+    ""
+);
