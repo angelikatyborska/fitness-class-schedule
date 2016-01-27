@@ -16,7 +16,6 @@ gem 'configurable_engine', '~> 0.4'
 gem 'simple_form', '~> 3.2'
 gem 'carrierwave', '~> 0.10'
 gem 'rmagick', '~> 2.15.4'
-gem 'mailcatcher', '~> 0.6.2'
 
 group :development, :test do
   gem 'byebug'
@@ -31,6 +30,7 @@ group :development do
   gem 'spring'
   gem 'brakeman', '~> 3.1.4', require: false
   gem 'bullet',  '~> 5.0.0'
+  gem 'mailcatcher', '~> 0.6.2'
 end
 
 group :test do
