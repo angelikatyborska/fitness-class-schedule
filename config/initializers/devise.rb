@@ -5,6 +5,8 @@ Devise.setup do |config|
     manager.failure_app = CustomFailure
   end
 
+  config.secret_key = ENV['DEVISE_SECRET_KEY'] if Rails.env.production?
+
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
