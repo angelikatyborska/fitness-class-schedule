@@ -38,26 +38,20 @@ spinning_room = Room.create!(
 
 puts 'Creating rooms...'
 
-3.times do |n|
-  photo = File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+unless Rails.env.production?
+  3.times do |n|
+    RoomPhoto.create!(
+      room: fitness_hall,
+      photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+    )
+  end
 
-  RoomPhoto.create!(
-    room: fitness_hall,
-    photo: photo
-  )
-
-  photo.close
-end
-
-3.times do |n|
-  photo = File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
-
-  RoomPhoto.create!(
-    room: spinning_room,
-    photo: photo
-  )
-
-  photo.close
+  3.times do |n|
+    RoomPhoto.create!(
+      room: spinning_room,
+      photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+    )
+  end
 end
 
 fitness_classes_names_and_colors = [
@@ -108,20 +102,20 @@ room_classes_pairings = [
 ]
 
 fitness_schedule_items = 21.times.with_object([]) do |days, items|
-    available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
-      start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
-      duration = 45
-      trainer = trainers[0, (trainers.length / 2)].sample
+  available_hours.to_a.sample(available_hours.to_a.length * 1 / 3).each do |hours|
+    start = ScheduleItem.beginning_of_day(beginning_of_last_week) + days.days + hours.hours
+    duration = 45
+    trainer = trainers[0, (trainers.length / 2)].sample
 
-      items << {
-        start: start,
-        duration: duration,
-        fitness_class: fitness_classes.sample,
-        trainer: trainer,
-        room: fitness_hall,
-        capacity: Faker::Number.between(3, 5)
-      }
-    end
+    items << {
+      start: start,
+      duration: duration,
+      fitness_class: fitness_classes.sample,
+      trainer: trainer,
+      room: fitness_hall,
+      capacity: Faker::Number.between(3, 5)
+    }
+  end
 end
 
 available_hours = available_hours.step(1.5)
