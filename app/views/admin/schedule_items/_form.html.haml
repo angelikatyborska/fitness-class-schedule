@@ -1,4 +1,12 @@
 = simple_form_for [:admin, schedule_item] do |f|
+  - if schedule_item.reservations.count > 0
+    .row
+      .medium-12.columns
+        .alert-box.alert{ data: { alert: '' } }
+          = t('schedule_item.edit_warning')
+          %a{ href: '#', class: 'close' }
+            &times;
+
   .form-inputs
     .row
       .medium-12.columns

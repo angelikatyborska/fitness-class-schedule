@@ -18,4 +18,15 @@ class ReservationMailer < ApplicationMailer
         'reservation_mailer.cancelled',
         schedule_item: "#{ reservation.schedule_item }, #{ l(reservation.schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_weekday)}"))
   end
+
+  def edited(reservation, changes = {})
+    @schedule_item = reservation.schedule_item
+    @changes = changes
+
+    mail(
+      to: reservation.user.email,
+      subject: t(
+        'reservation_mailer.edited',
+        schedule_item: "#{ reservation.schedule_item }, #{ l(reservation.schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_weekday)}"))
+  end
 end

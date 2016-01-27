@@ -24,15 +24,17 @@ RSpec.describe ScheduleItem do
 
     context 'with a room that is already occupied' do
       let!(:room) { create :room }
-      let!(:schedule_item_occupying_the_room) { create :schedule_item,
+      let!(:schedule_item_occupying_the_room) { create(
+        :schedule_item,
         room: room,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day), duration: 60
-      }
+      ) }
 
-      subject { build :schedule_item,
+      subject { build(
+        :schedule_item,
         room: room,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
-      }
+      ) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -42,16 +44,18 @@ RSpec.describe ScheduleItem do
 
     context 'with a trainer that is already occupied' do
       let!(:trainer) { create :trainer }
-      let!(:schedule_item_occupying_the_room) { create :schedule_item,
+      let!(:schedule_item_occupying_the_room) { create(
+        :schedule_item,
         trainer: trainer,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day),
         duration: 60
-      }
+      ) }
 
-      subject { build :schedule_item,
+      subject { build(
+        :schedule_item,
         trainer: trainer,
         start: ScheduleItem.beginning_of_day(Time.zone.now + 1.day) + 15.minutes
-      }
+      ) }
 
       it 'is not valid' do
         is_expected.not_to be_valid
@@ -103,6 +107,41 @@ RSpec.describe ScheduleItem do
     end
   end
 
+  describe '#update' do
+    let!(:schedule_item) { create :schedule_item, capacity: 2 }
+    let!(:reservations) { create_list :reservation, 4, schedule_item: schedule_item }
+
+    context 'data changed' do
+      subject { schedule_item.update!(
+        capacity: 5,
+        trainer: create(:trainer),
+        room: create(:room),
+        start: schedule_item.start + 3.days
+      ) }
+
+      it 'sends an email to every user that has a reservation' do
+        expect { subject }.to change { ActionMailer::Base.deliveries.count }.by(reservations.count)
+
+        reservations.each_with_index do |reservation, i|
+          expect(ActionMailer::Base.deliveries[ -1 - i].to).to eq [reservation.user.email]
+        end
+      end
+    end
+
+    context 'data did not change' do
+      subject { schedule_item.update!(
+        capacity: schedule_item.capacity,
+        trainer: schedule_item.trainer,
+        room: schedule_item.room,
+        start: schedule_item.start
+      ) }
+
+      it 'does not send emails' do
+        expect { subject }.not_to change { ActionMailer::Base.deliveries.count }
+      end
+    end
+  end
+
   describe 'scopes' do
     describe '#week' do
       let!(:today) { Time.zone.now }
@@ -137,20 +176,23 @@ RSpec.describe ScheduleItem do
     end
 
     describe '#hourly_time_frame' do
-      let!(:schedule_item_at_3am) { create :schedule_item,
+      let!(:schedule_item_at_3am) { create(
+        :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 3.hours,
         duration: 45
-      }
+      ) }
 
-      let!(:schedule_item_at_8am) { create :schedule_item,
+      let!(:schedule_item_at_8am) { create(
+        :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 8.hours,
         duration: 45
-      }
+      ) }
 
-      let!(:schedule_item_at_10am) { create :schedule_item,
+      let!(:schedule_item_at_10am) { create(
+        :schedule_item,
         start: Time.zone.now.beginning_of_day + 1.day + 10.hours,
         duration: 45
-      }
+      ) }
 
       it 'lists all schedule items that take place between given hours' do
         expect(described_class.hourly_time_frame(8, 12)).to match_array [schedule_item_at_8am, schedule_item_at_10am]
@@ -226,6 +268,34 @@ RSpec.describe ScheduleItem do
         is_expected.to include schedule_item_this_week
         is_expected.not_to include schedule_item_next_week
       end
+    end
+  end
+
+  describe '#changes_without_timestamps_and_ids' do
+    let!(:schedule_item) { create :schedule_item }
+
+    subject { schedule_item.changes_without_timestamps_and_ids }
+
+    before :each do
+      schedule_item.room = (create :room)
+      schedule_item.trainer = (create :trainer)
+      schedule_item.fitness_class = (create :fitness_class)
+    end
+
+    it 'changes ids to associations' do
+      associations = ['room', 'trainer', 'fitness_class']
+
+      associations.each do |association|
+        is_expected.not_to include association + '_id'
+        is_expected.to include association
+
+        expect(subject[association][0].class).to eq association.classify.constantize
+        expect(subject[association][1].class).to eq association.classify.constantize
+      end
+    end
+
+    it 'removes timestamps' do
+      is_expected.not_to include 'created_at', 'updated_at'
     end
   end
 

@@ -1,5 +1,6 @@
 class ScheduleItem < ActiveRecord::Base
   before_destroy :send_cancellation_emails
+  after_update :send_edited_emails
 
   belongs_to :trainer
   belongs_to :room
@@ -55,6 +56,30 @@ class ScheduleItem < ActiveRecord::Base
   def send_cancellation_emails
     if start > Time.zone.now
       reservations.each { |reservation| ReservationMailer.cancelled(reservation).deliver_now }
+    end
+  end
+
+  def send_edited_emails
+    if changed?
+      reservations.each do |reservation|
+        ReservationMailer.edited(reservation, changes_without_timestamps_and_ids).deliver_now
+      end
+    end
+  end
+
+  def changes_without_timestamps_and_ids
+    changes_without_timestamps = changes.except(:created_at, :updated_at)
+
+    changes_without_timestamps.each.with_object({}) do |(key, values), hash|
+      if key =~ /_id$/
+        new_key = key.gsub(/_id$/, '')
+        new_values = values.map { |id| new_key.classify.constantize.find(id) }
+      else
+        new_key = key
+        new_values = values
+      end
+
+      hash[new_key] = new_values
     end
   end
 

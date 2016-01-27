@@ -94,6 +94,7 @@ en:
     active: 'Upcoming'
     stale: 'Past'
     focus: 'Show on the schedule'
+    edit_warning: 'You are about to edit a schedule item for which some users already made reservations. Please proceed with caution and be aware that those users will be notified about the changes via email.'
   room:
     name: 'Location'
     all_rooms: 'All locations'
@@ -169,3 +170,4 @@ en:
   reservation_mailer:
     spot_freed: 'There is an empty spot for you at %{schedule_item}'
     cancelled: '%{schedule_item} has been cancelled.'
+    edited: '%{schedule_item} has been changed.'

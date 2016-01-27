@@ -1,0 +1,28 @@
+%h1
+  Something's changed!
+%p
+  We had to do some adjusting to our schedule and in the process we changed some details about
+  = @schedule_item
+  at
+  = "#{ l(@schedule_item.start.in_website_time_zone, format: :simple_time) }"
+  on
+  = "#{ l(@schedule_item.start.in_website_time_zone, format: :human_friendly_date_with_weekday) }"
+  at
+  = "#{ @schedule_item.room.name }."
+
+%h2
+  Changes:
+%ul
+  - @changes.each do |key, values|
+    - if values[0].respond_to?(:in_website_time_zone)
+      - old = l(values[0].in_website_time_zone, format: :human_friendly_date_with_time)
+      - new = l(values[1].in_website_time_zone, format: :human_friendly_date_with_time)
+    - else
+      - old = values[0]
+      - new = values[1]
+
+    %li
+      = "#{ t('schedule_item.attributes.' + key.to_s) }:"
+      = old
+      = '--->'
+      = new
