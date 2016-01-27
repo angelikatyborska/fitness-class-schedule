@@ -42,3 +42,7 @@ group :test do
   gem 'poltergeist', '~> 1.8.1'
   gem 'simplecov', '~> 0.11.1', require: false
 end
+
+group :production do
+  gem 'rails_12factor', '~> 0.0.3'
+end
