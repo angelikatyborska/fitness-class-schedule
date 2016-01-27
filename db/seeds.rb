@@ -45,6 +45,13 @@ puts 'Creating rooms...'
   )
 end
 
+3.times do |n|
+  RoomPhoto.create!(
+    room: spinning_room,
+    photo: File.open(Rails.root.join('app', 'assets', 'images', "fitness#{ n }.jpg"))
+  )
+end
+
 fitness_classes_names_and_colors = [
   { name: 'Step', color: '#ff9000'},
   { name: 'ABT', color: '#cf2580'},
