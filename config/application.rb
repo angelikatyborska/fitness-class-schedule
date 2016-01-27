@@ -32,5 +32,9 @@ module FitnessClassSchedule
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.use_cache = true
+
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components', 'font-awesome', 'fonts')
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.precompile << /\.(?:svg|eot|woff|ttf)\z/
   end
 end
