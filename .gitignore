@@ -40,3 +40,4 @@ coverage
 # Environment files that may contain sensitive data
 .env
 .powenv
+secrets.yml
