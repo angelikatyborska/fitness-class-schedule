@@ -45,18 +45,12 @@ $reserved-check-size: 18px;
       }
 
       &.time-navigation {
-        width: calc(33.333333% - #{$spacing-tiny});
+        width: calc(33.333333% - #{2 * $spacing-tiny});
+        margin-right: $spacing-tiny;
+        margin-left: $spacing-tiny;
 
         @media #{$medium-up} {
           width: inherit;
-        }
-
-        &:not(:last-of-type) {
-          margin-right: $spacing-tiny;
-
-          @media #{$medium-up} {
-            margin-right: inherit;
-          }
         }
       }
     }
