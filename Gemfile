@@ -18,12 +18,12 @@ gem 'simple_form', '~> 3.2'
 gem 'carrierwave', '~> 0.10'
 gem 'rmagick', '~> 2.15.4'
 gem 'faker', '~> 1.6.1'
+gem 'timecop', '~> 0.8.0'
 
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.4.0'
   gem 'factory_girl_rails', '~> 4.5.0'
-  gem 'timecop', '~> 0.8.0'
 end
 
 group :development do
