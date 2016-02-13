@@ -18,6 +18,4 @@ Every user has the password `password`. For the administrator user, use email `a
 ### Setup
 If you want to run this app on your machine, you need to install all the dependencies and then:
 
-1. `bundle install`
-2. `cp config/database.yml.sample config/database.yml`
-3. `rake db:setup`
+1. `bin/setup`
