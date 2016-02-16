@@ -147,6 +147,7 @@ en:
       attended: 'Attended classes'
       missed: 'Missed classes'
       reliability: 'Reliability'
+      reliability_description: 'How often does this person attend the classes they made reservations for.'
       email: 'Email'
     login: 'Log In'
     logout: 'Log Out'

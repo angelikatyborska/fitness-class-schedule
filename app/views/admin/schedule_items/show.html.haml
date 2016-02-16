@@ -30,7 +30,8 @@
           %th
             = t('reservation.attributes.attended')
           %th
-            = t('user.attributes.reliability')
+            %span{ class: 'has-tip tip-top', 'aria-haspopup': 'true', 'data-tooltip': '', title: t('user.attributes.reliability_description') }
+              = t('user.attributes.reliability')
           %th
             = t('shared.actions')
       %tbody
