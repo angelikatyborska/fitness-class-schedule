@@ -31,8 +31,8 @@ class ScheduleItem < ActiveRecord::Base
 
   scope :hourly_time_frame, -> (from, to) { fitting_in_hourly_time_frame(from, to) }
 
-  scope :trainer, -> (trainer) { where('trainer_id = ?', trainer) }
-  scope :room, -> (room) { where('room_id = ?', room) }
+  scope :trainer, -> (trainer) { where(trainer: trainer) }
+  scope :room, -> (room) { where(room: room) }
 
   scope :active, -> (time = Time.zone.now) { where('start >= ?', time) }
   scope :stale, -> (time = Time.zone.now) { where('start < ?', time) }
@@ -123,11 +123,11 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def self.day_duration_in_quarters
-    (day_end - day_start) * 4
+    day_duration_in_hours * 4
   end
 
   def self.day_duration_in_hours
-    day_duration_in_quarters / 4
+    day_end - day_start
   end
 
   private
@@ -137,17 +137,17 @@ class ScheduleItem < ActiveRecord::Base
     stop_hour = '( extract(hour from start) + duration/60.0 )'
 
     if from < to
-      query = "( #{ start_hour } BETWEEN ? AND ? ) AND ( #{ stop_hour } BETWEEN ? AND ? )"
-      args = [from, to, from, to]
+      query = "( #{ start_hour } BETWEEN :from AND :to ) AND ( #{ stop_hour } BETWEEN :from AND :to )"
+      args = { from: from, to: to }
     else
       query =
-        "(( #{ start_hour } BETWEEN ? AND ?) AND ( #{ stop_hour } BETWEEN ? AND ?)) " \
+        "(( #{ start_hour } BETWEEN :day_start AND :to) AND ( #{ stop_hour } BETWEEN :day_start AND :to)) " \
         "OR "\
-        "(( #{ start_hour } BETWEEN ? AND ?) AND ( #{ stop_hour } BETWEEN ? AND ?))"
-      args = [0, to, 0, to, from, 24, from, 24]
+        "(( #{ start_hour } BETWEEN :from AND :day_end) AND ( #{ stop_hour } BETWEEN :from AND :day_end))"
+      args = { day_start: 0, to: to, from: from, day_end: 24 }
     end
 
-    where(query, *args)
+    where(query, args)
   end
 
   def self.day_start
