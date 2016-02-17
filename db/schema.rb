@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121170303) do
+ActiveRecord::Schema.define(version: 20160217145109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,22 @@ ActiveRecord::Schema.define(version: 20160121170303) do
   add_index "schedule_items", ["room_id"], name: "index_schedule_items_on_room_id", using: :btree
   add_index "schedule_items", ["start"], name: "index_schedule_items_on_start", using: :btree
   add_index "schedule_items", ["trainer_id"], name: "index_schedule_items_on_trainer_id", using: :btree
+
+  create_table "site_settings", force: :cascade do |t|
+    t.integer  "singleton_guard"
+    t.integer  "day_start"
+    t.integer  "day_end"
+    t.string   "time_zone"
+    t.integer  "cancellation_deadline"
+    t.string   "site_title"
+    t.string   "email"
+    t.string   "primary_color"
+    t.string   "topbar_bg_color"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "site_settings", ["singleton_guard"], name: "index_site_settings_on_singleton_guard", unique: true, using: :btree
 
   create_table "trainers", force: :cascade do |t|
     t.string   "first_name"
