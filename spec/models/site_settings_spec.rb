@@ -6,6 +6,10 @@ RSpec.describe SiteSettings do
     it { is_expected.to validate_inclusion_of(:day_start).in_array((0..23).to_a) }
     it { is_expected.to validate_inclusion_of(:day_end).in_array((1..24).to_a) }
     it { is_expected.to validate_inclusion_of(:time_zone).in_array(ActiveSupport::TimeZone.all.map(&:name)) }
+    it { is_expected.to allow_value('#abc123', '#FFFFFF', '#333333').for(:primary_color) }
+    it { is_expected.not_to allow_value('#gg33gg', '#abcd', '#1234567').for(:primary_color) }
+    it { is_expected.to allow_value('#abc123', '#FFFFFF', '#333333').for(:topbar_bg_color) }
+    it { is_expected.not_to allow_value('#gg33gg', '#abcd', '#1234567').for(:topbar_bg_color) }
   end
 
   describe 'database columns' do
@@ -24,6 +28,10 @@ RSpec.describe SiteSettings do
   end
 
   describe 'default values' do
+    before :each do
+      described_class.instance.destroy
+    end
+
     subject { described_class.instance }
 
     it { expect(subject.day_start).to eq 8 }
@@ -37,6 +45,10 @@ RSpec.describe SiteSettings do
   end
 
   describe 'caching' do
+    before :each do
+      described_class.instance.destroy
+    end
+
     it 'return an old value when not saved' do
       described_class.instance.day_start = 10
       expect(described_class.instance.day_start).to eq 8
@@ -49,9 +61,22 @@ RSpec.describe SiteSettings do
 
       expect(described_class.instance.day_start).to eq 10
     end
+
+    it 'returns the default value when destroyed' do
+      settings = described_class.instance
+      settings.day_start = 10
+      settings.save!
+      settings.destroy
+
+      expect(described_class.instance.day_start).to eq 8
+    end
   end
 
   describe '.instance' do
+    before :each do
+      described_class.instance.destroy
+    end
+
     subject { described_class.instance }
 
     it 'always returns the same record' do
@@ -61,7 +86,6 @@ RSpec.describe SiteSettings do
     end
 
     it 'creates a new record only on the first call' do
-      described_class.count
       expect{ subject }.to change(described_class, :count).from(0).to(1)
       expect{ subject }.not_to change(described_class, :count)
     end

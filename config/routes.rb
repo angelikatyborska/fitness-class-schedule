@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   end
 
   namespace 'admin' do
+    resource :site_settings, only: [:edit, :update]
     resources :users
     resources :schedule_items
     resources :fitness_classes, except: :show, path: 'classes'

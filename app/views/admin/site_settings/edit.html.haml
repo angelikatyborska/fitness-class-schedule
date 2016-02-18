@@ -1,0 +1,69 @@
+= simple_form_for site_settings, url: admin_site_settings_path do |f|
+  .form-inputs
+    .row
+      .medium-12.columns
+        = f.input :site_title,
+           label: t('user.admin_panel.site_title')
+
+    .row
+      .medium-12.columns
+        = f.input :email, label: t('user.admin_panel.email')
+
+    .row
+      .small-12.medium-6.columns
+        = f.input :time_zone,
+          as: :select,
+          include_blank: false,
+          collection: ActiveSupport::TimeZone.all,
+          value_method: :name,
+          label_method: :to_s,
+          default: site_settings.time_zone,
+          autocomplete: :off,
+          label: t('user.admin_panel.time_zone')
+
+      .small-6.medium-3.columns
+        = f.input :day_start,
+          as: :select,
+          include_blank: false,
+          collection: (0..23).to_a,
+          autocomplete: :off,
+          label: t('user.admin_panel.day_start')
+
+      .small-6.medium-3.columns
+        = f.input :day_end,
+          as: :select,
+          include_blank: false,
+          collection: (1..24).to_a,
+          autocomplete: :off,
+          label: t('user.admin_panel.day_end')
+
+    .row
+      .small-12.columns
+        - deadlines = (0..10).to_a + [12, 16, 24, 36, 48]
+        - deadline_options = deadlines.map { |i| [i, "#{ i } #{ 'hour'.pluralize(i) } before class starts"]}
+
+        = f.input :cancellation_deadline,
+          as: :select,
+          include_blank: false,
+          collection: deadline_options,
+          value_method: :first,
+          label_method: :second,
+          default: site_settings.cancellation_deadline,
+          autocomplete: :off,
+          label: t('user.admin_panel.cancellation_deadline')
+
+    .row
+      .medium-6.columns
+        = f.input :topbar_bg_color,
+          as: :color,
+          label: t('user.admin_panel.topbar_bg_color')
+
+      .medium-6.columns
+        = f.input :primary_color,
+          as: :color,
+          label: t('user.admin_panel.primary_color')
+
+    .form-actions
+      .row
+        .medium-12.columns
+          = f.button :button, t('shared.save'), class: 'button action save'

@@ -15,7 +15,7 @@ RSpec.describe ReservationMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq [Configurable.email]
+      expect(mail.from).to eq [SiteSettings.instance.email]
     end
 
     it 'mentions most important information' do
@@ -48,7 +48,7 @@ RSpec.describe ReservationMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq [Configurable.email]
+      expect(mail.from).to eq [SiteSettings.instance.email]
     end
 
     it 'mentions most important information' do
@@ -82,7 +82,7 @@ RSpec.describe ReservationMailer, type: :mailer do
     end
 
     it 'renders the sender email' do
-      expect(mail.from).to eq [Configurable.email]
+      expect(mail.from).to eq [SiteSettings.instance.email]
     end
 
     it 'mentions most important information' do

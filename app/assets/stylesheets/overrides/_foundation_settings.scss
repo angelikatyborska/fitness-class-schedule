@@ -119,10 +119,10 @@ $black       : #000000;
 
 $dark-font-color: $jet;
 $light-font-color: $white;
-$bar-color: color_from_configurables('topbar_bg_color');
+$bar-color: color_from_site_settings('topbar_bg_color');
 
 // We use these as default colors throughout
-$primary-color: color_from_configurables('primary_color');
+$primary-color: color_from_site_settings('primary_color');
 $secondary-color: $white-smoke;
 
 $bar-font-color: $light-font-color;
@@ -1451,8 +1451,8 @@ $topbar-link-color-active-hover: $topbar-link-color;
 // $topbar-link-hover-lightness: -10%; // Darken by 10%
 
 $topbar-link-bg: $topbar-bg;
-$topbar-link-bg-hover: darken(color_from_configurables('topbar_bg_color'), 10);
-$topbar-link-bg-color-hover: lighten(color_from_configurables('topbar_bg_color'), 20);
+$topbar-link-bg-hover: darken(color_from_site_settings('topbar_bg_color'), 10);
+$topbar-link-bg-color-hover: lighten(color_from_site_settings('topbar_bg_color'), 20);
 
 // $topbar-link-bg-active: $primary-color;
 // $topbar-link-bg-active-hover: scale-color($primary-color, $lightness: -14%);
@@ -1466,7 +1466,7 @@ $topbar-link-bg-color-hover: lighten(color_from_configurables('topbar_bg_color')
 
 // Style the top bar dropdown elements
 
-$topbar-dropdown-bg: color_from_configurables('topbar_bg_color');
+$topbar-dropdown-bg: color_from_site_settings('topbar_bg_color');
 $topbar-dropdown-link-color: $topbar-link-color;
 
 // $topbar-dropdown-link-color-hover: $topbar-link-color-hover;

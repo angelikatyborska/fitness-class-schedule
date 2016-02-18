@@ -151,10 +151,10 @@ class ScheduleItem < ActiveRecord::Base
   end
 
   def self.day_start
-    Configurable.day_start
+    SiteSettings.instance.day_start
   end
 
   def self.day_end
-    Configurable.day_end
+    SiteSettings.instance.day_end
   end
 end

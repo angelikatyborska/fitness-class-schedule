@@ -40,7 +40,7 @@ class Admin::FitnessClassesController < Admin::AdminApplicationController
 
   def convert_start_to_website_time_zone
     if params[:fitness_class][:start]
-      params[:fitness_class][:start] = Time.find_zone!(Configurable.time_zone).parse(params[:fitness_class][:start])
+      params[:fitness_class][:start] = Time.find_zone!(SiteSettings.instance.time_zone).parse(params[:fitness_class][:start])
     end
   end
 end

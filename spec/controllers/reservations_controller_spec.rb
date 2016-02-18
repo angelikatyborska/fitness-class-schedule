@@ -59,7 +59,7 @@ RSpec.describe ReservationsController do
 
         context 'within time allowed for cancellations' do
           before :each do
-            Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours - 1.hour)
+            Timecop.freeze(reservation.schedule_item.start - SiteSettings.instance.cancellation_deadline.hours - 1.hour)
           end
 
           after :each do
@@ -77,7 +77,7 @@ RSpec.describe ReservationsController do
 
         context 'after time allowed for cancellations has passed' do
           before :each do
-            Timecop.freeze(reservation.schedule_item.start - Configurable.cancellation_deadline.hours + 15.minutes)
+            Timecop.freeze(reservation.schedule_item.start - SiteSettings.instance.cancellation_deadline.hours + 15.minutes)
           end
 
           after :each do

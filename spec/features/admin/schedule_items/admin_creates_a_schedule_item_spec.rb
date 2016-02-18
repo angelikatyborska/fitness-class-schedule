@@ -12,7 +12,10 @@ feature 'Admin creates a schedule item', js: true do
 
     visit root_path
     click_link 'Admin Panel'
-    click_link I18n.t('user.admin_panel.schedule_items')
+    click_link 'Schedule'
+    using_wait_time 15 do
+      expect(page).to have_content 'Upcoming'
+    end
     click_link 'Add'
   end
 

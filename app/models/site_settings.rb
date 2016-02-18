@@ -1,14 +1,18 @@
 class SiteSettings < ActiveRecord::Base
   self.table_name = 'site_settings'
 
+  COLOR_REGEX = /\A#([a-f]|[A-F]|[0-9]){6}\Z/
+
   validates :singleton_guard, inclusion: { in: [0] }
   validates :day_start, inclusion: { in: (0..23) }
   validates :day_end, inclusion: { in: (1..24) }
   validates :time_zone, inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
+  validates :primary_color, format: { with: COLOR_REGEX, message: I18n.t('errors.invalid_color') }
+  validates :topbar_bg_color, format: { with: COLOR_REGEX, message: I18n.t('errors.invalid_color') }
 
   after_save { self.class.invalidate_cache }
-  after_rollback { self.class.invalidate_cache }
   after_destroy { self.class.invalidate_cache }
+  after_rollback { self.class.invalidate_cache }
 
   DEFAULTS = {
     day_start: 8,
