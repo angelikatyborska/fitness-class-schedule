@@ -10,7 +10,7 @@ class Admin::SiteSettingsController < Admin::AdminApplicationController
     if site_settings.update(site_settings_params)
       # For now this is the only way I know of
       # to force a new version of application.css to be compiled
-      # when configurables are edited. Simply 'touching' the application.scss file
+      # when site settings are edited. Simply 'touching' the application.scss file
       # does not work, because the assets cache is based on the file's content
       # and not the modification date.
       Rails.cache.clear if should_refresh_stylesheets

@@ -38,6 +38,7 @@ class Admin::FitnessClassesController < Admin::AdminApplicationController
     params.require(:fitness_class).permit(:name, :description, :color)
   end
 
+  # TODO: is this method needed?
   def convert_start_to_website_time_zone
     if params[:fitness_class][:start]
       params[:fitness_class][:start] = Time.find_zone!(SiteSettings.instance.time_zone).parse(params[:fitness_class][:start])
