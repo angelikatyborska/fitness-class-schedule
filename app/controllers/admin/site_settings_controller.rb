@@ -13,7 +13,13 @@ class Admin::SiteSettingsController < Admin::AdminApplicationController
       # when site settings are edited. Simply 'touching' the application.scss file
       # does not work, because the assets cache is based on the file's content
       # and not the modification date.
-      Rails.cache.clear if should_refresh_stylesheets
+      if should_refresh_stylesheets
+        if Rails.env.production?
+          %x(bundle exec rake assets:precompile)
+        else
+          Rails.cache.clear
+        end
+      end
 
       redirect_to edit_admin_site_settings_path, notice: t('shared.updated_singular', resource: t('site_settings.name'))
     else
