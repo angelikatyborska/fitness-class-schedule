@@ -52,16 +52,17 @@
           autocomplete: :off,
           label: t('user.admin_panel.cancellation_deadline')
 
-    .row
-      .medium-6.columns
-        = f.input :topbar_bg_color,
-          as: :color,
-          label: t('user.admin_panel.topbar_bg_color')
-
-      .medium-6.columns
-        = f.input :primary_color,
-          as: :color,
-          label: t('user.admin_panel.primary_color')
+    -# TODO: uncomment when found a way to make it work in production
+    -#.row
+    -#  .medium-6.columns
+    -#    = f.input :topbar_bg_color,
+    -#      as: :color,
+    -#      label: t('user.admin_panel.topbar_bg_color')
+    -#
+    -#  .medium-6.columns
+    -#    = f.input :primary_color,
+    -#      as: :color,
+    -#      label: t('user.admin_panel.primary_color')
 
   .form-actions
     .row
