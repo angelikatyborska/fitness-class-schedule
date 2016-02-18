@@ -43,7 +43,7 @@ class Admin::ScheduleItemsController < Admin::AdminApplicationController
 
   def convert_start_to_website_time_zone
     if params[:schedule_item][:start]
-      params[:schedule_item][:start] = Time.find_zone!(Configurable.time_zone).parse(params[:schedule_item][:start])
+      params[:schedule_item][:start] = Time.find_zone!(SiteSettings.instance.time_zone).parse(params[:schedule_item][:start])
     end
   end
 end

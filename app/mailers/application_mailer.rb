@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: Configurable.email
+  default from: SiteSettings.instance.email
   layout 'mailer'
 end

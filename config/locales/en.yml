@@ -54,11 +54,13 @@ en:
       cant_make_reservations_in_the_past: "can't make reservations for items from the past"
       cant_make_the_same_reservation_twice: "can't make a reservation for the same item twice"
       only_status_can_be_changed: "only reservation's status can be changed"
-    occupied: "is already occupied at this time"
+    occupied: 'is already occupied at this time'
+    invalid_color: 'is not a valid hex color'
     generic: 'Oops, something went wrong.'
   shared:
     created: "%{resource} has been created!"
     updated: "%{resource} has been updated!"
+    updated_singular: "%{resource} have been updated!"
     deleted: "%{resource} has been deleted!"
     actions: 'Actions'
     edit: 'Edit'
@@ -172,3 +174,5 @@ en:
     spot_freed: 'There is an empty spot for you at %{schedule_item}'
     cancelled: '%{schedule_item} has been cancelled.'
     edited: '%{schedule_item} has been changed.'
+  site_settings:
+    name: 'Site settings'

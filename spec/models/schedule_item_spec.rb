@@ -420,7 +420,7 @@ RSpec.describe ScheduleItem do
       subject { described_class.beginning_of_day(today) }
 
       it 'returns the earliest time a schedule item starting at will be displayed' do
-        expect(subject.hour).to eq Configurable.day_start
+        expect(subject.hour).to eq SiteSettings.instance.day_start
         expect(subject.min).to eq 0
       end
     end
@@ -430,7 +430,7 @@ RSpec.describe ScheduleItem do
       subject { described_class.end_of_day(today) }
 
       it 'returns the latest time a schedule item starting at will be displayed' do
-        expect(subject.hour).to eq Configurable.day_end - 1
+        expect(subject.hour).to eq SiteSettings.instance.day_end - 1
         expect(subject.min).to eq 59
         expect(subject.sec).to eq 59
       end

@@ -19,7 +19,7 @@ feature 'User deletes a reservation', js: true do
 
   context 'within time allowed for cancellations' do
     background do
-      Timecop.freeze((schedule_item.start.in_website_time_zone - Configurable.cancellation_deadline.hours - 1.hour))
+      Timecop.freeze((schedule_item.start.in_website_time_zone - SiteSettings.instance.cancellation_deadline.hours - 1.hour))
     end
 
     scenario 'via user panel' do
@@ -50,7 +50,7 @@ feature 'User deletes a reservation', js: true do
 
   context '15 minutes after time allowed for cancellations has passed' do
     background do
-      Timecop.freeze(schedule_item.start.in_website_time_zone - (Configurable.cancellation_deadline).hours + 15.minutes)
+      Timecop.freeze(schedule_item.start.in_website_time_zone - (SiteSettings.instance.cancellation_deadline).hours + 15.minutes)
     end
 
     scenario 'via user panel' do
@@ -60,7 +60,7 @@ feature 'User deletes a reservation', js: true do
       click_link 'My Reservations'
       expect(page).to have_link 'Cancel'
       click_link 'Cancel'
-      expect(page).to have_content "We're sorry, but cancellations are only allowed up to #{ Configurable.cancellation_deadline } #{ 'hour'.pluralize(Configurable.cancellation_deadline) } before class."
+      expect(page).to have_content "We're sorry, but cancellations are only allowed up to #{ SiteSettings.instance.cancellation_deadline } #{ 'hour'.pluralize(SiteSettings.instance.cancellation_deadline) } before class."
     end
 
     scenario 'via schedule item dialog box' do
@@ -69,7 +69,7 @@ feature 'User deletes a reservation', js: true do
       click_link schedule_item
       expect(page).to have_link 'Cancel'
       click_link 'Cancel'
-      expect(page).to have_content "We're sorry, but cancellations are only allowed up to #{ Configurable.cancellation_deadline } #{ 'hour'.pluralize(Configurable.cancellation_deadline) } before class."
+      expect(page).to have_content "We're sorry, but cancellations are only allowed up to #{ SiteSettings.instance.cancellation_deadline } #{ 'hour'.pluralize(SiteSettings.instance.cancellation_deadline) } before class."
     end
   end
 end

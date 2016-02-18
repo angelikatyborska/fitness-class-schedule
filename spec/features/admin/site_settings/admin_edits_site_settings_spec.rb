@@ -1,7 +1,11 @@
 require'rails_helper'
 
-feature 'Admin edits system setting' do
+feature 'Admin edits site setting' do
   let!(:admin) { create :admin_user }
+
+  before :each do
+    SiteSettings.instance.destroy
+  end
 
   background do
     login_as admin, scope: :user

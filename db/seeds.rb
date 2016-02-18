@@ -10,7 +10,7 @@ Trainer.destroy_all
 Room.destroy_all
 FitnessClass.destroy_all
 User.destroy_all
-Configurable.destroy_all
+SiteSettings.destroy_all
 
 Rails.cache.clear
 

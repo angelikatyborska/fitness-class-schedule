@@ -23,12 +23,12 @@ class ScheduleItemsController < ApplicationController
   def index
     week = Time.zone.now.in_website_time_zone.beginning_of_week + week_offset.weeks
 
-    if Configurable.day_start > Configurable.day_end
+    if SiteSettings.instance.day_start > SiteSettings.instance.day_end
       self.schedule_items = schedule_items.none
     else
       self.schedule_items = self.schedule_items.week(week).hourly_time_frame(
-        (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_start.hours).utc.hour,
-        (Time.zone.now.in_website_time_zone.beginning_of_day + Configurable.day_end.hours).utc.hour
+        (Time.zone.now.in_website_time_zone.beginning_of_day + SiteSettings.instance.day_start.hours).utc.hour,
+        (Time.zone.now.in_website_time_zone.beginning_of_day + SiteSettings.instance.day_end.hours).utc.hour
       )
     end
 
