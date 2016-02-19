@@ -6,10 +6,6 @@ RSpec.describe SiteSettings do
     it { is_expected.to validate_inclusion_of(:day_start).in_array((0..23).to_a) }
     it { is_expected.to validate_inclusion_of(:day_end).in_array((1..24).to_a) }
     it { is_expected.to validate_inclusion_of(:time_zone).in_array(ActiveSupport::TimeZone.all.map(&:name)) }
-    it { is_expected.to allow_value('#abc123', '#FFFFFF', '#333333').for(:primary_color) }
-    it { is_expected.not_to allow_value('#gg33gg', '#abcd', '#1234567').for(:primary_color) }
-    it { is_expected.to allow_value('#abc123', '#FFFFFF', '#333333').for(:topbar_bg_color) }
-    it { is_expected.not_to allow_value('#gg33gg', '#abcd', '#1234567').for(:topbar_bg_color) }
   end
 
   describe 'database columns' do
@@ -22,9 +18,6 @@ RSpec.describe SiteSettings do
 
     it { is_expected.to have_db_column(:site_title).of_type(:string) }
     it { is_expected.to have_db_column(:email).of_type(:string) }
-
-    it { is_expected.to have_db_column(:primary_color).of_type(:string) }
-    it { is_expected.to have_db_column(:topbar_bg_color).of_type(:string) }
   end
 
   describe 'default values' do
@@ -40,8 +33,6 @@ RSpec.describe SiteSettings do
     it { expect(subject.cancellation_deadline).to eq 12 }
     it { expect(subject.site_title).to eq 'My Fitness Club' }
     it { expect(subject.email).to eq 'noreply@example.com' }
-    it { expect(subject.primary_color).to eq '#2b7ac5' }
-    it { expect(subject.topbar_bg_color).to eq '#333333' }
   end
 
   describe 'caching' do

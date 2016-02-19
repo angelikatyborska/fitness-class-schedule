@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160217145109) do
+ActiveRecord::Schema.define(version: 20160219102932) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -93,8 +93,6 @@ ActiveRecord::Schema.define(version: 20160217145109) do
     t.integer  "cancellation_deadline"
     t.string   "site_title"
     t.string   "email"
-    t.string   "primary_color"
-    t.string   "topbar_bg_color"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
